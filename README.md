@@ -1,1 +1,3 @@
-This is the source code to Jon Barron's public academic website: https://jonbarron.info/. Feel free to clone this code for your own personal use.
+# 我的个人主页
+
+这是我的个人学术主页源代码。访问地址：https://ritianyu.github.io/
