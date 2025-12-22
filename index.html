@@ -16,185 +16,228 @@
     <table style="width:100%;max-width:800px;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
       <tr style="padding:0px">
         <td style="padding:0px">
-          <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
-            <tr style="padding:0px">
-              <td style="padding:2.5%;width:63%;vertical-align:middle">
-                <p class="name" style="text-align: center;">
-                  Hao Yu
-                </p>
-                <p>
-                Hi! I am a first-year Master's student at the State Key Laboratory of CAD&CG, Zhejiang University, advised by Prof.<a href="https://pengsida.net/">Sida Peng</a> and <a href="https://xzhou.me/">Xiaowei Zhou</a>.
-                I received my Bachelor's degree from Shandong University in 2025. 
-                </p>
-                <p>
-                My research interests focus on foundation tasks in 3D computer vision, including <strong>depth estimation</strong>, <strong>image matching</strong>, and <strong>3D reconstruction</strong>.
-                </p>
-                <p style="text-align:center">
-                  <a href="mailto:ritianyu@example.com">Email</a> &nbsp;/&nbsp;
-                  <!-- <a href="data/YourName-CV.pdf">CV</a> &nbsp;/&nbsp; -->
-                  <a href="https://scholar.google.com/citations?user=YOUR_ID">Scholar</a> &nbsp;/&nbsp;
-                  <a href="https://twitter.com/YuRitianYu">Twitter</a> &nbsp;/&nbsp;
-                  <a href="https://github.com/RitianYu">Github</a>
-                </p>
-              </td>
-              <td style="padding:2.5%;width:37%;max-width:37%">
-                <a href="images/me/me_2.jpg"><img style="width:100%;max-width:100%;object-fit: cover; border-radius: 50%;" alt="profile photo" src="images/me/me_2.jpg" class="hoverZoomLink"></a>
-              </td>
-            </tr>
-          </tbody></table>
+          <!-- Profile Section with New Design -->
+          <div class="profile-container">
+            <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;"><tbody>
+              <tr style="padding:0px">
+                <td style="padding:2.5%;width:63%;vertical-align:middle" class="profile-text">
+                  <p class="name" style="text-align: center; font-size: 30px; font-weight: 700;">
+                    👨‍💻 Hao Yu | 余昊
+                  </p>
+                  <p>
+                  Hi! 👋 I am a first-year Master's student at Zhejiang University, advised by Prof.<a href="https://pengsida.net/">Sida Peng</a> and <a href="https://xzhou.me/">Xiaowei Zhou</a>.
+                  I received my Bachelor's degree from Shandong University in 2025. 🎓
+                  </p>
+                  <p>
+                  My research interests lie in foundational tasks in 3D computer vision, including <strong>depth estimation</strong>, <strong>image matching</strong> , and <strong>3D reconstruction</strong>, aiming to empower broad applications in autonomous driving 🚗 and robotics 🤖.
+                  </p>
+                  <div style="text-align:center" class="profile-links">
+                    <a href="mailto:ritianyu@example.com">📧 Email</a>
+                    <span style="margin: 0 8px; color: rgba(255,255,255,0.5);">/</span>
+                    <!-- <a href="data/YourName-CV.pdf">CV</a> &nbsp;/&nbsp; -->
+                    <a href="https://scholar.google.com/citations?user=YOUR_ID">🎓 Scholar</a>
+                    <span style="margin: 0 8px; color: rgba(255,255,255,0.5);">/</span>
+                    <a href="https://twitter.com/YuRitianYu">🐦 Twitter</a>
+                    <span style="margin: 0 8px; color: rgba(255,255,255,0.5);">/</span>
+                    <a href="https://github.com/RitianYu">💻 Github</a>
+                  </div>
+                </td>
+                <td style="padding:2.5%;width:37%;max-width:37%">
+                  <div class="profile-image-wrapper">
+                    <a href="images/me/me_2.jpg"><img style="width:100%;max-width:100%;object-fit: cover; border-radius: 50%;" alt="profile photo" src="images/me/me_2.jpg" class="hoverZoomLink"></a>
+                  </div>
+                </td>
+              </tr>
+            </tbody></table>
+          </div>
           
-          <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
-          <tbody>
-            <tr>
-              <td style="padding:5px;width:100%;vertical-align:middle">
-                <h2>Publications</h2>
-                <p>
-                  * denotes equal contributions.
-                </p>
-              </td>
-            </tr>
-          </tbody>
-          </table>
+          <!-- Publications Section with New Design -->
+          <div class="publications-header">
+            <h2>📚 Publications</h2>
+            <p>* denotes equal contributions.</p>
+          </div>
           
           <!-- Publications Section -->
-          <table style="width:100%;border:0px;border-spacing:0px 10px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
+          <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
 
             <!-- MatchAnything -->
-            <!-- <tr bgcolor="#ffffd0"> -->
             <tr>
-              <!-- Teaser Info -->
-              <td style="padding:20px;width:25%;vertical-align:middle">
-                <video width="210" playsinline="" autoplay="autoplay" loop="loop">
-                  <source src="https://zju3dv.github.io/MatchAnything/img/teaser_v0.mov" type="video/mp4">
-                  Your browser does not support the video tag.
-                </video>
-              </td>
-              <!-- Text Info -->
-              <td style="padding:20px;width:75%;vertical-align:middle">
-                <span class="papertitle">MatchAnything: Universal Cross-Modality Image Matching with Large-Scale Pre-Training</span>
-                <br>
-                Xingyi He, <strong>Hao Yu</strong>, Sida Peng, Dongli Tan, Zehong Shen, Xiaowei Zhou, Hujun Bao
-                <br>
-                <font color="red"><strong>1.1k+ Stars, HuggingFace tried out 54k+ times, included in <a href="https://huggingface.co/zju-community/matchanything_eloftr" target="_blank">Transformers</a></strong></font>.
-                <br>
-                <a href="https://zju3dv.github.io/MatchAnything/" target="_blank">project page</a>
-                /
-                <a href="https://arxiv.org/abs/2501.07556" target="_blank">paper</a>
+              <td colspan="2" style="padding:0;">
+                <div class="publication-item">
+                  <div class="publication-teaser">
+                    <video width="210" playsinline="" autoplay="autoplay" loop="loop" muted>
+                      <source src="https://zju3dv.github.io/MatchAnything/img/teaser_v0.mov" type="video/mp4">
+                      Your browser does not support the video tag.
+                    </video>
+                  </div>
+                  <div class="publication-content">
+                    <span class="papertitle">MatchAnything: Universal Cross-Modality Image Matching with Large-Scale Pre-Training</span>
+                    <br>
+                    Xingyi He, <strong>Hao Yu</strong>, Sida Peng, Dongli Tan, Zehong Shen, Xiaowei Zhou, Hujun Bao
+                    <div class="publication-highlight">
+                      <strong>⭐ 1.1k+ Stars, HuggingFace tried out 54k+ times, included in <a href="https://huggingface.co/zju-community/matchanything_eloftr" target="_blank">Transformers</a></strong>
+                    </div>
+                    <div class="publication-links">
+                      <a href="https://zju3dv.github.io/MatchAnything/" target="_blank">🌐 Project Page</a>
+                      <a href="https://arxiv.org/abs/2501.07556" target="_blank">📄 Paper</a>
+                    </div>
+                  </div>
+                </div>
               </td>
             </tr>
 
             <!-- LCNet -->
             <tr>
-              <!-- Teaser Info -->
-              <td style="padding:20px;width:25%;vertical-align:middle">
-                <img src="images/pub/LCnet.png" width="210">
-              </td>
-              <!-- Text Info -->
-              <td style="padding:20px;width:75%;vertical-align:middle">
-                <span class="papertitle">LCNet: Unsupervised Liver Deformation Correction Network Using Optimal Transport for Image-Guided Liver Surgery</span>
-                <br>
-                Mingyang Liu, Geng Li, <strong>Hao Yu</strong>, Xinzhe Du, Rui Song, Yibin Li, Max Q.-H. Meng, Zhe Min
-                <br>
-                <em>IROS</em> 2025, <font color="red"><strong>Oral</strong></font>.
-                <br>
-                <a href="https://ieeexplore.ieee.org/document/11246403" target="_blank">paper</a>
+              <td colspan="2" style="padding:0;">
+                <div class="publication-item">
+                  <div class="publication-teaser">
+                    <img src="images/pub/LCnet.png" width="210">
+                  </div>
+                  <div class="publication-content">
+                    <span class="papertitle">LCNet: Unsupervised Liver Deformation Correction Network Using Optimal Transport for Image-Guided Liver Surgery</span>
+                    <br>
+                    Mingyang Liu, Geng Li, <strong>Hao Yu</strong>, Xinzhe Du, Rui Song, Yibin Li, Max Q.-H. Meng, Zhe Min
+                    <br>
+                    <em>IROS</em> 2025, <font color="red"><strong>🎤 Oral</strong></font>
+                    <div class="publication-links">
+                      <a href="https://ieeexplore.ieee.org/document/11246403" target="_blank">📄 Paper</a>
+                    </div>
+                  </div>
+                </div>
               </td>
             </tr>
 
             <!-- Bi-NOFNet -->
             <tr>
-              <!-- Teaser Info -->
-              <td style="padding:20px;width:25%;vertical-align:middle">
-                <img src="images/pub/binofnet.png" width="210">
-              </td>
-              <!-- Text Info -->
-              <td style="padding:20px;width:75%;vertical-align:middle">
-                <span class="papertitle">Bi-NOFNet: Bidirectional Partial-to-Full Non-Rigid Point Set Registration with Non-Overlapping Filtering</span>
-                <br>
-                <strong>Hao Yu</strong>, Mingyang Liu, Rui Song, Yibin Li, Max Q.-H Meng, Zhe Min
-                <br>
-                <em>IROS</em> 2024.
-                <br>
-                <a href="https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=10801491" target="_blank">paper</a>
+              <td colspan="2" style="padding:0;">
+                <div class="publication-item">
+                  <div class="publication-teaser">
+                    <img src="images/pub/binofnet.png" width="210">
+                  </div>
+                  <div class="publication-content">
+                    <span class="papertitle">Bi-NOFNet: Bidirectional Partial-to-Full Non-Rigid Point Set Registration with Non-Overlapping Filtering</span>
+                    <br>
+                    <strong>Hao Yu</strong>, Mingyang Liu, Rui Song, Yibin Li, Max Q.-H Meng, Zhe Min
+                    <br>
+                    <em>IROS</em> 2024
+                    <div class="publication-links">
+                      <a href="https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=10801491" target="_blank">📄 Paper</a>
+                    </div>
+                  </div>
+                </div>
               </td>
             </tr>
 
           </tbody></table>
 
           <!-- Honors Section -->
-          <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20">
+          <div class="honors-header">
+            <span class="section-emoji">🏆</span>
+            <h2>Honors & Awards</h2>
+          </div>
+          
+          <table width="100%" align="center" border="0" cellpadding="10">
             <tbody>
               <tr>
-                <td>
-                  <h2>Honors & Awards</h2>
+                <td width="100%" valign="center">
+                  <div class="award-item">
+                    <div class="award-content">
+                      <div class="award-icon-wrapper">
+                        <span class="award-emoji">🎓</span>
+                      </div>
+                      <div>
+                        <span class="award-title">National Scholarship</span>
+                        <!-- <div class="award-description">
+                          Awarded to the top 0.2% of students nationwide 🇨🇳
+                        </div> -->
+                        <span class="award-year">2025</span>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td width="100%" valign="center">
+                  <div class="award-item">
+                    <div class="award-content">
+                      <div class="award-icon-wrapper">
+                        <span class="award-emoji">🏅</span>
+                      </div>
+                      <div>
+                        <span class="award-title">Gold Medal in <a href="https://www.kaggle.com/competitions/image-matching-challenge-2024" target="_blank">Image Matching Challenge 2024</a>, <a href="https://www.youtube.com/watch?v=KG-_i12fU_A&t=14889s" target="_blank">CVPR 2024 Workshop</a></span>
+                        <!-- <div class="award-description">
+                          Ranked 3/929 on the public leaderboard and 6/929 on the private leaderboard.<br>
+                          Invited to give a talk at <a href="https://www.youtube.com/watch?v=KG-_i12fU_A&t=14889s" target="_blank">CVPR 2024 Workshop</a> 🎤
+                        </div> -->
+                        <span class="award-year">2024</span>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td width="100%" valign="center">
+                  <div class="award-item">
+                    <div class="award-content">
+                      <div class="award-icon-wrapper">
+                        <span class="award-emoji">🥇</span>
+                      </div>
+                      <div>
+                        <span class="award-title">First Prize in the Chinese Mathematics Competitions</span>
+                        <!-- <div class="award-description">
+                          National-level mathematics excellence recognition 📐
+                        </div> -->
+                        <span class="award-year">2023</span>
+                      </div>
+                    </div>
+                  </div>
                 </td>
               </tr>
             </tbody>
           </table>
-          <table width="100%" align="center" border="0" cellpadding="20">
-            <tbody>
-              <tr>
-                <td width="75%" valign="center">
-                  <b>National Scholarship </b>
-                  <br>
-                  Awarded to the top 0.2% of students nationwide.
-                  <br>
-                  2025
-                </td>
-              </tr>
-
-              <tr>
-                <td width="75%" valign="center">
-                  <b>Gold Medal in Image Matching Challenge 2024</b>
-                  <br>
-                  2024
-                </td>
-              </tr>
-              
-              <tr>
-                <td width="75%" valign="center">
-                  <b>First Prize in the Chinese Mathematics Competitions</b>
-                  <br>
-                  2023
-                </td>
-              </tr>
 
           <!-- Experience Section -->
-          <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20">
-            <tbody>
-              <tr>
-                <td>
-                  <h2>Experience</h2>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-          <table width="100%" align="center" border="0" cellpadding="20">
+          <div class="experience-header">
+            <span class="section-emoji">💼</span>
+            <h2>Experience</h2>
+          </div>
+          
+          <table width="100%" align="center" border="0" cellpadding="10">
             <tbody>
 
               <tr>
-                <td style="padding:20px;width:25%;vertical-align:middle;"><img src="images/icons/liauto.png" style="width:100%"></td>
-                <td width="75%" valign="center">
-                  <b>Li Auto, <a href="https://github.com/LiAutoAD">Autonomous Driving Team</a></b>
-                  <br>
-                  Research Intern.
-                  <br>
-                  Mar. 2025 - Present
-                  <br>
-                  Advisor: <a href="https://wangyida.github.io/" target="_blank">Yida Wang</a>
+                <td width="100%" valign="center">
+                  <div class="experience-item">
+                    <img src="images/icons/liauto.png" class="experience-logo" alt="Li Auto">
+                    <div class="experience-content">
+                      <div class="experience-title">
+                        🚗 Li Auto, <a href="https://github.com/LiAutoAD" target="_blank">Autonomous Driving Team</a>
+                      </div>
+                      <div class="experience-role">Research Intern</div>
+                      <div class="experience-advisor">
+                        Advisor: <a href="https://wangyida.github.io/" target="_blank">Yida Wang</a>
+                      </div>
+                      <span class="experience-period">Mar. 2025 - Present</span>
+                    </div>
+                  </div>
                 </td>
               </tr>
 
               <tr>
-                <td style="padding:20px;width:25%;vertical-align:middle;"><img src="images/icons/Tencent.avif" style="width:100%"></td>
-                <td width="75%" valign="center">
-                  <b>Tencent, <a href="https://roboticsx.tencent.com/#/">RoboticsX</a></b>
-                  <br>
-                  Research Intern.
-                  <br>
-                  Oct. 2024 - Feb. 2025
-                  <br>
-                  Advisor: <a href="https://cghezhang.github.io/" target="_blank">He Zhang</a>
+                <td width="100%" valign="center">
+                  <div class="experience-item">
+                    <img src="images/icons/Tencent.avif" class="experience-logo" alt="Tencent">
+                    <div class="experience-content">
+                      <div class="experience-title">
+                        🤖 Tencent, <a href="https://roboticsx.tencent.com/#/" target="_blank">RoboticsX</a>
+                      </div>
+                      <div class="experience-role">Research Intern</div>
+                      <div class="experience-advisor">
+                        Advisor: <a href="https://cghezhang.github.io/" target="_blank">He Zhang</a>
+                      </div>
+                      <span class="experience-period">Oct. 2024 - Feb. 2025</span>
+                    </div>
+                  </div>
                 </td>
               </tr>
 
