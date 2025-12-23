@@ -1,0 +1,288 @@
+/* InfiniDepth Project Page Styles */
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Jost', 'Lato', sans-serif;
+    background: #fafafa;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+strong { font-weight: 600; }
+b { font-weight: 700; }
+
+/* Jumbotron - 标题区域 */
+.jumbotron {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 50%, #f8f9fa 100%);
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+    padding: 3rem 1rem;
+    margin-bottom: 0;
+    margin-top: 0 !important;
+    border-radius: 0;
+    position: relative;
+    overflow: hidden;
+}
+
+/* 添加装饰性渐变背景 */
+.jumbotron::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -10%;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(107,154,196,0.08) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.jumbotron::after {
+    content: '';
+    position: absolute;
+    bottom: -30%;
+    left: -5%;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(123,165,145,0.06) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.jumbotron h1 {
+    font-weight: 700;
+    font-size: 2.8rem;
+    color: #2c3e50;
+    margin-bottom: 1rem;
+    line-height: 1.3;
+    position: relative;
+    z-index: 1;
+}
+
+.jumbotron h4 {
+    color: #5a6268;
+    font-weight: 400;
+    margin-bottom: 1.5rem;
+    position: relative;
+    z-index: 1;
+}
+
+.jumbotron hr {
+    border-top: 2px solid rgba(0,0,0,0.1);
+    margin: 1.5rem auto;
+    width: 100%;
+    max-width: 1000px;
+    position: relative;
+    z-index: 1;
+    background: linear-gradient(90deg, transparent 0%, rgba(107,154,196,0.3) 50%, transparent 100%);
+    height: 2px;
+    border: none;
+}
+
+.jumbotron a {
+    color: #495057;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    margin: 0 8px;
+    display: inline-block;
+    position: relative;
+    z-index: 1;
+}
+
+.jumbotron a:hover {
+    color: #6b9ac4;
+    text-decoration: none;
+    transform: translateY(-1px);
+}
+
+.jumbotron a:active {
+    transform: scale(0.95);
+    color: #5a8ab8;
+}
+
+.jumbotron sup { font-size: 0.7em; }
+
+.jumbotron p {
+    color: #6c757d;
+    font-size: 1.2rem;
+    margin-top: 1rem;
+    position: relative;
+    z-index: 1;
+}
+
+/* Author names - 作者名称更大 */
+.author-list {
+    font-size: 1.4rem;
+    line-height: 1.8;
+    margin-bottom: 0.5rem;
+}
+
+/* Author rows */
+.author-row {
+    display: block;
+    margin-bottom: 0.3rem;
+}
+
+/* Buttons */
+.btn-large {
+    padding: 12px 32px;
+    font-size: 1rem;
+    font-weight: 500;
+    border-radius: 30px;
+    border: 2px solid #dee2e6;
+    background: linear-gradient(135deg, white 0%, #f8f9fa 100%);
+    color: #495057 !important;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    margin: 0 8px;
+    text-decoration: none !important;
+    display: inline-block;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-large::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #6b9ac4 0%, #5a8ab8 100%);
+    transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: -1;
+}
+
+.btn-large:hover {
+    color: white !important;
+    border-color: #6b9ac4;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(107,154,196,0.4);
+}
+
+.btn-large:hover::before {
+    left: 0;
+}
+
+.btn-large:active {
+    transform: translateY(-1px) scale(0.98);
+    box-shadow: 0 3px 10px rgba(107,154,196,0.3);
+}
+
+.btn-large i { margin-right: 8px; }
+
+/* Sections */
+section {
+    padding: 3rem 0;
+    border-bottom: none;
+}
+
+section:first-of-type {
+    padding-top: 0;
+}
+
+section:last-of-type { border-bottom: none; }
+
+/* Section Content Card - 为每个模块添加卡片样式 */
+.section-card {
+    background: white;
+    border: 1px solid #e0e4e8;
+    border-radius: 12px;
+    padding: 2.5rem;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.section-card:hover {
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    transform: translateY(-2px);
+}
+
+section h3 {
+    font-weight: 700;
+    color: #2c3e50;
+    margin-bottom: 1.5rem;
+    font-size: 2rem;
+}
+
+section hr {
+    border-top: 2px solid #e9ecef;
+    margin: 0 0 1.5rem 0;
+    width: 60px;
+}
+
+section p {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: #495057;
+}
+
+.text-left { text-align: left; }
+
+/* Media */
+.media-container {
+    margin: 2rem 0;
+    text-align: center;
+}
+
+.media-container img,
+.media-container video {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+/* Citation */
+pre {
+    background: #2c3e50;
+    color: #ecf0f1;
+    padding: 1.5rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    overflow-x: auto;
+}
+
+pre code {
+    color: #ecf0f1;
+    white-space: pre-wrap;
+}
+
+/* Footer */
+footer {
+    padding: 2rem 0;
+    color: #6c757d;
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+footer a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+footer a:hover { text-decoration: underline; }
+
+/* Highlights */
+.highlight-green { color: #28a745; font-weight: 600; }
+.highlight-blue { color: #007bff; font-weight: 600; }
+.highlight-orange { color: #fd7e14; font-weight: 600; }
+.highlight-purple { color: #6f42c1; font-weight: 600; }
+.highlight-teal { color: #20c997; font-weight: 600; }
+.highlight-indigo { color: #6610f2; font-weight: 600; }
+
+/* Responsive */
+@media (max-width: 768px) {
+    .jumbotron h1 { font-size: 2rem; }
+    section h3 { font-size: 1.6rem; }
+    .btn-large {
+        padding: 10px 24px;
+        font-size: 0.95rem;
+        margin: 5px;
+    }
+}
