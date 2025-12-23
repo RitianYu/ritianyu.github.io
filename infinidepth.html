@@ -90,24 +90,63 @@
         </div>
     </section>
 
-    <!-- TL;DR Section -->
     <section>
         <div class="container">
             <div class="row">
                 <div class="col-12">
                     <div class="section-card">
-                        <h3>TL;DR</h3>
-                        <hr style="margin-top: 0px">
-                        <p class="text-left">
-                            (1) Brief point one about your work.<br>
-                            (2) Brief point two with <span class="highlight-blue">key insight</span>.<br>
-                            (3) Brief point three about <span class="highlight-green">main contribution</span>.
-                        </p>
+                        <!-- <h3>InfiniDepth</h3> -->
+                        <p><strong>Interactive Depth Comparison:</strong> Hover over the RGB image to explore depth details. The circular magnifier shows the original content at 1:1 scale. Use mouse wheel to adjust the patch size to zoom in/out the viewing region.</p>
+                        
+                        <!-- Case Navigation -->
+                        <div style="display: flex; justify-content: center; align-items: center; gap: 20px; margin-bottom: 20px;">
+                            <button id="prevCase" class="case-nav-btn" style="padding: 8px 16px; background-color: #f3f4f6; border: 1px solid #d1d5db; border-radius: 6px; cursor: pointer; font-size: 14px; transition: all 0.2s;">
+                                ← Previous
+                            </button>
+                            <span id="caseName" style="font-weight: 600; font-size: 16px; color: #111827; min-width: 200px; text-align: center;">
+                                Loading...
+                            </span>
+                            <button id="nextCase" class="case-nav-btn" style="padding: 8px 16px; background-color: #f3f4f6; border: 1px solid #d1d5db; border-radius: 6px; cursor: pointer; font-size: 14px; transition: all 0.2s;">
+                                Next →
+                            </button>
+                        </div>
+                        
+                        <!-- Interactive Comparison with Magnifier -->
+                        <div class="interactive-comparison">
+                            <!-- Left: RGB Image -->
+                            <div class="rgb-side" id="rgbSide">
+                                <img src="images/pub/infinidepth/DSC_0250.png" class="rgb-image" id="rgbImage" alt="RGB Image">
+                                <div class="magnifier-lens" id="magnifierLens"></div>
+                                <div class="zoom-info" id="zoomInfo">Patch Size: 256×256</div>
+                            </div>
+                            
+                            <!-- Right: 2×2 Depth Maps -->
+                            <div class="depth-side">
+                                <div class="depth-item">
+                                    <canvas id="depthCanvas1"></canvas>
+                                    <div class="depth-label">Method 1</div>
+                                </div>
+                                <div class="depth-item">
+                                    <canvas id="depthCanvas2"></canvas>
+                                    <div class="depth-label">Method 2</div>
+                                </div>
+                                <div class="depth-item">
+                                    <canvas id="depthCanvas3"></canvas>
+                                    <div class="depth-label">Method 3 </div>
+                                </div>
+                                <div class="depth-item">
+                                    <canvas id="depthCanvas4"></canvas>
+                                    <div class="depth-label">Method 4</div>
+                                </div>
+                            </div>
+                        </div>
+                    
                     </div>
                 </div>
             </div>
         </div>
     </section>
+
 
     <!-- Abstract Section -->
     <section>
@@ -156,51 +195,23 @@
     </section>
 
     <!-- Results Section -->
+    
+    <!-- Acknowledgement Section -->
     <section>
         <div class="container">
             <div class="row">
-                <div class="col-12">
+                <div class="col-md-12">
                     <div class="section-card">
-                        <h3>Results</h3>
-                        <p><strong>Interactive Depth Comparison:</strong> Hover over the RGB image to explore depth details. The circular magnifier shows the original content at 1:1 scale. Use mouse wheel to adjust the patch size to zoom in/out the viewing region.</p>
-                        
-                        <!-- Interactive Comparison with Magnifier -->
-                        <div class="interactive-comparison">
-                            <!-- Left: RGB Image -->
-                            <div class="rgb-side" id="rgbSide">
-                                <img src="images/pub/infinidepth/DSC_0250.png" class="rgb-image" id="rgbImage" alt="RGB Image">
-                                <div class="magnifier-lens" id="magnifierLens"></div>
-                                <div class="zoom-info" id="zoomInfo">Patch Size: 256×256</div>
-                            </div>
-                            
-                            <!-- Right: 2×2 Depth Maps -->
-                            <div class="depth-side">
-                                <div class="depth-item">
-                                    <canvas id="depthCanvas1"></canvas>
-                                    <div class="depth-label">Method 1</div>
-                                </div>
-                                <div class="depth-item">
-                                    <canvas id="depthCanvas2"></canvas>
-                                    <div class="depth-label">Method 2</div>
-                                </div>
-                                <div class="depth-item">
-                                    <canvas id="depthCanvas3"></canvas>
-                                    <div class="depth-label">Method 3 </div>
-                                </div>
-                                <div class="depth-item">
-                                    <canvas id="depthCanvas4"></canvas>
-                                    <div class="depth-label">Method 4</div>
-                                </div>
-                            </div>
-                        </div>
-                    
+                        <h3>Acknowledgement</h3>
+                        <hr style="margin-top: 0px">
+                        <p style="text-align: justify;">
+                            We thank <a href="https://yuanhongyu.xyz/" target="_blank">Yuanhong Yu</a>, <a href="https://gangweix.github.io/" target="_blank">Gangwei Xu</a> and <a href="https://github.com/ghy0324" target="_blank">Haoyu Guo</a> for helpful discussions and suggestions, and <a href="https://zhenx.me/" target="_blank">Zhen Xu</a> for synthetic data curations.
+                        </p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-
-
 
     <!-- Citation Section -->
     <section>

@@ -276,6 +276,23 @@ footer a:hover { text-decoration: underline; }
 .highlight-teal { color: #20c997; font-weight: 600; }
 .highlight-indigo { color: #6610f2; font-weight: 600; }
 
+/* Case Navigation Buttons */
+.case-nav-btn:hover {
+    background-color: #e5e7eb !important;
+    border-color: #9ca3af !important;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.case-nav-btn:active {
+    transform: translateY(0);
+}
+
+.case-nav-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     .jumbotron h1 { font-size: 2rem; }
