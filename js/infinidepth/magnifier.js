@@ -192,12 +192,33 @@ class DepthMagnifier {
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
         
+        // Get RGB natural dimensions for boundary checking
+        const rgbDisplayWidth = this.rgbImage.offsetWidth;
+        const rgbDisplayHeight = this.rgbImage.offsetHeight;
+        const rgbNaturalWidth = this.rgbImage.naturalWidth;
+        const rgbNaturalHeight = this.rgbImage.naturalHeight;
+        
+        // Map display coordinates to natural image coordinates
+        const scaleX = rgbNaturalWidth / rgbDisplayWidth;
+        const scaleY = rgbNaturalHeight / rgbDisplayHeight;
+        let srcCenterX = x * scaleX;
+        let srcCenterY = y * scaleY;
+        
+        // Clamp center position to keep patch within bounds
+        const halfPatch = this.patchSize / 2;
+        srcCenterX = Math.max(halfPatch, Math.min(srcCenterX, rgbNaturalWidth - halfPatch));
+        srcCenterY = Math.max(halfPatch, Math.min(srcCenterY, rgbNaturalHeight - halfPatch));
+        
+        // Convert back to display coordinates for lens positioning
+        const clampedX = srcCenterX / scaleX;
+        const clampedY = srcCenterY / scaleY;
+        
         // Fixed lens size (does not change with scroll)
         const lensSize = 200; // Fixed at 200px for consistent UI
         
-        // Calculate lens position (centered on cursor)
-        let lensX = x - lensSize / 2;
-        let lensY = y - lensSize / 2;
+        // Calculate lens position (centered on clamped cursor)
+        let lensX = clampedX - lensSize / 2;
+        let lensY = clampedY - lensSize / 2;
         
         // Keep lens within image bounds
         lensX = Math.max(0, Math.min(lensX, rect.width - lensSize));
@@ -209,14 +230,14 @@ class DepthMagnifier {
         this.lens.style.width = lensSize + 'px';
         this.lens.style.height = lensSize + 'px';
         
-        // Draw RGB content in lens (content zooms in/out with wheel, lens size stays fixed)
-        this.drawMagnifiedContent(x, y);
+        // Draw RGB content in lens using clamped center (content zooms in/out with wheel, lens size stays fixed)
+        this.drawMagnifiedContent(clampedX, clampedY);
         
-        this.mousePos = { x, y };
+        this.mousePos = { x: clampedX, y: clampedY };
         
-        // Update all depth patches with synchronized zoom
+        // Update all depth patches with synchronized zoom using clamped center
         this.canvases.forEach((_, index) => {
-            this.drawPatchDepth(index, x, y);
+            this.drawPatchDepth(index, clampedX, clampedY);
         });
         
         // Update zoom info
