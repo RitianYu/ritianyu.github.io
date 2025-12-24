@@ -1,18 +1,26 @@
 /**
  * InfiniDepth Interactive Depth Magnifier
  * 
- * Main class for handling interactive depth comparison with zoom functionality
+ * Main class for handling interactive depth comparison with zoom functionality and scene switching
  */
 
 class DepthMagnifier {
     constructor(config) {
         this.config = config || InfiniDepthConfig;
         
+        // Scene management
+        this.currentSceneIndex = 0;
+        this.isTransitioning = false;
+        
         // DOM elements
         this.rgbSide = document.getElementById('rgbSide');
         this.rgbImage = document.getElementById('rgbImage');
         this.lens = document.getElementById('magnifierLens');
         this.zoomInfo = document.getElementById('zoomInfo');
+        
+        // Scene navigation elements
+        this.prevBtn = document.getElementById('prevCase');
+        this.nextBtn = document.getElementById('nextCase');
         
         // Create canvas inside magnifier lens for zoom effect
         this.lensCanvas = document.createElement('canvas');
@@ -37,23 +45,209 @@ class DepthMagnifier {
         this.mousePos = { x: 0, y: 0 };
         this.lastMouseEvent = null;
         
-        // Wait for RGB image to load before initializing
-        if (this.rgbImage.complete) {
-            this.initializeCanvasSizes();
-            this.loadDepthImages();
-            this.initEvents();
-            this.setupMagnifierLens();
-        } else {
-            this.rgbImage.addEventListener('load', () => {
-                this.initializeCanvasSizes();
-                this.loadDepthImages();
-                this.initEvents();
-                this.setupMagnifierLens();
+        // Initialize scene navigation
+        this.initSceneNavigation();
+        
+        // Load first scene
+        this.loadScene(0);
+    }
+    
+    /**
+     * Initialize scene navigation
+     */
+    initSceneNavigation() {
+        console.log('Initializing scene navigation...');
+        console.log('prevBtn:', this.prevBtn);
+        console.log('nextBtn:', this.nextBtn);
+        console.log('Total scenes:', this.config.scenes.length);
+        
+        if (this.prevBtn) {
+            this.prevBtn.addEventListener('click', () => {
+                console.log('Previous button clicked');
+                this.previousScene();
             });
         }
         
+        if (this.nextBtn) {
+            this.nextBtn.addEventListener('click', () => {
+                console.log('Next button clicked');
+                this.nextScene();
+            });
+        }
+        
+        // Update navigation button states
+        this.updateNavigationButtons();
+    }
+    
+    /**
+     * Update navigation button states
+     */
+    updateNavigationButtons() {
+        if (!this.prevBtn || !this.nextBtn) return;
+        
+        const totalScenes = this.config.scenes.length;
+        
+        // Disable/enable buttons based on current position
+        if (totalScenes <= 1) {
+            this.prevBtn.disabled = true;
+            this.nextBtn.disabled = true;
+            this.prevBtn.style.opacity = '0.5';
+            this.nextBtn.style.opacity = '0.5';
+            this.prevBtn.style.cursor = 'not-allowed';
+            this.nextBtn.style.cursor = 'not-allowed';
+        } else {
+            this.prevBtn.disabled = this.currentSceneIndex === 0;
+            this.nextBtn.disabled = this.currentSceneIndex === totalScenes - 1;
+            
+            this.prevBtn.style.opacity = this.prevBtn.disabled ? '0.5' : '1';
+            this.nextBtn.style.opacity = this.nextBtn.disabled ? '0.5' : '1';
+            this.prevBtn.style.cursor = this.prevBtn.disabled ? 'not-allowed' : 'pointer';
+            this.nextBtn.style.cursor = this.nextBtn.disabled ? 'not-allowed' : 'pointer';
+        }
+    }
+    
+    /**
+     * Load a specific scene
+     */
+    loadScene(sceneIndex) {
+        if (this.isTransitioning) return;
+        if (sceneIndex < 0 || sceneIndex >= this.config.scenes.length) return;
+        
+        this.currentSceneIndex = sceneIndex;
+        const scene = this.config.scenes[sceneIndex];
+        
+        console.log('Loading scene:', scene.name);
+        
+        // Update method labels
+        this.updateMethodLabels(scene.methodLabels);
+        
+        // Update navigation buttons
+        this.updateNavigationButtons();
+        
+        // Reset depth images
+        this.depthImagesLoaded = [];
+        
+        // Update RGB image
+        const oldSrc = this.rgbImage.src;
+        const newSrc = scene.rgbImage;
+        
+        if (oldSrc !== newSrc) {
+            // Set new image source
+            this.rgbImage.src = newSrc;
+            
+            // Wait for RGB image to load
+            if (this.rgbImage.complete) {
+                this.onSceneLoaded(scene);
+            } else {
+                this.rgbImage.addEventListener('load', () => {
+                    this.onSceneLoaded(scene);
+                }, { once: true });
+            }
+        } else {
+            this.onSceneLoaded(scene);
+        }
+    }
+    
+    /**
+     * Called when scene is loaded
+     */
+    onSceneLoaded(scene) {
+        this.initializeCanvasSizes();
+        this.loadDepthImages(scene.depthImages);
+        
+        // Initialize events only once
+        if (!this.eventsInitialized) {
+            this.initEvents();
+            this.setupMagnifierLens();
+            this.eventsInitialized = true;
+        }
+        
         // Handle window resize
-        window.addEventListener('resize', () => this.initializeCanvasSizes());
+        if (!this.resizeHandlerAdded) {
+            window.addEventListener('resize', () => this.initializeCanvasSizes());
+            this.resizeHandlerAdded = true;
+        }
+    }
+    
+    /**
+     * Update method labels
+     */
+    updateMethodLabels(labels) {
+        const depthItems = document.querySelectorAll('.depth-item');
+        
+        depthItems.forEach((item, i) => {
+            const labelEl = item.querySelector('.depth-label');
+            if (labelEl && labels[i]) {
+                labelEl.textContent = labels[i];
+            }
+        });
+    }
+    
+    /**
+     * Switch to previous scene
+     */
+    previousScene() {
+        if (this.currentSceneIndex > 0 && !this.isTransitioning) {
+            this.switchScene(this.currentSceneIndex - 1, 'left');
+        }
+    }
+    
+    /**
+     * Switch to next scene
+     */
+    nextScene() {
+        console.log('nextScene called, current:', this.currentSceneIndex, 'total:', this.config.scenes.length);
+        if (this.currentSceneIndex < this.config.scenes.length - 1 && !this.isTransitioning) {
+            console.log('Switching to next scene...');
+            this.switchScene(this.currentSceneIndex + 1, 'right');
+        } else {
+            console.log('Cannot go to next scene');
+        }
+    }
+    
+    /**
+     * Switch to a specific scene with animation
+     */
+    switchScene(newSceneIndex, direction) {
+        console.log('switchScene called:', newSceneIndex, direction);
+        if (this.isTransitioning) {
+            console.log('Already transitioning, skipping...');
+            return;
+        }
+        
+        this.isTransitioning = true;
+        const comparison = document.querySelector('.interactive-comparison');
+        
+        if (!comparison) {
+            console.error('interactive-comparison element not found!');
+            this.isTransitioning = false;
+            return;
+        }
+        
+        console.log('Starting transition...');
+        
+        // Add slide-out animation
+        comparison.classList.add('transitioning');
+        comparison.classList.add(direction === 'left' ? 'slide-out-right' : 'slide-out-left');
+        
+        // After slide-out animation completes
+        setTimeout(() => {
+            console.log('Slide-out complete, loading scene...');
+            // Load new scene
+            this.loadScene(newSceneIndex);
+            
+            // Remove slide-out class and add slide-in class
+            comparison.classList.remove('slide-out-left', 'slide-out-right');
+            comparison.classList.add(direction === 'left' ? 'slide-in-left' : 'slide-in-right');
+            
+            // Remove all animation classes after slide-in completes
+            setTimeout(() => {
+                console.log('Slide-in complete');
+                comparison.classList.remove('transitioning', 'slide-in-left', 'slide-in-right');
+                this.isTransitioning = false;
+            }, this.config.transitionDuration);
+            
+        }, this.config.transitionDuration);
     }
     
     /**
@@ -100,8 +294,12 @@ class DepthMagnifier {
     /**
      * Load all depth images
      */
-    loadDepthImages() {
-        this.config.depthImages.forEach((src, index) => {
+    loadDepthImages(depthImagePaths) {
+        const imagePaths = depthImagePaths || this.config.scenes[this.currentSceneIndex].depthImages;
+        
+        this.depthImagesLoaded = [];
+        
+        imagePaths.forEach((src, index) => {
             const img = new Image();
             img.crossOrigin = 'anonymous';
             img.onload = () => {

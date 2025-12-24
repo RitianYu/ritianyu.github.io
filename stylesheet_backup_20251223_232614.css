@@ -1,10 +1,45 @@
 /* ===================================
-   Academic Personal Homepage Stylesheet
+   Academic Persbody {
+  font-family: body {
+  font-family: 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 15px;
+  line-height: 1.7;
+  color: #333;
+  background-color: #ffffff;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+td, th, tr, p {
+  font-family: 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 15px;
+  line-height: 1.7;
+}ystem, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.75;
+  color: #1f2937;
+  background-color: #ffffff;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  letter-spacing: -0.01em;
+}
+
+td, th, tr, p {
+  font-family: 'N.experience-role {
+  color: #6b7280;
+  font-size: 15px;
+  margin-top: 4px;
+  font-weight: 600;
+}, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.75;
+}t Style
    A minimal, professional design for academic homepages
    =================================== */
 
-/* === Font Imports - Lato === */
-/* latin-ext */
+/* === Font Imports === */
 @font-face {
   font-family: 'Lato';
   font-style: italic;
@@ -13,7 +48,6 @@
   unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 
-/* latin */
 @font-face {
   font-family: 'Lato';
   font-style: italic;
@@ -22,25 +56,6 @@
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
-/* latin-ext */
-@font-face {
-  font-family: 'Lato';
-  font-style: italic;
-  font-weight: 700;
-  src: local('Lato Bold Italic'), local('Lato-BoldItalic'), url(https://fonts.gstatic.com/s/lato/v15/S6u_w4BMUTPHjxsI5wq_FQftx9897sxZ.woff2) format('woff2');
-  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-
-/* latin */
-@font-face {
-  font-family: 'Lato';
-  font-style: italic;
-  font-weight: 700;
-  src: local('Lato Bold Italic'), local('Lato-BoldItalic'), url(https://fonts.gstatic.com/s/lato/v15/S6u_w4BMUTPHjxsI5wq_Gwftx9897g.woff2) format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-
-/* latin-ext */
 @font-face {
   font-family: 'Lato';
   font-style: normal;
@@ -49,7 +64,6 @@
   unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 
-/* latin */
 @font-face {
   font-family: 'Lato';
   font-style: normal;
@@ -58,7 +72,6 @@
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
-/* latin-ext */
 @font-face {
   font-family: 'Lato';
   font-style: normal;
@@ -67,7 +80,6 @@
   unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 
-/* latin */
 @font-face {
   font-family: 'Lato';
   font-style: normal;
@@ -78,151 +90,96 @@
 
 /* === Base Styles === */
 body {
-  font-family: 'Helvetica Neue-Light', 'Lato', Verdana, Helvetica, sans-serif;
-  font-size: 15px;
-  line-height: 1.4em;
-  color: #333;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.75;
+  color: #1f2937;
   background-color: #ffffff;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  letter-spacing: -0.01em;
 }
 
-td, th, tr, p, a {
-  font-family: 'Helvetica Neue-Light', 'Lato', Verdana, Helvetica, sans-serif;
-  font-size: 15px;
-  line-height: 1.4em;
-}
-
-strong {
-  font-family: 'Helvetica Neue-Light', 'Lato', Verdana, Helvetica, sans-serif;
-  font-size: 15px;
-}
-
-/* === Links === */
-a {
-  color: #1772d0;
-  text-decoration: none;
-}
-
-a:focus,
-a:hover {
-  color: #f09228;
-  text-decoration: none;
+td, th, tr, p {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.75;
 }
 
 /* === Typography === */
 h2 {
-  font-family: 'Helvetica Neue-Light', 'Lato', Verdana, Helvetica, sans-serif;
-  font-size: 22px;
-  margin: 0 0 0.6em 0;
+  margin: 0 0 0.8em 0;
+  font-weight: 600;
+  font-size: 24px;
+  color: #222;
+  letter-spacing: -0.02em;
+}
+
+strong {
   font-weight: 600;
   color: #222;
 }
 
-.heading {
-  font-family: 'Helvetica Neue-Light', 'Lato', Verdana, Helvetica, sans-serif;
-  font-size: 22px;
+/* === Links === */
+a {
+  color: #2563eb;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  border-bottom: 1px solid transparent;
+}
+
+a:hover {
+  color: #1e40af;
+  border-bottom-color: #93c5fd;
 }
 
 /* === Paper Title === */
 .papertitle {
-  font-family: 'Helvetica Neue-Light', 'Lato', Verdana, Helvetica, sans-serif;
+  font-family: 'Lato', sans-serif;
   font-size: 15px;
-  font-weight: 700;
+  font-weight: 600;
   color: #222;
-  line-height: 1.3;
+  line-height: 1.5;
 }
 
 .name {
-  font-family: 'Helvetica Neue-Light', 'Lato', Verdana, Helvetica, sans-serif;
-  font-size: 32px;
-  padding-top: 15px;
+  padding-top: 20px;
   color: #222;
   font-weight: 700;
-}
-
-/* === Pre/Code === */
-pre {
-  overflow-x: auto;
-  text-align: left;
-  border: 0.5px solid rgb(215, 215, 215);
-  border-radius: 6px;
-  background: rgba(239,239,239,0.6);
-  padding: 5px 5px 5px 10px;
-  line-height: 1.2;
-  white-space: pre-wrap;
-}
-
-/* === Button === */
-button {
-  background: none;
-  border: none;
-  padding: 0;
-  font-family: 'Helvetica Neue-Light', 'Lato', Verdana, Helvetica, sans-serif;
-  font-size: 15px;
-  color: #1772d0;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-button:hover {
-  color: #f09228;
-  text-decoration: none;
+  letter-spacing: -0.03em;
 }
 
 /* === Profile Section === */
 .profile-container {
-  padding: 20px 0;
-  margin-bottom: 30px;
+  padding: 30px 0;
+  margin-bottom: 40px;
 }
 
 .profile-text p {
   text-align: justify;
-  line-height: 1.5;
+  line-height: 1.8;
   color: #374151;
-  margin-bottom: 0.8em;
-}
-
-.profile-text p:first-of-type {
-  margin-top: 0.2em;
+  margin-bottom: 1em;
 }
 
 .profile-links {
-  margin-top: 15px;
-  padding-top: 12px;
+  margin-top: 20px;
+  padding-top: 15px;
   border-top: 1px solid #f3f4f6;
 }
 
 .profile-links a {
-  color: #1772d0 !important;
+  color: #4b5563;
   font-size: 14px;
   font-weight: 500;
   border-bottom: none;
-  padding: 8px 12px;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  border-radius: 4px;
-  transition: all 0.3s ease;
-}
-
-.profile-links a svg {
-  display: inline-block;
-  vertical-align: middle;
-  margin-right: 4px;
-  width: 16px;
-  height: 16px;
-  fill: #1772d0 !important;
-  transition: all 0.3s ease;
+  padding: 4px 0;
 }
 
 .profile-links a:hover {
-  color: #f09228 !important;
-  background: rgba(240, 146, 40, 0.08);
-  transform: translateY(-1px);
-}
-
-.profile-links a:hover svg {
-  fill: #f09228 !important;
-  transform: scale(1.1);
+  color: #2563eb;
 }
 
 .profile-image-wrapper {
@@ -242,27 +199,27 @@ button:hover {
 
 /* === Publications Section === */
 .publications-header {
-  margin: 10px 0 10px 0;
-  padding-bottom: 10px;
+  margin: 50px 0 30px 0;
+  padding-bottom: 12px;
   border-bottom: 2px solid #e5e7eb;
 }
 
 .publications-header h2 {
-  margin-bottom: 6px;
+  margin-bottom: 8px;
   color: #111827;
 }
 
 .publications-header p {
   color: #6b7280;
-  font-size: 13px;
+  font-size: 14px;
   margin: 0;
   font-style: italic;
 }
 
 .publication-item {
   display: flex;
-  gap: 20px;
-  padding: 20px 0;
+  gap: 25px;
+  padding: 30px 0;
   border-bottom: 1px solid #f3f4f6;
   transition: background-color 0.2s ease;
 }
@@ -281,19 +238,10 @@ button:hover {
 
 .publication-teaser {
   flex-shrink: 0;
-  width: 200px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .publication-teaser img,
 .publication-teaser video {
-  max-width: 200px;
-  max-height: 150px;
-  width: auto;
-  height: auto;
-  object-fit: contain;
   border-radius: 6px;
   border: 1px solid #e5e7eb;
   display: block;
@@ -303,29 +251,27 @@ button:hover {
   flex: 1;
   min-width: 0;
   font-size: 14px;
-  line-height: 1.4;
 }
 
 .publication-content em {
-  color: #333;
-  font-style: italic;
-  font-weight: 400;
-  font-size: 15px;
+  color: #4b5563;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
 }
 
 .publication-venue {
-  font-size: 15px;
-  font-weight: 400;
-  color: #333;
-  font-style: normal;
+  font-size: 16px;
+  font-weight: 700;
+  color: #4b5563;
 }
 
 .publication-highlight {
-  margin-top: 8px;
-  padding: 6px 10px;
+  margin-top: 10px;
+  padding: 8px 12px;
   background-color: #fef3c7;
   border-left: 3px solid #f59e0b;
-  font-size: 12px;
+  font-size: 13px;
   border-radius: 4px;
 }
 
@@ -335,47 +281,38 @@ button:hover {
 }
 
 .publication-links {
-  margin-top: 8px;
+  margin-top: 10px;
   display: flex;
-  gap: 8px;
+  gap: 15px;
   flex-wrap: wrap;
-  align-items: center;
 }
 
 .publication-links a {
   font-size: 14px;
-  color: #374151;
-  text-decoration: none;
-  font-weight: 500;
-  border: 1px solid #e5e7eb;
-  padding: 5px 12px;
-  background: #f9fafb;
-  border-radius: 5px;
+  color: #4b5563;
+  padding: 4px 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
   transition: all 0.2s ease;
+  border-bottom: 1px solid #d1d5db;
 }
 
 .publication-links a:hover {
+  background-color: #f3f4f6;
+  border-color: #9ca3af;
   color: #111827;
-  background: #e5e7eb;
-  border-color: #d1d5db;
-  transform: translateY(-1px);
-}
-
-.publication-links span {
-  color: #9ca3af;
-  font-size: 14px;
 }
 
 /* === Honors Section === */
 .honors-header {
-  margin: 30px 0 15px 0;
-  padding-bottom: 8px;
+  margin: 40px 0 20px 0;
+  padding-bottom: 10px;
   border-bottom: 2px solid #e5e7eb;
 }
 
 .experience-header {
-  margin: 35px 0 18px 0;
-  padding-bottom: 10px;
+  margin: 50px 0 25px 0;
+  padding-bottom: 12px;
   border-bottom: 2px solid #e5e7eb;
 }
 
@@ -393,11 +330,11 @@ button:hover {
 
 /* Award items - compact design */
 .award-item {
-  padding: 10px 0;
+  padding: 12px 0;
   border-bottom: 1px solid #f3f4f6;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
 }
 
 .award-item:last-child {
@@ -437,14 +374,11 @@ button:hover {
   white-space: nowrap;
 }
 
-/* === Experience Section === */
+/* Experience items - keep original spacing */
 .experience-item {
-  padding: 18px 0;
+  padding: 25px 0;
   border-bottom: 1px solid #f3f4f6;
   transition: all 0.2s ease;
-  display: flex;
-  gap: 20px;
-  align-items: flex-start;
 }
 
 .experience-item:last-child {
@@ -457,6 +391,33 @@ button:hover {
   margin: 0 -10px;
   padding-left: 10px;
   padding-right: 10px;
+}
+
+.experience-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #111827;
+  line-height: 1.5;
+  margin-bottom: 5px;
+  display: block;
+}
+
+.experience-period {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 3px 10px;
+  background-color: #f3f4f6;
+  color: #6b7280;
+  font-size: 13px;
+  font-weight: 500;
+  border-radius: 4px;
+}
+
+/* === Experience Section === */
+.experience-item {
+  display: flex;
+  gap: 25px;
+  align-items: flex-start;
 }
 
 .experience-logo {
@@ -474,39 +435,17 @@ button:hover {
   flex: 1;
 }
 
-.experience-title {
-  font-size: 15px;
-  font-weight: 600;
-  color: #111827;
-  line-height: 1.3;
-  margin-bottom: 4px;
-  display: block;
-}
-
 .experience-role {
   color: #6b7280;
-  font-size: 14px;
-  margin-top: 3px;
+  font-size: 15px;
+  margin-top: 4px;
   font-weight: 500;
-  line-height: 1.3;
-}
-
-.experience-period {
-  display: inline-block;
-  margin-top: 6px;
-  padding: 2px 8px;
-  background-color: #f3f4f6;
-  color: #6b7280;
-  font-size: 12px;
-  font-weight: 500;
-  border-radius: 4px;
 }
 
 .experience-advisor {
   color: #6b7280;
-  font-size: 13px;
-  margin-top: 3px;
-  line-height: 1.3;
+  font-size: 14px;
+  margin-top: 4px;
 }
 
 .experience-advisor a {
@@ -515,30 +454,8 @@ button:hover {
 }
 
 .experience-advisor a:hover {
-  color: #1772d0;
-  border-bottom-color: #f09228;
-}
-
-/* === Image Transitions === */
-.one {
-  width: 160px;
-  height: 160px;
-  position: relative;
-}
-
-.two {
-  width: 160px;
-  height: 160px;
-  position: absolute;
-  transition: opacity .2s ease-in-out;
-  -moz-transition: opacity .2s ease-in-out;
-  -webkit-transition: opacity .2s ease-in-out;
-}
-
-.fade {
-  transition: opacity .2s ease-in-out;
-  -moz-transition: opacity .2s ease-in-out;
-  -webkit-transition: opacity .2s ease-in-out;
+  color: #2563eb;
+  border-bottom-color: #93c5fd;
 }
 
 /* === Utilities === */
@@ -546,15 +463,11 @@ button:hover {
   display: inline-block;
 }
 
-.highlight,
-span.highlight {
-  background-color: #ffffd0;
+.highlight {
+  background-color: #fef3c7;
   padding: 2px 6px;
   border-radius: 3px;
-}
-
-.code-card {
-  background-color: rgba(239,239,239,0.66);
+  font-weight: 500;
 }
 
 /* === Responsive === */
@@ -565,10 +478,6 @@ span.highlight {
   
   h2 {
     font-size: 20px;
-  }
-  
-  .name {
-    font-size: 28px;
   }
   
   .publication-item,
