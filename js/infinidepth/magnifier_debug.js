@@ -779,6 +779,7 @@ class DepthMagnifier {
 window.addEventListener('load', () => {
     if (typeof InfiniDepthConfig !== 'undefined') {
         const magnifier = new DepthMagnifier(InfiniDepthConfig);
+        window.depthMagnifier = magnifier; // Expose globally for auto recorder
         console.log('DepthMagnifier (Debug Version) initialized');
         console.log('Use +/= keys to zoom in, - key to zoom out');
     } else {

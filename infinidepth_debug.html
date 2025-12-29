@@ -161,5 +161,32 @@
     <!-- InfiniDepth Scripts -->
     <script src="js/infinidepth/config_debug.js"></script>
     <script src="js/infinidepth/magnifier_debug.js"></script>
+    <script src="js/infinidepth/auto_recorder.js"></script>
+    
+    <!-- Initialize Auto Recorder -->
+    <script>
+        // Wait for magnifier to be initialized
+        window.addEventListener('load', () => {
+            // Give magnifier time to initialize
+            setTimeout(() => {
+                if (window.depthMagnifier) {
+                    // Create auto recorder instance
+                    window.autoRecorder = new AutoRecorder(window.depthMagnifier, {
+                        moveSpeed: 0.2,          // Faster movement for demo
+                        zoomSpeed: 1.0,          // Faster zoom for demo
+                        pauseAtAnchor: 500,      // Short pause at anchor
+                        pauseAtZoom: 1200,       // Pause at max zoom
+                        pauseAfterZoomOut: 500,  // Short pause after zoom out
+                        maxZoomLevel: 0.12,      // Maximum zoom level
+                        moveEasing: 'easeInOutCubic',
+                        zoomEasing: 'easeInOutQuad'
+                    });
+                    console.log('Auto Recorder initialized');
+                } else {
+                    console.error('Depth magnifier not found');
+                }
+            }, 1000);
+        });
+    </script>
 </body>
 </html>

@@ -99,6 +99,7 @@
     cursor: crosshair;
     display: flex;
     align-items: stretch;
+    z-index: 1; /* 确保 RGB 容器有基础层级 */
 }
 
 .rgb-side:hover {
@@ -111,13 +112,15 @@
     display: block;
     border-radius: 8px;
     box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    position: relative; /* 确保图像有定位上下文 */
+    z-index: 2; /* RGB 图像层级 */
 }
 
 .magnifier-lens {
     position: absolute;
     pointer-events: none;
     display: none;
-    z-index: 10;
+    z-index: 100; /* 大幅提高层级，确保始终在最顶层 */
     border-radius: 50%;
     overflow: hidden;
     
@@ -164,7 +167,7 @@
         rgba(255,255,255,1) 100%
     );
     pointer-events: none;
-    z-index: 1;
+    z-index: 101; /* 确保遮罩层在放大镜内容之上 */
 }
 
 .depth-side {
@@ -174,6 +177,8 @@
     grid-template-rows: 1fr 1fr;
     gap: 10px;
     align-self: stretch;
+    position: relative; /* 确保有定位上下文 */
+    z-index: 1; /* 基础层级，低于放大镜 */
 }
 
 .depth-item {
@@ -182,6 +187,7 @@
     border-radius: 8px;
     box-shadow: 0 2px 12px rgba(0,0,0,0.1);
     background: #f5f5f5;
+    z-index: 2; /* 确保深度图在容器之上 */
 }
 
 .depth-item img {
@@ -223,7 +229,7 @@
     font-size: 0.85rem;
     font-weight: 500;
     display: none;
-    z-index: 11;
+    z-index: 102; /* 确保 zoom info 在放大镜之上 */
     backdrop-filter: blur(10px);
     box-shadow: 
         0 4px 15px rgba(0,0,0,0.2),

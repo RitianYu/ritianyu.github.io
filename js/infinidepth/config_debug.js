@@ -12,13 +12,26 @@ const InfiniDepthConfig = {
             name: 'DSC_0250',
             rgbImage: 'images/pub/infinidepth/DSC_6487.png',
             depthImage: 'images/pub/infinidepth/PromptNeuralDepth_DSC_6487_up_8_disparity.png', // Single depth image
-            methodLabel: 'InfiniDepth (Ours)'
+            methodLabel: 'InfiniDepth (Ours)',
+            // Predefined anchor points for auto recording (x, y in 0-1 range)
+            anchors: [
+                { x: 0.25, y: 0.35, name: 'Building Details' },
+                { x: 0.65, y: 0.30, name: 'Tree Branches' },
+                { x: 0.50, y: 0.55, name: 'Center Architecture' },
+                { x: 0.30, y: 0.70, name: 'Ground Texture' },
+                { x: 0.75, y: 0.65, name: 'Far Buildings' }
+            ]
         },
         {
             name: 'Demo Scene 2',
             rgbImage: 'images/pub/infinidepth/DSC_6487.png',
             depthImage: 'images/pub/infinidepth/MoGe-2_0250.png',
-            methodLabel: 'InfiniDepth (Ours)'
+            methodLabel: 'InfiniDepth (Ours)',
+            anchors: [
+                { x: 0.30, y: 0.40, name: 'Left Detail' },
+                { x: 0.70, y: 0.40, name: 'Right Detail' },
+                { x: 0.50, y: 0.60, name: 'Center' }
+            ]
         }
         // ============================
         // Add more scenes here:
@@ -27,7 +40,11 @@ const InfiniDepthConfig = {
         //     name: 'Your Scene Name',
         //     rgbImage: 'images/pub/infinidepth/your_rgb_image.png',
         //     depthImage: 'images/pub/infinidepth/your_depth.png',
-        //     methodLabel: 'InfiniDepth (Ours)'
+        //     methodLabel: 'InfiniDepth (Ours)',
+        //     anchors: [
+        //         { x: 0.3, y: 0.3, name: 'Region 1' },
+        //         { x: 0.7, y: 0.7, name: 'Region 2' }
+        //     ]
         // }
     ],
     
