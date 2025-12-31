@@ -11,16 +11,10 @@ const InfiniDepthConfig = {
             name: 'DSC_0250',
             rgbImage: 'images/pub/infinidepth/DSC_0250.png',
             depthImages: [
-                'images/pub/infinidepth/MoGe-2_0250.png',
-                'images/pub/infinidepth/NeuralDepth_0250_up_4.png',
-                'images/pub/infinidepth/MoGe-2_0250.png',
-                'images/pub/infinidepth/NeuralDepth_0250_up_4.png'
+                'images/pub/infinidepth/MoGe-2_0250.png'
             ],
             methodLabels: [
-                'Depth Anything v2',
-                'Metric3D v2',
-                'DepthPro',
-                'InfiniDepth (Ours)'
+                'Depth Anything v2'
             ]
         },
         // Demo scene 2 (using same images for demonstration)
@@ -28,16 +22,10 @@ const InfiniDepthConfig = {
             name: 'Demo Scene 2',
             rgbImage: 'images/pub/infinidepth/DSC_0250.png',
             depthImages: [
-                'images/pub/infinidepth/NeuralDepth_0250_up_4.png',
-                'images/pub/infinidepth/MoGe-2_0250.png',
-                'images/pub/infinidepth/NeuralDepth_0250_up_4.png',
-                'images/pub/infinidepth/MoGe-2_0250.png'
+                'images/pub/infinidepth/NeuralDepth_0250_up_4.png'
             ],
             methodLabels: [
-                'Method A',
-                'Method B',
-                'Method C',
-                'InfiniDepth (Ours)'
+                'Method A'
             ]
         }
         // ============================
@@ -45,28 +33,22 @@ const InfiniDepthConfig = {
         // ============================
         // Uncomment and modify the following template to add a new scene
         // Make sure to add a comma after the previous scene object
-        
+
         // ,{
         //     name: 'Your Scene Name',  // Will be displayed in the navigation bar
         //     rgbImage: 'images/pub/infinidepth/your_rgb_image.png',
         //     depthImages: [
-        //         'images/pub/infinidepth/your_method1_depth.png',
-        //         'images/pub/infinidepth/your_method2_depth.png',
-        //         'images/pub/infinidepth/your_method3_depth.png',
-        //         'images/pub/infinidepth/your_method4_depth.png'
+        //         'images/pub/infinidepth/your_method_depth.png'
         //     ],
         //     methodLabels: [
-        //         'Method 1 Name',
-        //         'Method 2 Name',
-        //         'Method 3 Name',
-        //         'Method 4 Name (Ours)'
+        //         'Method Name'
         //     ]
         // }
     ],
     
     // Patch size settings (in pixels)
-    initialPatchSize: 256,  // Initial patch size when hovering starts
-    minPatchSize: 64,       // Minimum patch size (max zoom in)
+    initialPatchSize: 512,  // Initial patch size when hovering starts
+    minPatchSize: 32,       // Minimum patch size (max zoom in)
     maxPatchSize: 512,      // Maximum patch size (max zoom out)
     
     // Zoom behavior

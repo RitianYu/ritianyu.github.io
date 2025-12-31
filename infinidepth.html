@@ -23,9 +23,14 @@
         border-radius: 14px !important;
         box-shadow: 0 1px 6px rgba(80,120,180,0.03) !important;
         /* 核心 */
-        padding: 16px 16px !important;   /* 原来视觉等价 ~24px */
+        padding: 18px 24px !important;   /* ↑↓ 18px，←→ 28px */
     }
-
+    /* Citation 区域整体 */
+    .section-card pre,
+    .section-card pre code {
+    color: #4a5a6a;          /* 淡灰蓝 */
+    background: #f7f9fb;     /* 很浅的灰背景 */
+    }
     section {
       margin-bottom: 2px !important;
       padding-bottom: 0 !important;
@@ -137,24 +142,124 @@
     /* ===== Cover 标题微调（更有气场但不臃肿） ===== */
     /* 整个 cover 顶部留白稍微加一点 */
     .jumbotron.text-center.mt-0 {
-        padding-top: 23px !important;   /* 原来 18px */
+        padding-top: 27px !important;   /* 原来 18px */
         }
 
     /* 主标题：稍微大一点点 */
     .jumbotron h1 {
-        font-size: 2.1rem !important;  /* 原来 2.1rem */
+        font-size: 2.15rem !important;  /* 原来 2.1rem */
         line-height: 1.26 !important;
-        margin-top: 1.0em !important;  /* 离顶部更舒展 */
-        margin-bottom: 0.35em !important;
+        margin-top: 1.1em;  /* 离顶部更舒展 */
+        margin-bottom: 0.45em;
         }
 
     /* 副标题 Arxiv 2025 */
     .jumbotron h4 {
-        font-size: 1.4rem !important;  /* 原来 1.1rem，其实略微回调 */
+        font-size: 1.1rem;  /* 原来 1.1rem，其实略微回调 */
         font-weight: 500;   
-        margin-top: 0.25em !important;
-        margin-bottom: 0.35em !important;
+        margin-top: 0.25em ;
+        margin-bottom: 0.45em;
         }
+    
+    .viz-description {
+        margin-top: 7px;
+        margin-bottom: 15px;
+        text-align: center;
+        }
+
+    .viz-desc {
+        display: none;
+        font-size: 0.97rem;
+        color: #5a6b7c;
+        line-height: 1.5;
+        }
+
+    .viz-desc.active {
+        display: block;
+        }
+
+    .showcase-bar {
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+
+    margin: 26px 0 10px 0;
+    padding: 18px 0;
+
+    position: relative;
+    background: none;
+    box-shadow: none;
+    border-radius: 0;
+
+    /* 中央轨道：从中间向两端自然消散 */
+    background:
+        radial-gradient(
+        ellipse at center,
+        rgba(100, 168, 240, 0.1) 0%,
+        rgba(100, 168, 240, 0.08) 30%,
+        rgba(100, 168, 240, 0.045) 55%,
+        rgba(100, 168, 240, 0.0) 75%
+        );
+    }
+
+    /* 上方短虚线 */
+    .showcase-bar::before,
+    .showcase-bar::after {
+    content: '';
+    position: absolute;
+    left: 22%;
+    right: 22%;
+    height: 2px;
+
+    background: repeating-linear-gradient(
+        to right,
+        rgba(52, 85, 120, 0.28),
+        rgba(52, 85, 120, 0.28) 8px,
+        transparent 8px,
+        transparent 16px
+    );
+
+    pointer-events: none;
+    }
+
+    /* 上虚线 */
+    .showcase-bar::before {
+    top: 0;
+    }
+
+    /* 下虚线 */
+    .showcase-bar::after {
+    bottom: 0;
+    }
+
+    .showcase-thumb {
+      width: 110px;
+      height: 82px;
+      object-fit: cover;
+      border-radius: 10px;
+      border: 2.5px solid #e3e8ef;
+      cursor: pointer;
+      transition: border 0.18s, transform 0.18s, box-shadow 0.18s, filter 0.18s;
+      box-shadow: 0 2px 10px rgba(80,120,180,0.09);
+      background: #f7f9fb;
+      filter: grayscale(0.12) brightness(0.98);
+    }
+    .showcase-thumb.active {
+      border: 3px solid #345;
+      box-shadow: 0 4px 18px rgba(80,120,180,0.18);
+      transform: scale(1.12) translateY(-6px);
+      z-index: 2;
+      filter: none;
+    }
+    .showcase-thumb:hover {
+      filter: none;
+      border-color: #a9b8c9;
+      transform: scale(1.07) translateY(-2px);
+    }
+    .showcase-thumb:active {
+      border-color: #a9b8c9;
+      transform: scale(0.97);
+    }
     </style>
 </head>
 
@@ -215,13 +320,6 @@
                                     </a>
                                 </p>
                             </div>
-                            <div class="column">
-                                <p class="mb-5">
-                                    <a class="btn btn-large btn-light" href="supplementary.pdf" role="button" target="_blank">
-                                        🤗 Huggingface Demo
-                                    </a>
-                                </p>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -234,13 +332,13 @@
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <div class="section-card" style="background:#fff; border-radius:14px; box-shadow:0 1px 6px rgba(80,120,180,0.03); padding:18px 22px;">
-                        <h3 style="font-size:1.18rem; margin-bottom:8px; color:#345; font-weight:600;">TL;DR</h3>
+                   <div class="section-card">
+                        <h3 style="font-size:1.5rem; margin-bottom:10px; color:#345; font-weight:600;">TL;DR</h3>
                         <ul style="margin-left:18px; margin-bottom:0; line-height:1.8; font-size:1.01rem; color:#3a4a5a;">
-                            <li>This paper introduces <strong class="title-main">InfiniDepth</strong>, a novel monocular depth estimation method with <span class="title-neural">neural implicit fields</span>.</li>
-                            <li>It leverages <strong>continuous coordinate queries</strong> to overcome the pixel limitation of traditional depth maps.</li>
-                            <li>It predicts depth at <span class="title-resolution">arbitrary resolutions</span> and recovers <span class="title-finegrained">fine-grained</span> geometric details.</li>
-                            <li>It demonstrates superior single-view novel view synthesis under <strong>large viewpoint shifts</strong>.</li>
+                            <li>This paper introduces <strong class="title-main">InfiniDepth</strong>, a novel monocular depth estimation method with <span class="title-neural">neural implicit fields</span>.
+                                It leverages continuous coordinate queries to enable <span class="title-resolution">arbitrary resolutions</span> and <span class="title-finegrained">fine-grained</span> depth estimation.</li>
+                            <li>We design a <strong>depth query strategy</strong> along with a <strong>Gaussian decoder</strong> to improve novel view synthesis quality, especially under large viewpoint shifts.</li>
+                            <li>We curate <strong>Synth4K</strong>, a high-quality 4K benchmark for evaluating depth estimation methods at high resolution and fine geometric details.</li>
                         </ul>
                     </div>
                 </div>
@@ -254,18 +352,18 @@
             <div class="row">
                 <div class="col-12">
                     <div class="section-card">
-                        <h3>Overview</h3>
-                        <!-- <hr style="margin-top: 0px"> -->
+                        <h3 style="font-size:1.5rem; margin-bottom:17px; color:#345; font-weight:600;">Overview</h3>
+                        <!-- <h3>Overview</h3> -->
                         <div style="display: flex; justify-content: center; align-items: center;">
                             <video id="overviewVideo" controls style="width: 100%; height: auto; border-radius: 12px; box-shadow: 0 4px 24px rgba(0,0,0,0.12);">
-                                <source src="images/pub/infinidepth/teaser.mov" type="video/mp4">
+                                <source src="images/pub/infinidepth/demo_speed_compress_2.mov" type="video/mp4">
                                 Your browser does not support the video tag.
                             </video>
                         </div>
                         <div class="overview-stage-bar">
-                            <button class="overview-stage-btn" id="stage-btn-1" onclick="seekOverviewVideo(2)">Depth Map at 16K-Resolution</button>
-                            <button class="overview-stage-btn" id="stage-btn-2" onclick="seekOverviewVideo(12)">Fine-Grained Point Clouds</button>
-                            <button class="overview-stage-btn" id="stage-btn-3" onclick="seekOverviewVideo(22)">Single-View NVS under Large ViewPoint Shifts</button>
+                            <button class="overview-stage-btn" id="stage-btn-1" onclick="seekOverviewVideo(0)">Depth Map at 16K-Resolution</button>
+                            <button class="overview-stage-btn" id="stage-btn-2" onclick="seekOverviewVideo(18)">Fine-Grained Point Clouds</button>
+                            <button class="overview-stage-btn" id="stage-btn-3" onclick="seekOverviewVideo(24)">Single-View NVS under Large ViewPoint Shifts</button>
                         </div>
                         <style>
                         .overview-stage-bar {
@@ -324,10 +422,10 @@
 
                         // 这里用“高亮阈值”，而不是跳转点
                         // 0-7 -> 1, 7-17 -> 2, >=17 -> 3
-                        const stageThresholds = [1, 4, 8];
+                        const stageThresholds = [2, 18, 24];
 
                         // 这里用“跳转点”
-                        const seekTimes = [1, 4, 8];
+                        const seekTimes = [2, 18, 24];
 
                         // 用户点击优先级锁
                         let userOverrideIdx = null;   // 当前用户强制选择的按钮 idx
@@ -436,9 +534,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="section-card">
-                        <h3>Abstract</h3>
-                        <!-- <hr style="margin-top: 0px">     -->
-                        <!-- <br> -->
+                        <h3 style="font-size:1.5rem; margin-bottom:17px; color:#345; font-weight:600;">Abstract</h3>
                         <p style="text-align: justify;">
                             Existing depth estimation methods are fundamentally limited to predicting depth on discrete image grids. Such representations restrict their scalability to arbitrary output resolutions and hinder the geometric detail recovery.
                             This paper introduces <strong>InfiniDepth</strong>, which represents depth as neural implicit fields.
@@ -459,10 +555,9 @@
             <div class="row">
                 <div class="col-12">
                     <div class="section-card">
-                        <h3>Method</h3>
-                        <!-- <hr style="margin-top: 0px"> -->
+                        <h3 style="font-size:1.5rem; margin-bottom:17px; color:#345; font-weight:600;">Method</h3>
                         <div style="display: flex; justify-content: center;">
-                            <img src="images/pub/infinidepth/pipeline.jpg" width="100%" alt="Method Overview">
+                            <img src="images/pub/infinidepth/pipeline.jpg" width="100%" alt="Method">
                         </div>
                         <br>
                         <p style="text-align: justify;"><strong>Pipeline of InfiniDepth:</strong></p>
@@ -482,9 +577,7 @@
         <div class="row">
         <div class="col-12">
             <div class="section-card">
-
-            <h3>Qualitative Visualization</h3>
-
+            <h3 style="font-size:1.5rem; margin-bottom:17px; color:#345; font-weight:600;">Qualitative Visualization</h3>
             <!-- Visualization Mode Switch -->
             <div class="viz-switch">
                 <button class="viz-btn active" data-viz="depth">Depth Map</button>
@@ -497,33 +590,18 @@
                 <p><strong>Interactive Depth Comparison:</strong>
                 Hover over the RGB image to explore depth details.
                 </p>
-
-                <!-- ⬇️ 原来的 interactive demo 内容，原封不动搬进来 ⬇️ -->
                 <div class="interactive-comparison">
                     <!-- Left: RGB Image --> 
                     <div class="rgb-side" id="rgbSide"> 
-                        <img src="images/pub/infinidepth/DSC_0250.png" class="rgb-image" id="rgbImage" alt="RGB Image"> 
+                        <img src="images/pub/infinidepth/DSC_6487.png" class="rgb-image" id="rgbImage" alt="RGB Image"> 
                         <div class="magnifier-lens" id="magnifierLens"></div> 
                         <div class="zoom-info" id="zoomInfo">Patch Size: 256×256</div> 
                     </div> 
-                    <!-- Right: 2×2 Depth Maps --> 
-                    <div class="depth-side"> 
-                        <div class="depth-item"> 
-                            <canvas id="depthCanvas1"></canvas> 
-                            <div class="depth-label">Method 1</div> 
-                        </div> 
-                        <div class="depth-item"> 
-                            <canvas id="depthCanvas2"></canvas> 
-                            <div class="depth-label">Method 2</div> 
-                        </div> 
-                        <div class="depth-item"> 
-                            <canvas id="depthCanvas3"></canvas> 
-                            <div class="depth-label">Method 3 </div> 
-                        </div> 
-                        <div class="depth-item"> 
-                            <canvas id="depthCanvas4"></canvas> 
-                            <div class="depth-label">Method 4</div> 
-                        </div> 
+                    <!-- Right: Depth Map -->
+                    <div class="depth-side">
+                        <div class="depth-item">
+                            <canvas id="depthCanvas1"></canvas>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -561,7 +639,9 @@
         <div class="col-12">
             <div class="section-card">
 
-            <h3>Qualitative Comparison</h3>
+            <h3 style="font-size:1.5rem; margin-bottom:17px; color:#345; font-weight:600;">
+                Qualitative Comparison
+            </h3>
 
             <!-- Visualization Mode Switch -->
             <div class="viz-switch">
@@ -569,36 +649,60 @@
                 <button class="viz-btn" data-viz="pointcloud">Point Cloud</button>
                 <button class="viz-btn" data-viz="nvs">Novel View Synthesis</button>
             </div>
+            
+            <div class="viz-description">
 
-            <!-- Mode 1: Interactive Depth -->
+            <div class="viz-desc active" data-viz="depth">
+                Predicted <strong>depth maps</strong> from different methods on the same input.
+                <span style="color:#61b6f2; font-weight:500;">Blue</span> and
+                <span style="color:#f089b9; font-weight:500;">pink</span> boxes highlight regions
+                with fine-grained geometric details.
+            </div>
+
+            <div class="viz-desc" data-viz="pointcloud">
+                Predicted <strong>point clouds</strong> from different methods on the same input.
+                <span style="color:#faac59; font-weight:500;">Orange</span> boxes highlight regions
+                with fine-grained geometric details.
+            </div>
+
+            <div class="viz-desc" data-viz="nvs">
+                <strong>Single-View NVS</strong> results under <strong>large viewpoint changes</strong>, e.g. Bird's-eye (BEV) views.
+            </div>
+
+            </div>
+
+
+            <!-- Mode 1: Depth -->
             <div class="viz-content active" id="viz-depth">
-                <p><strong>Interactive Depth Comparison:</strong>
-                Hover over the RGB image to explore depth details.
-                </p>
-
-                <div class="interactive-comparison">
-                    
+                <div style="display:flex; justify-content:center;">
+                <img id="depth-main-img"
+                    alt="Depth Comparison"
+                    style="max-width:100%; border-radius:12px; transition:box-shadow 0.2s;"
+                >
                 </div>
+                <div class="showcase-bar" id="depth-showcase"></div>
             </div>
 
             <!-- Mode 2: Point Cloud -->
             <div class="viz-content" id="viz-pointcloud">
-                <p><strong>Point Cloud Visualization:</strong>
-                Dense point clouds reconstructed from predicted depth.
-                </p>
-                <video controls style="width:100%; border-radius:12px;">
-                <source src="images/pub/infinidepth/pointcloud.mp4" type="video/mp4">
-                </video>
+                <div style="display:flex; justify-content:center;">
+                <img id="pcd-main-img"
+                    alt="Point Cloud Comparison"
+                    style="max-width:100%; border-radius:12px; transition:box-shadow 0.2s;"
+                >
+                </div>
+                <div class="showcase-bar" id="pcd-showcase"></div>
             </div>
 
             <!-- Mode 3: NVS -->
             <div class="viz-content" id="viz-nvs">
-                <p><strong>Novel View Synthesis:</strong>
-                Single-view novel view synthesis under large viewpoint shifts.
-                </p>
-                <video controls style="width:100%; border-radius:12px;">
-                <source src="images/pub/infinidepth/nvs.mp4" type="video/mp4">
-                </video>
+                <div style="display:flex; justify-content:center;">
+                <img id="nvs-main-img"
+                    alt="Novel View Synthesis Comparison"
+                    style="max-width:100%; border-radius:12px; transition:box-shadow 0.2s;"
+                >
+                </div>
+                <div class="showcase-bar" id="nvs-showcase"></div>
             </div>
 
             </div>
@@ -607,15 +711,13 @@
     </div>
     </section>
 
-
     <!-- Acknowledgement Section -->
     <section>
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
                     <div class="section-card">
-                        <h3>Acknowledgement</h3>
-                        <!-- <hr style="margin-top: 0px"> -->
+                        <h3 style="font-size:1.5rem; margin-bottom:17px; color:#345; font-weight:600;">Acknowledgement</h3>
                         <p style="text-align: justify;">
                             We thank <a href="https://yuanhongyu.xyz/" target="_blank">Yuanhong Yu</a>, <a href="https://gangweix.github.io/" target="_blank">Gangwei Xu</a> and <a href="https://github.com/ghy0324" target="_blank">Haoyu Guo</a> for their insightful discussions and valuable suggestions, and <a href="https://zhenx.me/" target="_blank">Zhen Xu</a> for his dedicated efforts in curating the synthetic data.
                         </p>
@@ -631,8 +733,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="section-card">
-                        <h3>Citation</h3>
-                        <!-- <hr style="margin-top: 0px"> -->
+                        <h3 style="font-size:1.5rem; margin-bottom:17px; color:#345; font-weight:600;">Citation</h3>
                         <pre><code>@inproceedings{yu2025infinidepth,
                                 title={InfiniDepth: Your Paper Title},
                                 author={Yu, Hao and Author, Name and Another, Author},
@@ -660,18 +761,104 @@
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        document.querySelectorAll('.viz-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const target = btn.dataset.viz;
-
-            document.querySelectorAll('.viz-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-
-            document.querySelectorAll('.viz-content').forEach(c => c.classList.remove('active'));
-            document.getElementById(`viz-${target}`).classList.add('active');
-        });
+        // 让每个 section 内的 .viz-btn 只控制本 section
+        function setupVizSwitch(section) {
+          const btns = section.querySelectorAll('.viz-btn');
+          const contents = section.querySelectorAll('.viz-content');
+          const descs = section.querySelectorAll('.viz-desc'); // 新增
+          btns.forEach(btn => {
+            btn.addEventListener('click', () => {
+              const target = btn.dataset.viz;
+              btns.forEach(b => b.classList.remove('active'));
+              btn.classList.add('active');
+              contents.forEach(c => c.classList.remove('active'));
+              const show = section.querySelector(`#viz-${target}`);
+              if (show) show.classList.add('active');
+              // 同步切换 description
+              descs.forEach(d => {
+                if (d.dataset.viz === target) {
+                  d.classList.add('active');
+                } else {
+                  d.classList.remove('active');
+                }
+              });
+            });
+          });
+        }
+        document.querySelectorAll('.section-card').forEach(card => {
+          if (card.querySelector('.viz-switch')) {
+            setupVizSwitch(card);
+          }
         });
     </script>
+
+    <script>
+    // 每个 mode 的主图和橱窗图像分别独立配置
+    const depthMainImgs = [
+      'images/pub/infinidepth/depth/depth1.jpg',
+      'images/pub/infinidepth/depth/depth2.jpg',
+      'images/pub/infinidepth/depth/depth3.jpg',
+      'images/pub/infinidepth/depth/depth4.jpg',
+    ];
+    const depthThumbs = [
+      'images/pub/infinidepth/depth/rgb1.jpg',
+      'images/pub/infinidepth/depth/rgb2.jpg',
+      'images/pub/infinidepth/depth/rgb3.jpg',
+      'images/pub/infinidepth/depth/rgb4.jpg',
+    ];
+    const pcdMainImgs = [
+      'images/pub/infinidepth/vis_pcd/pcd1.jpg',
+      'images/pub/infinidepth/vis_pcd/pcd2.jpg',
+      'images/pub/infinidepth/vis_pcd/pcd3.jpg',
+      'images/pub/infinidepth/vis_pcd/pcd4.jpg',
+    ];
+    const pcdThumbs = [
+      'images/pub/infinidepth/vis_pcd/rgb1.jpg',
+      'images/pub/infinidepth/vis_pcd/rgb2.jpg',
+      'images/pub/infinidepth/vis_pcd/rgb3.jpg',
+      'images/pub/infinidepth/vis_pcd/rgb4.jpg',
+    ];
+    const nvsMainImgs = [
+      'images/pub/infinidepth/nvs.jpg',
+      'images/pub/infinidepth/nvs.jpg',
+      'images/pub/infinidepth/nvs.jpg',
+      'images/pub/infinidepth/nvs.jpg',
+    ];
+    const nvsThumbs = [
+      'images/pub/infinidepth/vis_pcd/rgb1.jpg',
+      'images/pub/infinidepth/vis_pcd/rgb2.jpg',
+      'images/pub/infinidepth/vis_pcd/rgb3.jpg',
+      'images/pub/infinidepth/vis_pcd/rgb4.jpg',
+    ];
+
+    function setupShowcase(mainImgId, showcaseId, mainList, thumbList) {
+      const mainImg = document.getElementById(mainImgId);
+      const showcase = document.getElementById(showcaseId);
+      if (!mainImg || !showcase) return;
+      showcase.innerHTML = '';
+      thumbList.forEach((src, idx) => {
+        const thumb = document.createElement('img');
+        thumb.src = src;
+        thumb.className = 'showcase-thumb' + (idx === 0 ? ' active' : '');
+        thumb.alt = 'Showcase Thumb ' + (idx+1);
+        thumb.addEventListener('click', function() {
+          // 切换主图为主图list中同索引的图片
+          if (mainList[idx]) mainImg.src = mainList[idx];
+          // 高亮当前 thumbnail
+          showcase.querySelectorAll('.showcase-thumb').forEach(t => t.classList.remove('active'));
+          thumb.classList.add('active');
+        });
+        showcase.appendChild(thumb);
+      });
+      // 初始化主图
+      if (mainList[0]) mainImg.src = mainList[0];
+    }
+    // 初始化
+    setupShowcase('depth-main-img', 'depth-showcase', depthMainImgs, depthThumbs);
+    setupShowcase('pcd-main-img', 'pcd-showcase', pcdMainImgs, pcdThumbs);
+    setupShowcase('nvs-main-img', 'nvs-showcase', nvsMainImgs, nvsThumbs);
+    </script>
+
     <!-- InfiniDepth Scripts -->
     <script src="js/infinidepth/config.js"></script>
     <script src="js/infinidepth/magnifier.js"></script>

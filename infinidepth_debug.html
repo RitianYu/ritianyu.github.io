@@ -24,6 +24,7 @@
             gap: 20px;
             align-items: flex-start;
             justify-content: center;
+            overflow: visible;
         }
         
         .rgb-side {
@@ -37,7 +38,7 @@
             height: auto;
             display: block;
             border-radius: 8px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            box-shadow: none;
         }
         
         .depth-side-single {
@@ -50,9 +51,7 @@
             display: block;
             width: 100%;
             height: auto;
-            border: 1px solid #ddd;
             border-radius: 8px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
         }
         
         .depth-label-single {
@@ -127,7 +126,7 @@
                         <div class="interactive-comparison">
                             <!-- Left: RGB Image -->
                             <div class="rgb-side" id="rgbSide">
-                                <img src="images/pub/infinidepth/DSC_0250.png" class="rgb-image" id="rgbImage" alt="RGB Image">
+                                <img src="images/pub/infinidepth/DSC_0219_cropped.png" class="rgb-image" id="rgbImage" alt="RGB Image">
                                 <div class="magnifier-lens" id="magnifierLens"></div>
                                 <div class="zoom-info" id="zoomInfo">Patch Size: 256×256</div>
                             </div>

@@ -10,8 +10,8 @@ const InfiniDepthConfig = {
     scenes: [
         {
             name: 'DSC_0250',
-            rgbImage: 'images/pub/infinidepth/DSC_6487.png',
-            depthImage: 'images/pub/infinidepth/PromptNeuralDepth_DSC_6487_up_8_disparity.png', // Single depth image
+            rgbImage: 'images/pub/infinidepth/DSC_0219_cropped.png',
+            depthImage: 'images/pub/infinidepth/PromptNeuralDepth_DSC_0219_up_8_implicit_cropped.png', // Single depth image
             methodLabel: 'InfiniDepth (Ours)',
             // Predefined anchor points for auto recording (x, y in 0-1 range)
             anchors: [
@@ -24,8 +24,8 @@ const InfiniDepthConfig = {
         },
         {
             name: 'Demo Scene 2',
-            rgbImage: 'images/pub/infinidepth/DSC_6487.png',
-            depthImage: 'images/pub/infinidepth/MoGe-2_0250.png',
+            rgbImage: 'images/pub/infinidepth/DSC_0219_cropped.png',
+            depthImage: 'images/pub/infinidepth/PromptNeuralDepth_DSC_0219_up_8_implicit_cropped.png', // Single depth image
             methodLabel: 'InfiniDepth (Ours)',
             anchors: [
                 { x: 0.30, y: 0.40, name: 'Left Detail' },

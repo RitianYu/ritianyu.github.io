@@ -29,10 +29,7 @@ class DepthMagnifier {
         this.lensCtx = this.lensCanvas.getContext('2d');
         
         this.canvases = [
-            document.getElementById('depthCanvas1'),
-            document.getElementById('depthCanvas2'),
-            document.getElementById('depthCanvas3'),
-            document.getElementById('depthCanvas4')
+            document.getElementById('depthCanvas1')
         ];
         
         this.contexts = this.canvases.map(c => c ? c.getContext('2d') : null);
@@ -265,14 +262,13 @@ class DepthMagnifier {
      */
     initializeCanvasSizes() {
         if (!this.rgbImage) return;
-        
+
         const rgbHeight = this.rgbImage.offsetHeight;
         const rgbWidth = this.rgbImage.offsetWidth;
-        
-        // Calculate individual canvas dimensions (2x2 grid with gap)
-        const gap = 10; // Must match CSS gap value
-        const canvasHeight = (rgbHeight - gap) / 2;
-        const canvasWidth = (rgbWidth - gap) / 2;
+
+        // Set canvas dimensions to match RGB image size
+        const canvasHeight = rgbHeight;
+        const canvasWidth = rgbWidth;
         
         this.canvases.forEach(canvas => {
             if (canvas) {
