@@ -8,24 +8,23 @@ const InfiniDepthConfig = {
     // Multiple scenes configuration
     scenes: [
         {
-            name: 'DSC_0250',
-            rgbImage: 'images/pub/infinidepth/DSC_0250.png',
+            name: 'DSC_6487',
+            rgbImage: 'images/pub/infinidepth/DSC_6487.png',
             depthImages: [
                 'images/pub/infinidepth/MoGe-2_0250.png'
             ],
             methodLabels: [
-                'Depth Anything v2'
+                'InfiniDepth'
             ]
         },
-        // Demo scene 2 (using same images for demonstration)
         {
-            name: 'Demo Scene 2',
+            name: 'DSC_0250',
             rgbImage: 'images/pub/infinidepth/DSC_0250.png',
             depthImages: [
                 'images/pub/infinidepth/NeuralDepth_0250_up_4.png'
             ],
             methodLabels: [
-                'Method A'
+                'InfiniDepth'
             ]
         }
         // ============================

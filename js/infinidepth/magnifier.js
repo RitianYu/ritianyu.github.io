@@ -631,7 +631,7 @@ class DepthMagnifier {
 // Initialize after page load
 window.addEventListener('load', () => {
     if (typeof InfiniDepthConfig !== 'undefined') {
-        const magnifier = new DepthMagnifier(InfiniDepthConfig);
+        window.depthMagnifier = new DepthMagnifier(InfiniDepthConfig);
         console.log('DepthMagnifier initialized');
     } else {
         console.error('InfiniDepthConfig not found. Please include config.js before magnifier.js');

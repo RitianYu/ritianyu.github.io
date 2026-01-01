@@ -17,250 +17,19 @@
     <link href="css/infinidepth/main.css" rel="stylesheet">
     <link href="css/infinidepth/title-animations.css" rel="stylesheet">
     <link href="css/infinidepth/magnifier.css" rel="stylesheet">
-    <style>
-    .section-card {
-        background: #fff !important;
-        border-radius: 14px !important;
-        box-shadow: 0 1px 6px rgba(80,120,180,0.03) !important;
-        /* 核心 */
-        padding: 18px 24px !important;   /* ↑↓ 18px，←→ 28px */
-    }
-    /* Citation 区域整体 */
-    .section-card pre,
-    .section-card pre code {
-    color: #4a5a6a;          /* 淡灰蓝 */
-    background: #f7f9fb;     /* 很浅的灰背景 */
-    }
-    section {
-      margin-bottom: 2px !important;
-      padding-bottom: 0 !important;
-    }
-    
-    /* Visualization Switch */
-    .viz-switch {
-    display: flex;
-    justify-content: center;
-    gap: 12px;
-    margin: 12px 0 16px 0;
-    }
+    <link href="css/infinidepth/layout.css" rel="stylesheet">
+    <link href="css/infinidepth/visualization.css" rel="stylesheet">
 
-    .viz-btn {
-    border: 1px solid #cfd6df;
-    background: #f7f9fc;
-    color: #345;
-    padding: 6px 18px;
-    border-radius: 999px;
-    font-size: 0.95rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    }
-
-    .viz-btn.active {
-    background: #345;
-    color: #fff;
-    border-color: #345;
-    }
-
-    .viz-content {
-    display: none;
-    }
-
-    .viz-content.active {
-    display: block;
-    }
-
-    /* 压缩封面 section（标题区）垂直高度 */
-    .jumbotron.text-center.mt-0 {
-      padding-top: 18px !important;
-      padding-bottom: 18px !important;
-      margin-bottom: 0 !important;
-    }
-    .jumbotron .container {
-      padding-top: 0 !important;
-      padding-bottom: 0 !important;
-    }
-    .jumbotron h1 {
-      font-size: 2.1rem !important;
-      margin-bottom: 0.3em !important;
-      margin-top: 0.2em !important;
-    }
-    .jumbotron h4 {
-      font-size: 1.1rem !important;
-      margin-bottom: 0.2em !important;
-      margin-top: 0.2em !important;
-    }
-    .jumbotron hr {
-      margin: 0.2em 0 0.5em 0 !important;
-    }
-    .author-list, .author-row {
-      margin-bottom: 0.2em !important;
-      margin-top: 0 !important;
-    }
-    .jumbotron p {
-      margin-top: 0.2em !important;
-      margin-bottom: 0.2em !important;
-    }
-    .jumbotron .row.justify-content-center {
-      margin-top: 0.2em !important;
-      margin-bottom: 0.2em !important;
-    }
-    .jumbotron .column p {
-      margin-bottom: 0.2em !important;
-      margin-top: 0.2em !important;
-    }
-    @media (max-width: 700px) {
-      .jumbotron h1 {
-        font-size: 1.25rem !important;
-      }
-      .jumbotron h4 {
-        font-size: 0.98rem !important;
-      }
-      .jumbotron {
-        padding-top: 10px !important;
-        padding-bottom: 10px !important;
-      }
-    }
-    /* ===== Cover 作者名字字体调小 ===== */
-    .jumbotron .author-list a {
-        font-size: 1.1rem !important;   /* 原来 ~1rem */
-        font-weight: 400;             /* 保持清晰但不抢标题 */
+    <!-- Three.js for Point Cloud Viewer -->
+    <script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+            "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
         }
-    .jumbotron .author-row {
-        margin-bottom: 0.01em !important;
-        }
-    /* 单位信息 */
-    .jumbotron p:not([style]) {
-        font-size: 1.1rem !important;
-        font-weight: 400;    
-        }
-    .jumbotron .btn {
-        font-size: 0.95rem !important;
-        padding: 8px 16px !important;
-        }
-
-    /* ===== Cover 标题微调（更有气场但不臃肿） ===== */
-    /* 整个 cover 顶部留白稍微加一点 */
-    .jumbotron.text-center.mt-0 {
-        padding-top: 27px !important;   /* 原来 18px */
-        }
-
-    /* 主标题：稍微大一点点 */
-    .jumbotron h1 {
-        font-size: 2.15rem !important;  /* 原来 2.1rem */
-        line-height: 1.26 !important;
-        margin-top: 1.1em;  /* 离顶部更舒展 */
-        margin-bottom: 0.45em;
-        }
-
-    /* 副标题 Arxiv 2025 */
-    .jumbotron h4 {
-        font-size: 1.1rem;  /* 原来 1.1rem，其实略微回调 */
-        font-weight: 500;   
-        margin-top: 0.25em ;
-        margin-bottom: 0.45em;
-        }
-    
-    .viz-description {
-        margin-top: 7px;
-        margin-bottom: 15px;
-        text-align: center;
-        }
-
-    .viz-desc {
-        display: none;
-        font-size: 0.97rem;
-        color: #5a6b7c;
-        line-height: 1.5;
-        }
-
-    .viz-desc.active {
-        display: block;
-        }
-
-    .showcase-bar {
-    display: flex;
-    justify-content: center;
-    gap: 18px;
-
-    margin: 26px 0 10px 0;
-    padding: 18px 0;
-
-    position: relative;
-    background: none;
-    box-shadow: none;
-    border-radius: 0;
-
-    /* 中央轨道：从中间向两端自然消散 */
-    background:
-        radial-gradient(
-        ellipse at center,
-        rgba(100, 168, 240, 0.1) 0%,
-        rgba(100, 168, 240, 0.08) 30%,
-        rgba(100, 168, 240, 0.045) 55%,
-        rgba(100, 168, 240, 0.0) 75%
-        );
     }
-
-    /* 上方短虚线 */
-    .showcase-bar::before,
-    .showcase-bar::after {
-    content: '';
-    position: absolute;
-    left: 22%;
-    right: 22%;
-    height: 2px;
-
-    background: repeating-linear-gradient(
-        to right,
-        rgba(52, 85, 120, 0.28),
-        rgba(52, 85, 120, 0.28) 8px,
-        transparent 8px,
-        transparent 16px
-    );
-
-    pointer-events: none;
-    }
-
-    /* 上虚线 */
-    .showcase-bar::before {
-    top: 0;
-    }
-
-    /* 下虚线 */
-    .showcase-bar::after {
-    bottom: 0;
-    }
-
-    .showcase-thumb {
-      width: 110px;
-      height: 82px;
-      object-fit: cover;
-      border-radius: 10px;
-      border: 2.5px solid #e3e8ef;
-      cursor: pointer;
-      transition: border 0.18s, transform 0.18s, box-shadow 0.18s, filter 0.18s;
-      box-shadow: 0 2px 10px rgba(80,120,180,0.09);
-      background: #f7f9fb;
-      filter: grayscale(0.12) brightness(0.98);
-    }
-    .showcase-thumb.active {
-      border: 3px solid #345;
-      box-shadow: 0 4px 18px rgba(80,120,180,0.18);
-      transform: scale(1.12) translateY(-6px);
-      z-index: 2;
-      filter: none;
-    }
-    .showcase-thumb:hover {
-      filter: none;
-      border-color: #a9b8c9;
-      transform: scale(1.07) translateY(-2px);
-    }
-    .showcase-thumb:active {
-      border-color: #a9b8c9;
-      transform: scale(0.97);
-    }
-    </style>
+    </script>
 </head>
 
 <body>
@@ -365,163 +134,6 @@
                             <button class="overview-stage-btn" id="stage-btn-2" onclick="seekOverviewVideo(18)">Fine-Grained Point Clouds</button>
                             <button class="overview-stage-btn" id="stage-btn-3" onclick="seekOverviewVideo(24)">Single-View NVS under Large ViewPoint Shifts</button>
                         </div>
-                        <style>
-                        .overview-stage-bar {
-                          background: #f5f7fa;
-                          border-radius: 12px;
-                          padding: 10px 10px 6px 10px;
-                          margin: 16px auto 0 auto;
-                          display: flex;
-                          justify-content: center;
-                          gap: 10px;
-                          box-shadow: 0 2px 12px rgba(80,120,180,0.03); 
-                          max-width: 800px;
-                        }
-                        .overview-stage-btn {
-                          background: none;
-                          border: none;
-                          border-radius: 8px;
-                          padding: 0.28em 0.7em;
-                          font-size: 0.93rem;
-                          font-family: 'Jost', 'Segoe UI', Arial, sans-serif;
-                          font-weight: 500;
-                          color: #345;
-                          transition: background 0.18s, color 0.18s;
-                          cursor: pointer;
-                          outline: none;
-                        }
-                        .overview-stage-btn:hover, .overview-stage-btn:focus {
-                          background: #e3eaf2;
-                        }
-                        .overview-stage-btn.active {
-                          background: #a9b8c9 !important;
-                          color: #fff !important;
-                        }
-                        @media (max-width: 700px) {
-                          .overview-stage-bar {
-                            flex-direction: column;
-                            gap: 6px;
-                            padding: 8px 4px 4px 4px;
-                          }
-                          .overview-stage-btn {
-                            font-size: 0.91rem;
-                            padding: 0.22em 0.5em;
-                          }
-                        }
-                        </style>
-                        <script>
-                        (function () {
-                        const video = document.getElementById('overviewVideo');
-                        if (!video) return;
-
-                        const btns = [
-                            document.getElementById('stage-btn-1'),
-                            document.getElementById('stage-btn-2'),
-                            document.getElementById('stage-btn-3'),
-                        ];
-
-                        // 这里用“高亮阈值”，而不是跳转点
-                        // 0-7 -> 1, 7-17 -> 2, >=17 -> 3
-                        const stageThresholds = [2, 18, 24];
-
-                        // 这里用“跳转点”
-                        const seekTimes = [2, 18, 24];
-
-                        // 用户点击优先级锁
-                        let userOverrideIdx = null;   // 当前用户强制选择的按钮 idx
-                        let userOverrideUntil = 0;    // 在这个时间戳之前，自动高亮不允许覆盖
-                        let pendingSeek = null;       // 防止 metadata 未加载导致 seek 失败
-
-                        function setActive(idx) {
-                            btns.forEach((b, i) => b && b.classList.toggle('active', i === idx));
-                        }
-
-                        function getAutoStageIdx(t) {
-                            if (t >= stageThresholds[2]) return 2;
-                            if (t >= stageThresholds[1]) return 1;
-                            return 0;
-                        }
-
-                        function doSeekTo(idx) {
-                            const seekTo = () => {
-                            const target = seekTimes[idx];
-                            // 先强制高亮（立刻反馈）
-                            setActive(idx);
-
-                            // 设置用户优先级：例如 900ms 内不允许 timeupdate 覆盖
-                            userOverrideIdx = idx;
-                            userOverrideUntil = Date.now() + 900;
-
-                            // 再跳转播放
-                            const t = Math.min(target, (video.duration || target));
-                            video.currentTime = t;
-                            video.play();
-                            };
-
-                            // metadata 未加载时，等 loadedmetadata 再跳
-                            if (video.readyState < 1) {
-                            pendingSeek = idx;
-                            video.addEventListener('loadedmetadata', () => {
-                                if (pendingSeek !== null) {
-                                const i = pendingSeek;
-                                pendingSeek = null;
-                                doSeekTo(i);
-                                }
-                            }, { once: true });
-                            } else {
-                            seekTo();
-                            }
-                        }
-
-                        // 暴露给 HTML onclick 用
-                        window.seekOverviewVideo = function (timeOrIdx) {
-                            // 你原来 onclick 传的是秒数，这里兼容：传秒数就映射到最近的 idx
-                            let idx = 0;
-                            if (typeof timeOrIdx === 'number') {
-                            // 如果传的是 2/12/22，映射成 idx
-                            const i = seekTimes.indexOf(timeOrIdx);
-                            idx = (i >= 0) ? i : 0;
-                            }
-                            doSeekTo(idx);
-                        };
-
-                        // 给按钮绑定点击：优先级最高
-                        btns.forEach((b, idx) => {
-                            if (!b) return;
-                            b.addEventListener('click', (e) => {
-                            e.preventDefault();
-                            doSeekTo(idx);
-                            });
-                        });
-
-                        // 自动高亮：被用户锁短暂压制；一旦视频进入对应段也可解除锁
-                        function updateStageBtn() {
-                            const now = Date.now();
-
-                            // 如果用户刚点击过，优先显示用户选择
-                            if (userOverrideIdx !== null) {
-                            setActive(userOverrideIdx);
-
-                            // 两种解除方式：超时 或 视频已经进入用户选择的阶段
-                            const autoIdx = getAutoStageIdx(video.currentTime);
-                            if (now >= userOverrideUntil || autoIdx === userOverrideIdx) {
-                                userOverrideIdx = null;
-                            }
-                            return;
-                            }
-
-                            // 没有用户锁 -> 正常自动高亮
-                            setActive(getAutoStageIdx(video.currentTime));
-                        }
-
-                        video.addEventListener('timeupdate', updateStageBtn);
-                        video.addEventListener('seeking', updateStageBtn);
-                        video.addEventListener('seeked', updateStageBtn);
-
-                        // 初始
-                        updateStageBtn();
-                        })();
-                        </script>
                     </div>
                 </div>
             </div>
@@ -591,12 +203,12 @@
                 Hover over the RGB image to explore depth details.
                 </p>
                 <div class="interactive-comparison">
-                    <!-- Left: RGB Image --> 
-                    <div class="rgb-side" id="rgbSide"> 
-                        <img src="images/pub/infinidepth/DSC_6487.png" class="rgb-image" id="rgbImage" alt="RGB Image"> 
-                        <div class="magnifier-lens" id="magnifierLens"></div> 
-                        <div class="zoom-info" id="zoomInfo">Patch Size: 256×256</div> 
-                    </div> 
+                    <!-- Left: RGB Image -->
+                    <div class="rgb-side" id="rgbSide">
+                        <img src="images/pub/infinidepth/DSC_6487.png" class="rgb-image" id="rgbImage" alt="RGB Image">
+                        <div class="magnifier-lens" id="magnifierLens"></div>
+                        <div class="zoom-info" id="zoomInfo">Patch Size: 256×256</div>
+                    </div>
                     <!-- Right: Depth Map -->
                     <div class="depth-side">
                         <div class="depth-item">
@@ -604,16 +216,22 @@
                         </div>
                     </div>
                 </div>
+                <!-- Showcase bar for depth scenes -->
+                <div class="showcase-bar" id="depth-viz-showcase"></div>
             </div>
 
             <!-- Mode 2: Point Cloud -->
             <div class="viz-content" id="viz-pointcloud">
                 <p><strong>Point Cloud Visualization:</strong>
-                Dense point clouds reconstructed from predicted depth.
+                Dense point clouds reconstructed from predicted depth. Use mouse to rotate, zoom, and pan.
                 </p>
-                <video controls style="width:100%; border-radius:12px;">
-                <source src="images/pub/infinidepth/pointcloud.mp4" type="video/mp4">
-                </video>
+                <div id="pointcloud-container" style="width:100%; height:600px; border-radius:12px; background:#ffffff; position:relative;">
+                    <div id="pointcloud-loading" style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); color:#333; font-size:1.1rem;">
+                        Loading point cloud...
+                    </div>
+                </div>
+                <!-- Showcase bar for point cloud scenes -->
+                <div class="showcase-bar" id="pointcloud-viz-showcase"></div>
             </div>
 
             <!-- Mode 3: NVS -->
@@ -621,9 +239,13 @@
                 <p><strong>Novel View Synthesis:</strong>
                 Single-view novel view synthesis under large viewpoint shifts.
                 </p>
-                <video controls style="width:100%; border-radius:12px;">
-                <source src="images/pub/infinidepth/nvs.mp4" type="video/mp4">
-                </video>
+                <div style="display:flex; justify-content:center;">
+                    <video id="nvs-video" controls style="width:100%; border-radius:12px;">
+                        <source src="images/pub/infinidepth/nvs.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <!-- Showcase bar for NVS scenes -->
+                <div class="showcase-bar" id="nvs-viz-showcase"></div>
             </div>
 
             </div>
@@ -760,107 +382,14 @@
     <!-- Scripts -->
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        // 让每个 section 内的 .viz-btn 只控制本 section
-        function setupVizSwitch(section) {
-          const btns = section.querySelectorAll('.viz-btn');
-          const contents = section.querySelectorAll('.viz-content');
-          const descs = section.querySelectorAll('.viz-desc'); // 新增
-          btns.forEach(btn => {
-            btn.addEventListener('click', () => {
-              const target = btn.dataset.viz;
-              btns.forEach(b => b.classList.remove('active'));
-              btn.classList.add('active');
-              contents.forEach(c => c.classList.remove('active'));
-              const show = section.querySelector(`#viz-${target}`);
-              if (show) show.classList.add('active');
-              // 同步切换 description
-              descs.forEach(d => {
-                if (d.dataset.viz === target) {
-                  d.classList.add('active');
-                } else {
-                  d.classList.remove('active');
-                }
-              });
-            });
-          });
-        }
-        document.querySelectorAll('.section-card').forEach(card => {
-          if (card.querySelector('.viz-switch')) {
-            setupVizSwitch(card);
-          }
-        });
-    </script>
-
-    <script>
-    // 每个 mode 的主图和橱窗图像分别独立配置
-    const depthMainImgs = [
-      'images/pub/infinidepth/depth/depth1.jpg',
-      'images/pub/infinidepth/depth/depth2.jpg',
-      'images/pub/infinidepth/depth/depth3.jpg',
-      'images/pub/infinidepth/depth/depth4.jpg',
-    ];
-    const depthThumbs = [
-      'images/pub/infinidepth/depth/rgb1.jpg',
-      'images/pub/infinidepth/depth/rgb2.jpg',
-      'images/pub/infinidepth/depth/rgb3.jpg',
-      'images/pub/infinidepth/depth/rgb4.jpg',
-    ];
-    const pcdMainImgs = [
-      'images/pub/infinidepth/vis_pcd/pcd1.jpg',
-      'images/pub/infinidepth/vis_pcd/pcd2.jpg',
-      'images/pub/infinidepth/vis_pcd/pcd3.jpg',
-      'images/pub/infinidepth/vis_pcd/pcd4.jpg',
-    ];
-    const pcdThumbs = [
-      'images/pub/infinidepth/vis_pcd/rgb1.jpg',
-      'images/pub/infinidepth/vis_pcd/rgb2.jpg',
-      'images/pub/infinidepth/vis_pcd/rgb3.jpg',
-      'images/pub/infinidepth/vis_pcd/rgb4.jpg',
-    ];
-    const nvsMainImgs = [
-      'images/pub/infinidepth/nvs.jpg',
-      'images/pub/infinidepth/nvs.jpg',
-      'images/pub/infinidepth/nvs.jpg',
-      'images/pub/infinidepth/nvs.jpg',
-    ];
-    const nvsThumbs = [
-      'images/pub/infinidepth/vis_pcd/rgb1.jpg',
-      'images/pub/infinidepth/vis_pcd/rgb2.jpg',
-      'images/pub/infinidepth/vis_pcd/rgb3.jpg',
-      'images/pub/infinidepth/vis_pcd/rgb4.jpg',
-    ];
-
-    function setupShowcase(mainImgId, showcaseId, mainList, thumbList) {
-      const mainImg = document.getElementById(mainImgId);
-      const showcase = document.getElementById(showcaseId);
-      if (!mainImg || !showcase) return;
-      showcase.innerHTML = '';
-      thumbList.forEach((src, idx) => {
-        const thumb = document.createElement('img');
-        thumb.src = src;
-        thumb.className = 'showcase-thumb' + (idx === 0 ? ' active' : '');
-        thumb.alt = 'Showcase Thumb ' + (idx+1);
-        thumb.addEventListener('click', function() {
-          // 切换主图为主图list中同索引的图片
-          if (mainList[idx]) mainImg.src = mainList[idx];
-          // 高亮当前 thumbnail
-          showcase.querySelectorAll('.showcase-thumb').forEach(t => t.classList.remove('active'));
-          thumb.classList.add('active');
-        });
-        showcase.appendChild(thumb);
-      });
-      // 初始化主图
-      if (mainList[0]) mainImg.src = mainList[0];
-    }
-    // 初始化
-    setupShowcase('depth-main-img', 'depth-showcase', depthMainImgs, depthThumbs);
-    setupShowcase('pcd-main-img', 'pcd-showcase', pcdMainImgs, pcdThumbs);
-    setupShowcase('nvs-main-img', 'nvs-showcase', nvsMainImgs, nvsThumbs);
-    </script>
 
     <!-- InfiniDepth Scripts -->
     <script src="js/infinidepth/config.js"></script>
     <script src="js/infinidepth/magnifier.js"></script>
+    <script src="js/infinidepth/viz-switcher.js"></script>
+    <script src="js/infinidepth/showcase.js"></script>
+    <script src="js/infinidepth/viz-showcase.js"></script>
+    <script src="js/infinidepth/overview-video.js"></script>
+    <script type="module" src="js/infinidepth/pointcloud-viewer.js"></script>
 </body>
 </html>
