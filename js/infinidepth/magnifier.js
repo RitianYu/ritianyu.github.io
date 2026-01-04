@@ -11,7 +11,7 @@ class DepthMagnifier {
         // Scene management
         this.currentSceneIndex = 0;
         this.isTransitioning = false;
-        
+
         // DOM elements
         this.rgbSide = document.getElementById('rgbSide');
         this.rgbImage = document.getElementById('rgbImage');
@@ -21,19 +21,19 @@ class DepthMagnifier {
         // Scene navigation elements
         this.prevBtn = document.getElementById('prevCase');
         this.nextBtn = document.getElementById('nextCase');
-        
+
         // Create canvas inside magnifier lens for zoom effect
         this.lensCanvas = document.createElement('canvas');
         this.lensCanvas.width = 200;  // Fixed lens size
         this.lensCanvas.height = 200;
         this.lensCtx = this.lensCanvas.getContext('2d');
-        
+
         this.canvases = [
             document.getElementById('depthCanvas1')
         ];
-        
+
         this.contexts = this.canvases.map(c => c ? c.getContext('2d') : null);
-        
+
         // State
         this.isHovering = false;
         this.depthImagesLoaded = [];
@@ -41,7 +41,7 @@ class DepthMagnifier {
         this.zoomLevel = 1.0;
         this.mousePos = { x: 0, y: 0 };
         this.lastMouseEvent = null;
-        
+
         // Initialize scene navigation
         this.initSceneNavigation();
         
@@ -123,7 +123,7 @@ class DepthMagnifier {
         
         // Reset depth images
         this.depthImagesLoaded = [];
-        
+
         // Update RGB image
         const oldSrc = this.rgbImage.src;
         const newSrc = scene.rgbImage;
@@ -131,7 +131,7 @@ class DepthMagnifier {
         if (oldSrc !== newSrc) {
             // Set new image source
             this.rgbImage.src = newSrc;
-            
+
             // Wait for RGB image to load
             if (this.rgbImage.complete) {
                 this.onSceneLoaded(scene);
@@ -158,7 +158,7 @@ class DepthMagnifier {
             this.setupMagnifierLens();
             this.eventsInitialized = true;
         }
-        
+
         // Handle window resize
         if (!this.resizeHandlerAdded) {
             window.addEventListener('resize', () => this.initializeCanvasSizes());

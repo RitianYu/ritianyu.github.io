@@ -92,6 +92,7 @@ class LoadingManager {
         let progressCheckInterval = null;
         let startTime = Date.now();
         let minLoadingTime = 2000; // Minimum 2 seconds for loading animation visibility
+        let metadataLoaded = false;
 
         // Smoothly animate progress bar
         const animateProgress = () => {
@@ -111,6 +112,9 @@ class LoadingManager {
                 animationFrameId = requestAnimationFrame(animateProgress);
             }
         };
+
+        // Start animation immediately
+        animateProgress();
 
         // Function to start video playback
         const startVideoPlayback = () => {
@@ -153,6 +157,14 @@ class LoadingManager {
 
         // More accurate and reliable progress tracking
         const updateProgress = () => {
+            // If metadata not loaded yet, simulate progress to 10%
+            if (!metadataLoaded) {
+                if (targetPercentage < 50) {
+                    targetPercentage = Math.min(targetPercentage + 0.5, 50);
+                }
+                return;
+            }
+
             if (!video.duration || video.duration === 0) {
                 return;
             }
@@ -190,18 +202,29 @@ class LoadingManager {
             }
         };
 
-        // Start smooth animation
-        animateProgress();
-
-        // Poll progress more frequently for better responsiveness
+        // Start polling progress immediately
         progressCheckInterval = setInterval(updateProgress, 100);
 
-        // Listen to video events
-        video.addEventListener('loadedmetadata', () => {
+        // Listen to metadata loaded event
+        const onMetadataLoaded = () => {
             console.log('Video metadata loaded, duration:', video.duration);
+            metadataLoaded = true;
+            // Jump to at least 20% when metadata loads
+            if (targetPercentage < 50) {
+                targetPercentage = 50;
+            }
             updateProgress();
-        });
+        };
 
+        if (video.readyState >= 1) {
+            // Metadata already loaded
+            onMetadataLoaded();
+        } else {
+            // Wait for metadata to load
+            video.addEventListener('loadedmetadata', onMetadataLoaded, { once: true });
+        }
+
+        // Listen to video events
         video.addEventListener('progress', () => {
             updateProgress();
         });
@@ -233,7 +256,7 @@ class LoadingManager {
             }
         }, 10000);
 
-        // Initial check after a short delay
+        // Initial check
         setTimeout(updateProgress, 100);
     }
 

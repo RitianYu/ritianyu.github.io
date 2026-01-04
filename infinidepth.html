@@ -143,7 +143,7 @@
                         <!-- <h3>Overview</h3> -->
                         <div style="display: flex; justify-content: center; align-items: center; position: relative;">
                             <!-- Video Loading Bar -->
-                            <div id="video-loading-overlay" class="video-loading-overlay">
+                            <div id="video-loading-overlay" class="video-loading-overlay hidden">
                                 <div class="video-loading-content">
                                     <div class="video-loading-bar-container">
                                         <div class="video-loading-bar">
@@ -153,7 +153,7 @@
                                     <div class="video-loading-text">Loading video...</div>
                                 </div>
                             </div>
-                            <video id="overviewVideo" controls loop muted playsinline style="width: 100%; height: auto; border-radius: 12px; box-shadow: 0 4px 24px rgba(0,0,0,0.12);">
+                            <video id="overviewVideo" controls loop muted playsinline preload="metadata" style="width: 100%; height: auto; border-radius: 12px; box-shadow: 0 4px 24px rgba(0,0,0,0.12);">
                                 <source src="images/pub/infinidepth/demo_speed_compress_2.mov" type="video/mp4">
                                 Your browser does not support the video tag.
                             </video>
@@ -231,19 +231,27 @@
                 <p><strong>Interactive Depth Comparison:</strong>
                 Hover over the RGB image to explore depth details.
                 </p>
-                <div class="interactive-comparison">
-                    <!-- Left: RGB Image -->
-                    <div class="rgb-side" id="rgbSide">
+                <div class="interactive-depth-wrapper">
+                    <!-- Loading overlay -->
+                    <div class="interactive-depth-loading" id="depthLoading">
+                        <div class="image-spinner"></div>
+                        <div class="loading-text">Loading scene...</div>
+                    </div>
+                    <!-- Interactive comparison content -->
+                    <div class="interactive-comparison">
+                        <!-- Left: RGB Image -->
+                        <div class="rgb-side" id="rgbSide">
                         <img src="images/pub/infinidepth/DSC_6487.png" class="rgb-image" id="rgbImage" alt="RGB Image">
-                        <div class="magnifier-lens" id="magnifierLens"></div>
-                        <div class="zoom-info" id="zoomInfo">Patch Size: 256×256</div>
-                    </div>
-                    <!-- Right: Depth Map -->
-                    <div class="depth-side">
-                        <div class="depth-item">
-                            <canvas id="depthCanvas1"></canvas>
+                            <div class="magnifier-lens" id="magnifierLens"></div>
+                            <div class="zoom-info" id="zoomInfo">Patch Size: 256×256</div>
                         </div>
+                        <!-- Right: Depth Map -->
+                        <div class="depth-side">
+                            <div class="depth-item">
+                                <canvas id="depthCanvas1"></canvas>
+                            </div>
                     </div>
+                </div>
                 </div>
                 <!-- Showcase bar for depth scenes -->
                 <div class="showcase-bar" id="depth-viz-showcase"></div>
@@ -385,12 +393,12 @@
                     <div class="section-card">
                         <h3 style="font-size:1.5rem; margin-bottom:17px; color:#345; font-weight:600;">Citation</h3>
                         <div style="position: relative;">
-                            <pre id="citation-code"><code>@inproceedings{yu2025infinidepth,
-                                title={InfiniDepth: Arbitrary-Resolution and Fine-Grained Depth Estimation with Neural Implicit Fields},
-                                author={Hao Yu, Haotong Lin, Jiawei Wang, Jiaxin Li, Yida Wang, Xueyang Zhang, Yue Wang, Xiaowei Zhou, Ruizhen Hu and Sida Peng},
-                                booktitle={arXiv preprint},
-                                year={2026}
-                                }</code></pre>
+                            <pre id="citation-code"><code>@article{yu2025infinidepth,
+    title={InfiniDepth: Arbitrary-Resolution and Fine-Grained Depth Estimation with Neural Implicit Fields},
+    author={Hao Yu, Haotong Lin, Jiawei Wang, Jiaxin Li, Yida Wang, Xueyang Zhang, Yue Wang, Xiaowei Zhou, Ruizhen Hu and Sida Peng},
+    booktitle={arXiv preprint},
+    year={2026}
+}</code></pre>
                             <button id="copy-citation-btn" class="copy-citation-btn" onclick="copyCitation()">
                                 <i class="fa fa-copy"></i> Copy
                             </button>

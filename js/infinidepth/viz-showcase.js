@@ -11,26 +11,32 @@ const VizShowcaseConfig = {
             {
                 name: 'Scene 1',
                 rgb: 'images/pub/infinidepth/DSC_6487.png',
-                depth: 'images/pub/infinidepth/MoGe-2_0250.png',
-                thumbnail: 'images/pub/infinidepth/depth/rgb1.jpg'
+                depth: 'images/pub/infinidepth/vis_depth/Ours_DSC_6487_16k.png',
+                thumbnail: 'images/pub/infinidepth/DSC_6487.png'
             },
             {
                 name: 'Scene 2',
-                rgb: 'images/pub/infinidepth/DSC_0250.png',
-                depth: 'images/pub/infinidepth/NeuralDepth_0250_up_4.png',
-                thumbnail: 'images/pub/infinidepth/depth/rgb2.jpg'
+                rgb: 'images/pub/infinidepth/vis_depth/DSC_0219_cropped.png',
+                depth: 'images/pub/infinidepth/vis_depth/PromptNeuralDepth_DSC_0219_up_8_implicit_cropped.png',
+                thumbnail: 'images/pub/infinidepth/vis_depth/DSC_0219_cropped.png'
             },
             {
                 name: 'Scene 3',
-                rgb: 'images/pub/infinidepth/DSC_6487.png',
-                depth: 'images/pub/infinidepth/MoGe-2_0250.png',
-                thumbnail: 'images/pub/infinidepth/depth/rgb3.jpg'
+                rgb: 'images/pub/infinidepth/vis_depth/000011.png',
+                depth: 'images/pub/infinidepth/vis_depth/PromptNeuralDepth_000011_up_16_disparity.png',
+                thumbnail: 'images/pub/infinidepth/vis_depth/000011.png'
             },
             {
                 name: 'Scene 4',
-                rgb: 'images/pub/infinidepth/DSC_0250.png',
-                depth: 'images/pub/infinidepth/NeuralDepth_0250_up_4.png',
-                thumbnail: 'images/pub/infinidepth/depth/rgb4.jpg'
+                rgb: 'images/pub/infinidepth/vis_depth/000020.png',
+                depth: 'images/pub/infinidepth/vis_depth/PromptNeuralDepth_000020_up_16_disparity.png',
+                thumbnail: 'images/pub/infinidepth/vis_depth/000020.png'
+            },
+            {
+                name: 'Scene 5',
+                rgb: 'images/pub/infinidepth/vis_depth/000020.png',
+                depth: 'images/pub/infinidepth/vis_depth/PromptNeuralDepth_000020_up_16_disparity.png',
+                thumbnail: 'images/pub/infinidepth/vis_depth/000020.png'
             }
         ]
     },
@@ -129,6 +135,9 @@ class VizShowcaseManager {
         this.setupDepthShowcase();
         this.setupPointCloudShowcase();
         this.setupNVSShowcase();
+
+        // Initialize first depth scene on page load
+        this.initFirstDepthScene();
     }
 
     /**
@@ -221,6 +230,16 @@ class VizShowcaseManager {
     }
 
     /**
+     * Initialize first depth scene on page load
+     */
+    initFirstDepthScene() {
+        // Wait a short delay to ensure DOM is fully ready
+        setTimeout(() => {
+            this.switchDepthScene(0);
+        }, 100);
+    }
+
+    /**
      * Setup depth visualization showcase
      */
     setupDepthShowcase() {
@@ -239,37 +258,85 @@ class VizShowcaseManager {
 
         this.currentScenes.depth = sceneIndex;
 
+        // Show loading overlay
+        const loadingOverlay = document.getElementById('depthLoading');
+        const interactiveComparison = document.querySelector('.interactive-comparison');
+
+        if (loadingOverlay) {
+            loadingOverlay.classList.add('active');
+        }
+
+        if (interactiveComparison) {
+            interactiveComparison.classList.add('loading');
+        }
+
+        // Track both image loading states
+        let rgbLoaded = false;
+        let depthLoaded = false;
+
+        const checkBothLoaded = () => {
+            if (rgbLoaded && depthLoaded) {
+                // Both images loaded, hide loading overlay after a short delay
+                setTimeout(() => {
+                    if (loadingOverlay) {
+                        loadingOverlay.classList.remove('active');
+                    }
+                    if (interactiveComparison) {
+                        interactiveComparison.classList.remove('loading');
+                    }
+                }, 200);
+            }
+        };
+
         // Update RGB image
         const rgbImage = document.getElementById('rgbImage');
         if (rgbImage) {
-            rgbImage.src = scene.rgb;
+            const newRgbImage = new Image();
+            newRgbImage.src = scene.rgb;
+
+            newRgbImage.onload = () => {
+                rgbImage.src = scene.rgb;
+                rgbLoaded = true;
+                checkBothLoaded();
+            };
+
+            newRgbImage.onerror = () => {
+                console.error('Failed to load RGB image:', scene.rgb);
+                rgbImage.src = scene.rgb;
+                rgbLoaded = true;
+                checkBothLoaded();
+            };
+        } else {
+            rgbLoaded = true;
+            checkBothLoaded();
         }
 
-        // Update InfiniDepthConfig to match the new scene
-        if (window.InfiniDepthConfig && window.InfiniDepthConfig.scenes) {
-            // Find matching scene in InfiniDepthConfig by RGB image path
-            let configIndex = window.InfiniDepthConfig.scenes.findIndex(
-                s => s.rgbImage === scene.rgb
-            );
+        // Preload depth image before triggering magnifier
+        const depthImage = new Image();
+        depthImage.src = scene.depth;
 
-            // If no matching scene found, use scene 0 or add a temporary one
-            if (configIndex < 0) {
-                configIndex = 0;
+        depthImage.onload = () => {
+            depthLoaded = true;
+
+            // Directly load the depth image using loadDepthImages
+            if (window.depthMagnifier && typeof window.depthMagnifier.loadDepthImages === 'function') {
+                window.depthMagnifier.loadDepthImages([scene.depth]);
             }
 
-            // Update depth image for the matching scene
-            window.InfiniDepthConfig.scenes[configIndex].depthImages = [scene.depth];
+            checkBothLoaded();
+        };
 
-            // Trigger depth magnifier to reload
-            if (window.depthMagnifier) {
-                if (typeof window.depthMagnifier.loadScene === 'function') {
-                    window.depthMagnifier.loadScene(configIndex);
-                } else if (typeof window.depthMagnifier.loadDepthImages === 'function') {
-                    // Fallback: directly load the depth image
-                    window.depthMagnifier.loadDepthImages([scene.depth]);
-                }
+        depthImage.onerror = () => {
+            console.error('Failed to load depth image:', scene.depth);
+            depthLoaded = true;
+
+            // Still trigger magnifier even if depth failed
+            if (window.depthMagnifier && typeof window.depthMagnifier.loadDepthImages === 'function') {
+                window.depthMagnifier.loadDepthImages([scene.depth]);
             }
-        }
+
+            checkBothLoaded();
+        };
     }
 
     /**
