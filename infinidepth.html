@@ -175,13 +175,13 @@
             <div class="row">
                 <div class="col-12">
                     <div class="section-card">
-                        <h3 style="font-size:1.5rem; margin-bottom:17px; color:#345; font-weight:600;">Abstract</h3>
+                        <h3 style="font-size:1.5rem; margin-bottom:20px; color:#345; font-weight:600;">Abstract</h3>
                         <p style="text-align: justify;">
                             Existing depth estimation methods are fundamentally limited to predicting depth on discrete image grids. Such representations restrict their scalability to arbitrary output resolutions and hinder the geometric detail recovery.
                             This paper introduces <strong>InfiniDepth</strong>, which represents depth as neural implicit fields.
                             Through a simple yet effective local implicit decoder, we can query depth at continuous 2D coordinates, enabling arbitrary-resolution and fine-grained depth estimation.
                             To better assess our method's capabilities, we curate a high-quality 4K synthetic benchmark from five different games, spanning diverse scenes with rich geometric and appearance details.
-                            Extensive experiments demonstrate that InfiniDepth achieves state-of-the-art performance on both synthetic and real-world benchmarks across relative and metric depth estimation tasks, particularly excelling in fine-detail regions.
+                            Experiments demonstrate that InfiniDepth achieves SOTA performance on both synthetic and real-world benchmarks across relative and metric depth estimation tasks, particularly excelling in fine-detail regions.
                             It also benefits the task of novel view synthesis under large viewpoint shifts, producing high-quality results with fewer holes and artifacts.
                         </p>
                     </div>
@@ -228,17 +228,17 @@
 
             <!-- Mode 1: Interactive Depth -->
             <div class="viz-content active" id="viz-depth">
-                <p><strong>Interactive Depth Comparison:</strong>
-                Hover over the RGB image to explore depth details.
+                <p><strong>Interactive Depth Map Visulization:</strong>
+                Hover over the RGB image (left-side) to explore details in the 8K-resolution depth map (right-side). Use the mouse scroll wheel to zoom in/out on a specific patch.
                 </p>
                 <div class="interactive-depth-wrapper">
-                    <!-- Loading overlay -->
-                    <div class="interactive-depth-loading" id="depthLoading">
+                    <!-- Loading overlay - initially visible -->
+                    <div class="interactive-depth-loading active" id="depthLoading" style="opacity: 1; visibility: visible;">
                         <div class="image-spinner"></div>
                         <div class="loading-text">Loading scene...</div>
                     </div>
                     <!-- Interactive comparison content -->
-                    <div class="interactive-comparison">
+                    <div class="interactive-comparison loading" style="opacity: 0;">
                         <!-- Left: RGB Image -->
                         <div class="rgb-side" id="rgbSide">
                         <img src="images/pub/infinidepth/DSC_6487.png" class="rgb-image" id="rgbImage" alt="RGB Image">

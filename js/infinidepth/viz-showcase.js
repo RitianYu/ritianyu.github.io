@@ -6,37 +6,32 @@
 // Scene configuration for visualization showcase
 const VizShowcaseConfig = {
     // Depth visualization scenes
+    // NOTE: Keep this in sync with InfiniDepthConfig.scenes
     depth: {
         scenes: [
             {
                 name: 'Scene 1',
-                rgb: 'images/pub/infinidepth/DSC_6487.png',
-                depth: 'images/pub/infinidepth/vis_depth/Ours_DSC_6487_16k.png',
-                thumbnail: 'images/pub/infinidepth/DSC_6487.png'
+                rgb: 'images/pub/infinidepth/interactitve_depth/rgb1.png',
+                depth: 'images/pub/infinidepth/interactitve_depth/depth1.png',
+                thumbnail: 'images/pub/infinidepth/interactitve_depth/rgb1_low.png'
             },
             {
                 name: 'Scene 2',
-                rgb: 'images/pub/infinidepth/vis_depth/DSC_0219_cropped.png',
-                depth: 'images/pub/infinidepth/vis_depth/PromptNeuralDepth_DSC_0219_up_8_implicit_cropped.png',
-                thumbnail: 'images/pub/infinidepth/vis_depth/DSC_0219_cropped.png'
+                rgb: 'images/pub/infinidepth/interactitve_depth/rgb3.png',
+                depth: 'images/pub/infinidepth/interactitve_depth/depth3.png',
+                thumbnail: 'images/pub/infinidepth/interactitve_depth/rgb3_low.png'
             },
             {
                 name: 'Scene 3',
-                rgb: 'images/pub/infinidepth/vis_depth/000011.png',
-                depth: 'images/pub/infinidepth/vis_depth/PromptNeuralDepth_000011_up_16_disparity.png',
-                thumbnail: 'images/pub/infinidepth/vis_depth/000011.png'
+                rgb: 'images/pub/infinidepth/interactitve_depth/rgb4.png',
+                depth: 'images/pub/infinidepth/interactitve_depth/depth4.png',
+                thumbnail: 'images/pub/infinidepth/interactitve_depth/rgb4_low.png'
             },
             {
                 name: 'Scene 4',
-                rgb: 'images/pub/infinidepth/vis_depth/000020.png',
-                depth: 'images/pub/infinidepth/vis_depth/PromptNeuralDepth_000020_up_16_disparity.png',
-                thumbnail: 'images/pub/infinidepth/vis_depth/000020.png'
-            },
-            {
-                name: 'Scene 5',
-                rgb: 'images/pub/infinidepth/vis_depth/000020.png',
-                depth: 'images/pub/infinidepth/vis_depth/PromptNeuralDepth_000020_up_16_disparity.png',
-                thumbnail: 'images/pub/infinidepth/vis_depth/000020.png'
+                rgb: 'images/pub/infinidepth/interactitve_depth/rgb4.png',
+                depth: 'images/pub/infinidepth/interactitve_depth/depth4.png',
+                thumbnail: 'images/pub/infinidepth/interactitve_depth/rgb4_low.png',
             }
         ]
     },
@@ -280,9 +275,14 @@ class VizShowcaseManager {
                 setTimeout(() => {
                     if (loadingOverlay) {
                         loadingOverlay.classList.remove('active');
+                        // Remove inline styles to allow CSS transitions
+                        loadingOverlay.style.opacity = '';
+                        loadingOverlay.style.visibility = '';
                     }
                     if (interactiveComparison) {
                         interactiveComparison.classList.remove('loading');
+                        // Remove inline styles to allow CSS transitions
+                        interactiveComparison.style.opacity = '';
                     }
                 }, 200);
             }

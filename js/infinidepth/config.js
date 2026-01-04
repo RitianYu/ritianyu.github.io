@@ -6,48 +6,53 @@
 
 const InfiniDepthConfig = {
     // Multiple scenes configuration
+    // NOTE: Keep this in sync with VizShowcaseConfig.depth.scenes
     scenes: [
         {
-            name: 'DSC_6487',
-            rgbImage: 'images/pub/infinidepth/DSC_6487.png',
+            name: 'Scene 1',
+            rgbImage: 'images/pub/infinidepth/interactitve_depth/rgb1.png',
             depthImages: [
-                'images/pub/infinidepth/MoGe-2_0250.png'
+                'images/pub/infinidepth/interactitve_depth/depth1.png'
             ],
             methodLabels: [
                 'InfiniDepth'
             ]
         },
         {
-            name: 'DSC_0250',
-            rgbImage: 'images/pub/infinidepth/DSC_0250.png',
+            name: 'Scene 2',
+            rgbImage: 'images/pub/infinidepth/interactitve_depth/rgb3.png',
             depthImages: [
-                'images/pub/infinidepth/NeuralDepth_0250_up_4.png'
+               'images/pub/infinidepth/interactitve_depth/depth3.png'
             ],
             methodLabels: [
                 'InfiniDepth'
             ]
-        }
-        // ============================
-        // Add more scenes here:
-        // ============================
-        // Uncomment and modify the following template to add a new scene
-        // Make sure to add a comma after the previous scene object
-
-        // ,{
-        //     name: 'Your Scene Name',  // Will be displayed in the navigation bar
-        //     rgbImage: 'images/pub/infinidepth/your_rgb_image.png',
-        //     depthImages: [
-        //         'images/pub/infinidepth/your_method_depth.png'
-        //     ],
-        //     methodLabels: [
-        //         'Method Name'
-        //     ]
-        // }
+        },
+        {
+            name: 'Scene 3',
+            rgbImage: 'images/pub/infinidepth/interactitve_depth/rgb4.png',
+            depthImages: [
+               'images/pub/infinidepth/interactitve_depth/depth4.png'
+            ],
+            methodLabels: [
+                'InfiniDepth'
+            ]
+        },
+        {
+            name: 'Scene 4',
+            rgbImage: 'images/pub/infinidepth/interactitve_depth/rgb4.png',
+            depthImages: [
+               'images/pub/infinidepth/interactitve_depth/depth4.png'
+            ],
+            methodLabels: [
+                'InfiniDepth'
+            ]
+        },
     ],
     
     // Patch size settings (in pixels)
     initialPatchSize: 512,  // Initial patch size when hovering starts (zoom = 1x)
-    minPatchSize: 32,       // Minimum patch size (zoom = 16x, calculated as 512/16)
+    minPatchSize: 64,       // Minimum patch size (zoom = 16x, calculated as 512/16)
     maxPatchSize: 512,      // Maximum patch size (zoom = 1x, same as initial)
     
     // Zoom behavior

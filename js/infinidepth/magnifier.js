@@ -24,15 +24,16 @@ class DepthMagnifier {
 
         // Create canvas inside magnifier lens for zoom effect
         this.lensCanvas = document.createElement('canvas');
-        this.lensCanvas.width = 200;  // Fixed lens size
-        this.lensCanvas.height = 200;
-        this.lensCtx = this.lensCanvas.getContext('2d');
+        this.lensSize = 200;  // Fixed lens size
+        this.lensCanvas.width = this.lensSize;
+        this.lensCanvas.height = this.lensSize;
+        this.lensCtx = this.lensCanvas.getContext('2d', { willReadFrequently: false });
 
         this.canvases = [
             document.getElementById('depthCanvas1')
         ];
 
-        this.contexts = this.canvases.map(c => c ? c.getContext('2d') : null);
+        this.contexts = this.canvases.map(c => c ? c.getContext('2d', { willReadFrequently: false }) : null);
 
         // State
         this.isHovering = false;
@@ -41,6 +42,12 @@ class DepthMagnifier {
         this.zoomLevel = 1.0;
         this.mousePos = { x: 0, y: 0 };
         this.lastMouseEvent = null;
+
+        // Performance optimization: throttle wheel events
+        this.wheelThrottleTimeout = null;
+        this.isWheelThrottled = false;
+        this.accumulatedDelta = 0;  // Accumulate wheel deltas for smooth batch updates
+        this.wheelUpdatePending = false;
 
         // Initialize scene navigation
         this.initSceneNavigation();
@@ -120,29 +127,51 @@ class DepthMagnifier {
         
         // Update navigation buttons
         this.updateNavigationButtons();
-        
+
         // Reset depth images
         this.depthImagesLoaded = [];
+
+        // Clear cached dimensions when switching scenes
+        this._cachedRgbDimensions = null;
+        this._cachedCanvasAspectRatio = null;
+        this._cachedDepthDimensions = null;
 
         // Update RGB image
         const oldSrc = this.rgbImage.src;
         const newSrc = scene.rgbImage;
-        
+
         if (oldSrc !== newSrc) {
+            // Force eager decoding for RGB image as well
+            this.rgbImage.decoding = 'sync';
+
             // Set new image source
             this.rgbImage.src = newSrc;
 
-            // Wait for RGB image to load
+            // Wait for RGB image to load and decode
             if (this.rgbImage.complete) {
-                this.onSceneLoaded(scene);
+                this.decodeAndLoadScene(scene);
             } else {
-                this.rgbImage.addEventListener('load', () => {
-                    this.onSceneLoaded(scene);
+                this.rgbImage.addEventListener('load', async () => {
+                    await this.decodeAndLoadScene(scene);
                 }, { once: true });
             }
         } else {
             this.onSceneLoaded(scene);
         }
+    }
+
+    /**
+     * Decode RGB image and load scene
+     */
+    async decodeAndLoadScene(scene) {
+        try {
+            // Force decode RGB image to prevent lag on first zoom
+            await this.rgbImage.decode();
+            console.log('RGB image decoded');
+        } catch (e) {
+            console.warn('RGB image decode failed, will use sync decode:', e);
+        }
+        this.onSceneLoaded(scene);
     }
     
     /**
@@ -161,7 +190,12 @@ class DepthMagnifier {
 
         // Handle window resize
         if (!this.resizeHandlerAdded) {
-            window.addEventListener('resize', () => this.initializeCanvasSizes());
+            window.addEventListener('resize', () => {
+                // Clear cached dimensions on resize
+                this._cachedRgbDimensions = null;
+                this._cachedCanvasAspectRatio = null;
+                this.initializeCanvasSizes();
+            });
             this.resizeHandlerAdded = true;
         }
     }
@@ -288,26 +322,74 @@ class DepthMagnifier {
     }
     
     /**
-     * Load all depth images
+     * Load all depth images with eager decoding to prevent first-zoom lag
      */
     loadDepthImages(depthImagePaths) {
         const imagePaths = depthImagePaths || this.config.scenes[this.currentSceneIndex].depthImages;
-        
+
         this.depthImagesLoaded = [];
-        
+        let loadedCount = 0;
+        const totalImages = imagePaths.length;
+
         imagePaths.forEach((src, index) => {
             const img = new Image();
             img.crossOrigin = 'anonymous';
-            img.onload = () => {
+
+            // Critical: Force eager decoding to prevent lag on first zoom
+            img.decoding = 'sync';
+
+            img.onload = async () => {
+                // Force browser to decode the image immediately
+                // This prevents the lag when first drawing the image
+                try {
+                    await img.decode();
+                    console.log(`Depth image ${index + 1} decoded:`, src);
+                } catch (e) {
+                    console.warn(`Image decode failed, will use sync decode:`, e);
+                }
+
                 this.depthImagesLoaded[index] = img;
                 this.drawFullDepth(index);
                 console.log(`Depth image ${index + 1} loaded:`, src);
+
+                loadedCount++;
+                if (loadedCount === totalImages) {
+                    // All images loaded, hide loading overlay
+                    this.hideLoadingOverlay();
+                }
             };
             img.onerror = () => {
                 console.error(`Failed to load depth image ${index + 1}:`, src);
+                loadedCount++;
+                if (loadedCount === totalImages) {
+                    // All images loaded (even with errors), hide loading overlay
+                    this.hideLoadingOverlay();
+                }
             };
             img.src = src;
         });
+    }
+
+    /**
+     * Hide loading overlay
+     */
+    hideLoadingOverlay() {
+        const loadingOverlay = document.getElementById('depthLoading');
+        const interactiveComparison = document.querySelector('.interactive-comparison');
+
+        setTimeout(() => {
+            if (loadingOverlay) {
+                loadingOverlay.classList.remove('active');
+                // Remove inline styles to allow CSS transitions
+                loadingOverlay.style.opacity = '';
+                loadingOverlay.style.visibility = '';
+            }
+            if (interactiveComparison) {
+                interactiveComparison.classList.remove('loading');
+                // Remove inline styles to allow CSS transitions
+                interactiveComparison.style.opacity = '';
+            }
+        }, 200);
     }
     
     /**
@@ -335,26 +417,36 @@ class DepthMagnifier {
         const ctx = this.contexts[index];
         const img = this.depthImagesLoaded[index];
 
-        // Get RGB image dimensions
-        const rgbDisplayWidth = this.rgbImage.offsetWidth;
-        const rgbDisplayHeight = this.rgbImage.offsetHeight;
-        const rgbNaturalWidth = this.rgbImage.naturalWidth;
-        const rgbNaturalHeight = this.rgbImage.naturalHeight;
+        // Cache RGB image dimensions (these don't change during zoom)
+        if (!this._cachedRgbDimensions) {
+            this._cachedRgbDimensions = {
+                displayWidth: this.rgbImage.offsetWidth,
+                displayHeight: this.rgbImage.offsetHeight,
+                naturalWidth: this.rgbImage.naturalWidth,
+                naturalHeight: this.rgbImage.naturalHeight
+            };
+        }
+        const rgbDisplayWidth = this._cachedRgbDimensions.displayWidth;
+        const rgbDisplayHeight = this._cachedRgbDimensions.displayHeight;
+        const rgbNaturalWidth = this._cachedRgbDimensions.naturalWidth;
+        const rgbNaturalHeight = this._cachedRgbDimensions.naturalHeight;
 
         // Calculate mouse position in RGB natural coordinates
         const rgbNaturalX = (centerX / rgbDisplayWidth) * rgbNaturalWidth;
         const rgbNaturalY = (centerY / rgbDisplayHeight) * rgbNaturalHeight;
 
-        // Calculate patch dimensions that match canvas aspect ratio
-        const canvasAspectRatio = canvas.width / canvas.height;
-        let patchWidth, patchHeight;
+        // Cache canvas aspect ratio (doesn't change)
+        if (!this._cachedCanvasAspectRatio) {
+            this._cachedCanvasAspectRatio = canvas.width / canvas.height;
+        }
+        const canvasAspectRatio = this._cachedCanvasAspectRatio;
 
+        // Calculate patch dimensions that match canvas aspect ratio
+        let patchWidth, patchHeight;
         if (canvasAspectRatio >= 1) {
-            // Canvas is wider or square - use patchSize for width
             patchWidth = this.patchSize;
             patchHeight = this.patchSize / canvasAspectRatio;
         } else {
-            // Canvas is taller - use patchSize for height
             patchHeight = this.patchSize;
             patchWidth = this.patchSize * canvasAspectRatio;
         }
@@ -363,9 +455,20 @@ class DepthMagnifier {
         const patchRatioX = patchWidth / rgbNaturalWidth;
         const patchRatioY = patchHeight / rgbNaturalHeight;
 
+        // Cache depth image dimensions (don't change)
+        if (!this._cachedDepthDimensions) {
+            this._cachedDepthDimensions = [];
+        }
+        if (!this._cachedDepthDimensions[index]) {
+            this._cachedDepthDimensions[index] = {
+                width: img.width,
+                height: img.height
+            };
+        }
+        const depthWidth = this._cachedDepthDimensions[index].width;
+        const depthHeight = this._cachedDepthDimensions[index].height;
+
         // Apply same ratio to depth image to get corresponding patch
-        const depthWidth = img.width;
-        const depthHeight = img.height;
         const depthPatchWidth = patchRatioX * depthWidth;
         const depthPatchHeight = patchRatioY * depthHeight;
 
@@ -422,7 +525,7 @@ class DepthMagnifier {
         const clampedY = srcCenterY / scaleY;
         
         // Fixed lens size (does not change with scroll)
-        const lensSize = 200; // Fixed at 200px for consistent UI
+        const lensSize = this.lensSize;
         
         // Calculate lens position (centered on clamped cursor)
         let lensX = clampedX - lensSize / 2;
@@ -463,16 +566,22 @@ class DepthMagnifier {
         const canvas = this.lensCanvas;
         const ctx = this.lensCtx;
 
-        // Fixed lens canvas size (matches lens div size)
-        const lensSize = 200;
-        canvas.width = lensSize;
-        canvas.height = lensSize;
+        // Canvas size is already set in constructor - no need to reset
+        const lensSize = this.lensSize;
 
-        // Get RGB image dimensions
-        const rgbDisplayWidth = this.rgbImage.offsetWidth;
-        const rgbDisplayHeight = this.rgbImage.offsetHeight;
-        const rgbNaturalWidth = this.rgbImage.naturalWidth;
-        const rgbNaturalHeight = this.rgbImage.naturalHeight;
+        // Use cached RGB dimensions (same cache as drawPatchDepth)
+        if (!this._cachedRgbDimensions) {
+            this._cachedRgbDimensions = {
+                displayWidth: this.rgbImage.offsetWidth,
+                displayHeight: this.rgbImage.offsetHeight,
+                naturalWidth: this.rgbImage.naturalWidth,
+                naturalHeight: this.rgbImage.naturalHeight
+            };
+        }
+        const rgbDisplayWidth = this._cachedRgbDimensions.displayWidth;
+        const rgbDisplayHeight = this._cachedRgbDimensions.displayHeight;
+        const rgbNaturalWidth = this._cachedRgbDimensions.naturalWidth;
+        const rgbNaturalHeight = this._cachedRgbDimensions.naturalHeight;
 
         // Map display coordinates to natural image coordinates
         const scaleX = rgbNaturalWidth / rgbDisplayWidth;
@@ -481,10 +590,12 @@ class DepthMagnifier {
         const srcCenterX = centerX * scaleX;
         const srcCenterY = centerY * scaleY;
 
-        // Calculate patch dimensions that match canvas aspect ratio
-        // Get canvas aspect ratio from the first depth canvas
-        const depthCanvas = this.canvases[0];
-        const canvasAspectRatio = depthCanvas ? (depthCanvas.width / depthCanvas.height) : 1;
+        // Use cached canvas aspect ratio
+        if (!this._cachedCanvasAspectRatio) {
+            const depthCanvas = this.canvases[0];
+            this._cachedCanvasAspectRatio = depthCanvas ? (depthCanvas.width / depthCanvas.height) : 1;
+        }
+        const canvasAspectRatio = this._cachedCanvasAspectRatio;
 
         let patchWidth, patchHeight;
 
@@ -513,15 +624,35 @@ class DepthMagnifier {
         // Clear canvas
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+        // Calculate aspect ratios
+        const patchAspectRatio = sw / sh;
+        const lensAspectRatio = 1; // Lens is square (200x200)
+
+        let dx, dy, dw, dh;
+
+        // Fill the entire lens (cover mode) - may crop some content but no letterboxing
+        if (patchAspectRatio > lensAspectRatio) {
+            // Patch is wider - fit to height and crop sides
+            dh = lensSize;
+            dw = lensSize * patchAspectRatio;
+            dy = 0;
+            dx = (lensSize - dw) / 2; // Center horizontally (will be cropped by circular clip)
+        } else {
+            // Patch is taller - fit to width and crop top/bottom
+            dw = lensSize;
+            dh = lensSize / patchAspectRatio;
+            dx = 0;
+            dy = (lensSize - dh) / 2; // Center vertically (will be cropped by circular clip)
+        }
+
         // Draw with circular clipping
         ctx.save();
         ctx.beginPath();
         ctx.arc(canvas.width / 2, canvas.height / 2, canvas.width / 2, 0, Math.PI * 2);
         ctx.clip();
 
-        // Draw the patch region scaled to fill the fixed lens size
-        // As patchSize decreases (zoom in), we show a smaller region magnified in the lens
-        ctx.drawImage(this.rgbImage, sx, sy, sw, sh, 0, 0, lensSize, lensSize);
+        // Draw the patch region maintaining aspect ratio
+        ctx.drawImage(this.rgbImage, sx, sy, sw, sh, dx, dy, dw, dh);
 
         ctx.restore();
     }
@@ -538,24 +669,40 @@ class DepthMagnifier {
     }
     
     /**
-     * Handle mouse wheel zoom
+     * Handle mouse wheel zoom with accumulated delta batching
      */
     handleWheel(e) {
         e.preventDefault();
-        
-        // Adjust patch size based on wheel direction
+
+        // Accumulate wheel delta
         const delta = e.deltaY > 0 ? 1 : -1;
-        const newPatchSize = this.patchSize * (1 + delta * this.config.zoomStep);
-        
-        // Clamp patch size
-        this.patchSize = Math.max(
-            this.config.minPatchSize,
-            Math.min(this.config.maxPatchSize, newPatchSize)
-        );
-        
-        // Update display
-        if (this.isHovering && this.lastMouseEvent) {
-            this.updateLensPosition(this.lastMouseEvent);
+        this.accumulatedDelta += delta;
+
+        // If update is not already scheduled, schedule one
+        if (!this.wheelUpdatePending) {
+            this.wheelUpdatePending = true;
+
+            requestAnimationFrame(() => {
+                // Apply all accumulated deltas at once
+                const totalDelta = this.accumulatedDelta;
+                this.accumulatedDelta = 0;
+                this.wheelUpdatePending = false;
+
+                // Calculate new patch size based on accumulated delta
+                const zoomFactor = Math.pow(1 + this.config.zoomStep, totalDelta);
+                const newPatchSize = this.patchSize * zoomFactor;
+
+                // Clamp patch size
+                this.patchSize = Math.max(
+                    this.config.minPatchSize,
+                    Math.min(this.config.maxPatchSize, newPatchSize)
+                );
+
+                // Update display only once for all accumulated wheel events
+                if (this.isHovering && this.lastMouseEvent) {
+                    this.updateLensPosition(this.lastMouseEvent);
+                }
+            });
         }
     }
     
