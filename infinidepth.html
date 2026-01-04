@@ -223,7 +223,7 @@
             <!-- Mode 2: Point Cloud -->
             <div class="viz-content" id="viz-pointcloud">
                 <p><strong>Point Cloud Visualization:</strong>
-                Dense point clouds reconstructed from predicted depth. Use mouse to rotate, zoom, and pan.
+                Point clouds from predicted depth maps. Use mouse to rotate, zoom, and pan.
                 </p>
                 <div id="pointcloud-container" style="width:100%; height:600px; border-radius:12px; background:#ffffff; position:relative;">
                     <div id="pointcloud-loading" style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); color:#333; font-size:1.1rem;">
@@ -237,10 +237,10 @@
             <!-- Mode 3: NVS -->
             <div class="viz-content" id="viz-nvs">
                 <p><strong>Novel View Synthesis:</strong>
-                Single-view novel view synthesis under large viewpoint shifts.
+                Single-view NVS results.
                 </p>
                 <div style="display:flex; justify-content:center;">
-                    <video id="nvs-video" controls style="width:100%; border-radius:12px;">
+                    <video id="nvs-video" controls autoplay loop muted style="width:100%; border-radius:12px;">
                         <source src="images/pub/infinidepth/nvs.mp4" type="video/mp4">
                     </video>
                 </div>

@@ -65,20 +65,35 @@ const VizShowcaseConfig = {
     nvs: {
         scenes: [
             {
-                name: 'NVS Scene 1',
-                video: 'images/pub/infinidepth/nvs.mp4',
-                thumbnail: 'images/pub/infinidepth/vis_pcd/rgb1.jpg'
-            },
-            {
                 name: 'NVS Scene 2',
-                video: 'images/pub/infinidepth/nvs.mp4',
-                thumbnail: 'images/pub/infinidepth/vis_pcd/rgb2.jpg'
+                video: 'images/pub/infinidepth/vis_nvs/12_88_orig_to_bev_transition.mp4',
+                thumbnail:'images/pub/infinidepth/nvs_compare/rgb3.jpg',
             },
             {
                 name: 'NVS Scene 3',
-                video: 'images/pub/infinidepth/nvs.mp4',
-                thumbnail: 'images/pub/infinidepth/vis_pcd/rgb3.jpg'
-            }
+                video: 'images/pub/infinidepth/vis_nvs/147_30_orig_to_bev_transition.mp4',
+                thumbnail: 'images/pub/infinidepth/nvs_compare/rgb4.jpg',
+            },
+             {
+                name: 'NVS Scene 4',
+                video: 'images/pub/infinidepth/vis_nvs/1_190_orig_to_bev_transition.mp4',
+                thumbnail: 'images/pub/infinidepth/nvs_compare/rgb1.jpg',
+            },
+            {
+                name: 'NVS Scene 5',
+                video: 'images/pub/infinidepth/vis_nvs/50_69_orig_to_bev_transition.mp4',
+                thumbnail: 'images/pub/infinidepth/nvs_compare/rgb2.jpg',
+            },
+            {
+                name: 'NVS Scene 1',
+                video: 'images/pub/infinidepth/vis_nvs/0_36_orig_to_bev_transition.mp4',
+                thumbnail: 'images/pub/infinidepth/nvs_compare/rgb5.jpg',
+            },            
+            {
+                name: 'NVS Scene 6',
+                video: 'images/pub/infinidepth/vis_nvs/15_54_orig_to_bev_transition.mp4',
+                thumbnail: 'images/pub/infinidepth/nvs_compare/rgb8.jpg',
+            },
         ]
     }
 };
@@ -253,6 +268,9 @@ class VizShowcaseManager {
 
             showcase.appendChild(thumb);
         });
+
+        // Load first scene automatically
+        this.switchNVSScene(0);
     }
 
     /**
@@ -270,7 +288,21 @@ class VizShowcaseManager {
             const source = video.querySelector('source');
             if (source) {
                 source.src = scene.video;
+
+                // Ensure video has autoplay, loop, and muted attributes
+                video.loop = true;
+                video.muted = true;
+
                 video.load(); // Reload video with new source
+
+                // Auto-play video after it's loaded
+                video.addEventListener('loadeddata', function autoPlay() {
+                    video.play().catch(err => {
+                        console.log('Auto-play prevented:', err);
+                    });
+                    // Remove the event listener after first play
+                    video.removeEventListener('loadeddata', autoPlay);
+                });
             }
         }
     }
