@@ -19,6 +19,7 @@
     <link href="css/infinidepth/magnifier.css" rel="stylesheet">
     <link href="css/infinidepth/layout.css" rel="stylesheet">
     <link href="css/infinidepth/visualization.css" rel="stylesheet">
+    <link href="css/infinidepth/loading.css" rel="stylesheet">
 
     <!-- Three.js for Point Cloud Viewer -->
     <script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
@@ -240,7 +241,7 @@
                 Single-view NVS results.
                 </p>
                 <div style="display:flex; justify-content:center;">
-                    <video id="nvs-video" controls autoplay loop muted style="width:100%; border-radius:12px;">
+                    <video id="nvs-video" controls autoplay loop muted style="width:95%; border-radius:12px;">
                         <source src="images/pub/infinidepth/nvs.mp4" type="video/mp4">
                     </video>
                 </div>
@@ -384,6 +385,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
 
     <!-- InfiniDepth Scripts -->
+    <script src="js/infinidepth/loading.js"></script>
     <script src="js/infinidepth/config.js"></script>
     <script src="js/infinidepth/magnifier.js"></script>
     <script src="js/infinidepth/viz-switcher.js"></script>

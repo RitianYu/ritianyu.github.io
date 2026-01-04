@@ -106,6 +106,13 @@ class VizShowcaseManager {
             nvs: 0
         };
 
+        this.maxVisible = 4; // 固定显示4张图
+        this.startIndex = {
+            depth: 0,
+            pointcloud: 0,
+            nvs: 0
+        };
+
         this.init();
     }
 
@@ -125,31 +132,101 @@ class VizShowcaseManager {
     }
 
     /**
+     * Create showcase with navigation arrows
+     */
+    createShowcaseWithArrows(showcaseId, scenes, onClickCallback) {
+        const showcase = document.getElementById(showcaseId);
+        if (!showcase) return null;
+
+        const type = showcaseId.replace('-viz-showcase', '');
+
+        // Create container and arrows
+        const container = document.createElement('div');
+        container.className = 'showcase-container';
+
+        const leftArrow = document.createElement('div');
+        leftArrow.className = 'showcase-arrow showcase-arrow-left';
+        leftArrow.innerHTML = '&#9664;'; // ◀
+
+        const rightArrow = document.createElement('div');
+        rightArrow.className = 'showcase-arrow showcase-arrow-right';
+        rightArrow.innerHTML = '&#9654;'; // ▶
+
+        // Replace showcase with container
+        const parent = showcase.parentNode;
+        parent.replaceChild(container, showcase);
+        container.appendChild(leftArrow);
+        container.appendChild(showcase);
+        container.appendChild(rightArrow);
+
+        const renderThumbs = () => {
+            showcase.innerHTML = '';
+            const startIdx = this.startIndex[type];
+            const endIdx = Math.min(startIdx + this.maxVisible, scenes.length);
+            const visibleScenes = scenes.slice(startIdx, endIdx);
+
+            visibleScenes.forEach((scene, idx) => {
+                const actualIdx = startIdx + idx;
+                const thumb = document.createElement('img');
+                thumb.src = scene.thumbnail;
+                thumb.className = 'showcase-thumb' + (actualIdx === 0 && startIdx === 0 ? ' active' : '');
+                thumb.alt = scene.name;
+                thumb.dataset.index = actualIdx;
+
+                thumb.addEventListener('click', () => {
+                    showcase.querySelectorAll('.showcase-thumb').forEach(t => t.classList.remove('active'));
+                    thumb.classList.add('active');
+                    onClickCallback(actualIdx);
+                });
+
+                showcase.appendChild(thumb);
+            });
+
+            updateArrows();
+        };
+
+        const updateArrows = () => {
+            leftArrow.style.display = 'flex';
+            rightArrow.style.display = 'flex';
+
+            if (this.startIndex[type] === 0) {
+                leftArrow.classList.add('disabled');
+            } else {
+                leftArrow.classList.remove('disabled');
+            }
+
+            if (this.startIndex[type] + this.maxVisible >= scenes.length) {
+                rightArrow.classList.add('disabled');
+            } else {
+                rightArrow.classList.remove('disabled');
+            }
+        };
+
+        leftArrow.addEventListener('click', () => {
+            if (this.startIndex[type] > 0) {
+                this.startIndex[type]--;
+                renderThumbs();
+            }
+        });
+
+        rightArrow.addEventListener('click', () => {
+            if (this.startIndex[type] + this.maxVisible < scenes.length) {
+                this.startIndex[type]++;
+                renderThumbs();
+            }
+        });
+
+        renderThumbs();
+        return { showcase, renderThumbs };
+    }
+
+    /**
      * Setup depth visualization showcase
      */
     setupDepthShowcase() {
-        const showcase = document.getElementById('depth-viz-showcase');
-        if (!showcase) return;
-
         const scenes = VizShowcaseConfig.depth.scenes;
-        showcase.innerHTML = '';
-
-        scenes.forEach((scene, idx) => {
-            const thumb = document.createElement('img');
-            thumb.src = scene.thumbnail;
-            thumb.className = 'showcase-thumb' + (idx === 0 ? ' active' : '');
-            thumb.alt = scene.name;
-
-            thumb.addEventListener('click', () => {
-                // Update active thumbnail
-                showcase.querySelectorAll('.showcase-thumb').forEach(t => t.classList.remove('active'));
-                thumb.classList.add('active');
-
-                // Switch depth scene
-                this.switchDepthScene(idx);
-            });
-
-            showcase.appendChild(thumb);
+        this.createShowcaseWithArrows('depth-viz-showcase', scenes, (idx) => {
+            this.switchDepthScene(idx);
         });
     }
 
@@ -199,28 +276,9 @@ class VizShowcaseManager {
      * Setup point cloud visualization showcase
      */
     setupPointCloudShowcase() {
-        const showcase = document.getElementById('pointcloud-viz-showcase');
-        if (!showcase) return;
-
         const scenes = VizShowcaseConfig.pointcloud.scenes;
-        showcase.innerHTML = '';
-
-        scenes.forEach((scene, idx) => {
-            const thumb = document.createElement('img');
-            thumb.src = scene.thumbnail;
-            thumb.className = 'showcase-thumb' + (idx === 0 ? ' active' : '');
-            thumb.alt = scene.name;
-
-            thumb.addEventListener('click', () => {
-                // Update active thumbnail
-                showcase.querySelectorAll('.showcase-thumb').forEach(t => t.classList.remove('active'));
-                thumb.classList.add('active');
-
-                // Switch point cloud scene
-                this.switchPointCloudScene(idx);
-            });
-
-            showcase.appendChild(thumb);
+        this.createShowcaseWithArrows('pointcloud-viz-showcase', scenes, (idx) => {
+            this.switchPointCloudScene(idx);
         });
     }
 
@@ -245,28 +303,9 @@ class VizShowcaseManager {
      * Setup NVS visualization showcase
      */
     setupNVSShowcase() {
-        const showcase = document.getElementById('nvs-viz-showcase');
-        if (!showcase) return;
-
         const scenes = VizShowcaseConfig.nvs.scenes;
-        showcase.innerHTML = '';
-
-        scenes.forEach((scene, idx) => {
-            const thumb = document.createElement('img');
-            thumb.src = scene.thumbnail;
-            thumb.className = 'showcase-thumb' + (idx === 0 ? ' active' : '');
-            thumb.alt = scene.name;
-
-            thumb.addEventListener('click', () => {
-                // Update active thumbnail
-                showcase.querySelectorAll('.showcase-thumb').forEach(t => t.classList.remove('active'));
-                thumb.classList.add('active');
-
-                // Switch NVS scene
-                this.switchNVSScene(idx);
-            });
-
-            showcase.appendChild(thumb);
+        this.createShowcaseWithArrows('nvs-viz-showcase', scenes, (idx) => {
+            this.switchNVSScene(idx);
         });
 
         // Load first scene automatically
