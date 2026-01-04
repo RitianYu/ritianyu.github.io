@@ -46,9 +46,9 @@ const InfiniDepthConfig = {
     ],
     
     // Patch size settings (in pixels)
-    initialPatchSize: 512,  // Initial patch size when hovering starts
-    minPatchSize: 32,       // Minimum patch size (max zoom in)
-    maxPatchSize: 512,      // Maximum patch size (max zoom out)
+    initialPatchSize: 512,  // Initial patch size when hovering starts (zoom = 1x)
+    minPatchSize: 32,       // Minimum patch size (zoom = 16x, calculated as 512/16)
+    maxPatchSize: 512,      // Maximum patch size (zoom = 1x, same as initial)
     
     // Zoom behavior
     zoomStep: 0.1,          // Zoom step per mouse wheel scroll (0.05-0.2 recommended)

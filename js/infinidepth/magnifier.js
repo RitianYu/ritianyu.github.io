@@ -330,51 +330,65 @@ class DepthMagnifier {
      */
     drawPatchDepth(index, centerX, centerY) {
         if (!this.depthImagesLoaded[index] || !this.contexts[index]) return;
-        
+
         const canvas = this.canvases[index];
         const ctx = this.contexts[index];
         const img = this.depthImagesLoaded[index];
-        
+
         // Get RGB image dimensions
         const rgbDisplayWidth = this.rgbImage.offsetWidth;
         const rgbDisplayHeight = this.rgbImage.offsetHeight;
         const rgbNaturalWidth = this.rgbImage.naturalWidth;
         const rgbNaturalHeight = this.rgbImage.naturalHeight;
-        
+
         // Calculate mouse position in RGB natural coordinates
         const rgbNaturalX = (centerX / rgbDisplayWidth) * rgbNaturalWidth;
         const rgbNaturalY = (centerY / rgbDisplayHeight) * rgbNaturalHeight;
-        
+
+        // Calculate patch dimensions that match canvas aspect ratio
+        const canvasAspectRatio = canvas.width / canvas.height;
+        let patchWidth, patchHeight;
+
+        if (canvasAspectRatio >= 1) {
+            // Canvas is wider or square - use patchSize for width
+            patchWidth = this.patchSize;
+            patchHeight = this.patchSize / canvasAspectRatio;
+        } else {
+            // Canvas is taller - use patchSize for height
+            patchHeight = this.patchSize;
+            patchWidth = this.patchSize * canvasAspectRatio;
+        }
+
         // Calculate patch size as a ratio of RGB natural dimensions
-        const patchRatioX = this.patchSize / rgbNaturalWidth;
-        const patchRatioY = this.patchSize / rgbNaturalHeight;
-        
+        const patchRatioX = patchWidth / rgbNaturalWidth;
+        const patchRatioY = patchHeight / rgbNaturalHeight;
+
         // Apply same ratio to depth image to get corresponding patch
         const depthWidth = img.width;
         const depthHeight = img.height;
         const depthPatchWidth = patchRatioX * depthWidth;
         const depthPatchHeight = patchRatioY * depthHeight;
-        
+
         // Map center position from RGB to depth coordinates
         const depthCenterX = (rgbNaturalX / rgbNaturalWidth) * depthWidth;
         const depthCenterY = (rgbNaturalY / rgbNaturalHeight) * depthHeight;
-        
+
         // Calculate source rectangle in depth image
         let sx = depthCenterX - depthPatchWidth / 2;
         let sy = depthCenterY - depthPatchHeight / 2;
         let sw = depthPatchWidth;
         let sh = depthPatchHeight;
-        
+
         // Clamp to depth image bounds
         if (sx < 0) { sw += sx; sx = 0; }
         if (sy < 0) { sh += sy; sy = 0; }
         if (sx + sw > depthWidth) sw = depthWidth - sx;
         if (sy + sh > depthHeight) sh = depthHeight - sy;
-        
+
         // Clear canvas
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        
-        // Draw patch scaled to fill canvas (maintaining aspect ratio)
+
+        // Draw patch scaled to fill canvas
         ctx.drawImage(img, sx, sy, sw, sh, 0, 0, canvas.width, canvas.height);
     }
     
@@ -441,56 +455,74 @@ class DepthMagnifier {
     /**
      * Draw RGB content inside the lens
      * The lens size is fixed, but the cropped region varies with patchSize (zoom)
+     * Patch aspect ratio matches the canvas aspect ratio for consistency
      */
     drawMagnifiedContent(centerX, centerY) {
         if (!this.rgbImage.complete) return;
-        
+
         const canvas = this.lensCanvas;
         const ctx = this.lensCtx;
-        
+
         // Fixed lens canvas size (matches lens div size)
         const lensSize = 200;
         canvas.width = lensSize;
         canvas.height = lensSize;
-        
+
         // Get RGB image dimensions
         const rgbDisplayWidth = this.rgbImage.offsetWidth;
         const rgbDisplayHeight = this.rgbImage.offsetHeight;
         const rgbNaturalWidth = this.rgbImage.naturalWidth;
         const rgbNaturalHeight = this.rgbImage.naturalHeight;
-        
+
         // Map display coordinates to natural image coordinates
         const scaleX = rgbNaturalWidth / rgbDisplayWidth;
         const scaleY = rgbNaturalHeight / rgbDisplayHeight;
-        
+
         const srcCenterX = centerX * scaleX;
         const srcCenterY = centerY * scaleY;
-        
-        // Use current patch size for the source region (in natural coordinates)
-        let sx = srcCenterX - this.patchSize / 2;
-        let sy = srcCenterY - this.patchSize / 2;
-        let sw = this.patchSize;
-        let sh = this.patchSize;
-        
+
+        // Calculate patch dimensions that match canvas aspect ratio
+        // Get canvas aspect ratio from the first depth canvas
+        const depthCanvas = this.canvases[0];
+        const canvasAspectRatio = depthCanvas ? (depthCanvas.width / depthCanvas.height) : 1;
+
+        let patchWidth, patchHeight;
+
+        if (canvasAspectRatio >= 1) {
+            // Canvas is wider or square - use patchSize for width
+            patchWidth = this.patchSize;
+            patchHeight = this.patchSize / canvasAspectRatio;
+        } else {
+            // Canvas is taller - use patchSize for height
+            patchHeight = this.patchSize;
+            patchWidth = this.patchSize * canvasAspectRatio;
+        }
+
+        // Calculate source rectangle using aspect-ratio-adjusted patch size
+        let sx = srcCenterX - patchWidth / 2;
+        let sy = srcCenterY - patchHeight / 2;
+        let sw = patchWidth;
+        let sh = patchHeight;
+
         // Clamp to image bounds
         if (sx < 0) { sw += sx; sx = 0; }
         if (sy < 0) { sh += sy; sy = 0; }
         if (sx + sw > rgbNaturalWidth) sw = rgbNaturalWidth - sx;
         if (sy + sh > rgbNaturalHeight) sh = rgbNaturalHeight - sy;
-        
+
         // Clear canvas
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        
+
         // Draw with circular clipping
         ctx.save();
         ctx.beginPath();
         ctx.arc(canvas.width / 2, canvas.height / 2, canvas.width / 2, 0, Math.PI * 2);
         ctx.clip();
-        
+
         // Draw the patch region scaled to fill the fixed lens size
         // As patchSize decreases (zoom in), we show a smaller region magnified in the lens
         ctx.drawImage(this.rgbImage, sx, sy, sw, sh, 0, 0, lensSize, lensSize);
-        
+
         ctx.restore();
     }
     
@@ -498,12 +530,11 @@ class DepthMagnifier {
      * Update zoom information display
      */
     updateZoomInfo() {
-        // Calculate magnification factor (lens size / patch size)
-        const lensSize = 200; // Fixed lens size
-        const magnification = lensSize / this.patchSize;
-        
-        // Show patch size and magnification
-        this.zoomInfo.textContent = `Patch: ${Math.round(this.patchSize)}px | Zoom: ${magnification.toFixed(2)}x`;
+        // Calculate zoom level (initial patch size / current patch size)
+        const zoomLevel = this.config.initialPatchSize / this.patchSize;
+
+        // Show only zoom level
+        this.zoomInfo.textContent = `Zoom: ${zoomLevel.toFixed(1)}x`;
     }
     
     /**
@@ -540,6 +571,10 @@ class DepthMagnifier {
         // Mouse enter
         this.rgbSide.addEventListener('mouseenter', (e) => {
             this.isHovering = true;
+
+            // Reset zoom to 1x on enter
+            this.patchSize = this.config.initialPatchSize;
+
             this.lens.style.display = 'block';
             this.zoomInfo.style.display = 'block';
             // Trigger animation
@@ -547,7 +582,7 @@ class DepthMagnifier {
                 this.lens.classList.add('active');
                 this.zoomInfo.classList.add('active');
             }, 10);
-            
+
             // Immediately show patch on enter
             this.updateLensPosition(e);
         });
@@ -587,6 +622,10 @@ class DepthMagnifier {
         // Touch support
         this.rgbSide.addEventListener('touchstart', (e) => {
             this.isHovering = true;
+
+            // Reset zoom to 1x on touch start
+            this.patchSize = this.config.initialPatchSize;
+
             this.lens.style.display = 'block';
             this.zoomInfo.style.display = 'block';
             setTimeout(() => {
