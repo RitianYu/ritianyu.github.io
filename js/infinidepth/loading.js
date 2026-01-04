@@ -1,12 +1,10 @@
 /**
  * Loading Effects Manager
- * Handles page loading, lazy loading for images, videos, and point clouds
+ * Handles page loading, image transitions, videos, and point clouds
  */
 
 class LoadingManager {
     constructor() {
-        this.totalAssets = 0;
-        this.loadedAssets = 0;
         this.init();
     }
 
@@ -14,11 +12,8 @@ class LoadingManager {
         // Create page loader
         this.createPageLoader();
 
-        // Setup lazy loading
-        this.setupLazyLoading();
-
-        // Setup video loading
-        this.setupVideoLoading();
+        // Setup image loading transitions
+        this.setupImageLoadingTransitions();
 
         // Enhance point cloud loading
         this.enhancePointCloudLoading();
@@ -35,22 +30,12 @@ class LoadingManager {
             <div class="loader-content">
                 <div class="loader-spinner"></div>
                 <div class="loader-text">Loading InfiniDepth</div>
-                <div class="loader-progress">
-                    <div class="loading-progress-bar">
-                        <div class="loading-progress-fill" id="loading-progress-fill" style="width: 0%"></div>
-                    </div>
-                </div>
             </div>
         `;
         document.body.insertBefore(loader, document.body.firstChild);
     }
 
     startPageLoad() {
-        // Count total assets to load
-        const images = document.querySelectorAll('img');
-        const videos = document.querySelectorAll('video');
-        this.totalAssets = images.length + videos.length;
-
         // Wait for DOM content loaded
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', () => this.onDOMReady());
@@ -60,177 +45,135 @@ class LoadingManager {
     }
 
     onDOMReady() {
-        // Simulate minimum loading time for better UX
-        const minLoadTime = 800;
-        const startTime = Date.now();
-
-        const checkComplete = () => {
-            const elapsed = Date.now() - startTime;
-            if (elapsed >= minLoadTime && document.readyState === 'complete') {
-                this.hidePageLoader();
-            } else {
-                requestAnimationFrame(checkComplete);
-            }
-        };
-
-        if (document.readyState === 'complete') {
-            setTimeout(() => this.hidePageLoader(), minLoadTime);
-        } else {
-            window.addEventListener('load', () => {
-                requestAnimationFrame(checkComplete);
-            });
-        }
-
-        // Update progress
-        this.updateProgress();
-    }
-
-    updateProgress() {
-        const progress = this.totalAssets > 0
-            ? (this.loadedAssets / this.totalAssets) * 100
-            : 0;
-
-        const progressFill = document.getElementById('loading-progress-fill');
-        if (progressFill) {
-            progressFill.style.width = Math.min(progress, 95) + '%';
-        }
+        // Simple 1 second delay for initial load animation
+        setTimeout(() => {
+            this.hidePageLoader();
+        }, 1000);
     }
 
     hidePageLoader() {
         const loader = document.getElementById('page-loader');
-        const progressFill = document.getElementById('loading-progress-fill');
 
-        if (progressFill) {
-            progressFill.style.width = '100%';
+        if (loader) {
+            loader.classList.add('hidden');
+            setTimeout(() => loader.remove(), 500);
         }
 
-        setTimeout(() => {
-            if (loader) {
-                loader.classList.add('hidden');
-                setTimeout(() => loader.remove(), 500);
-            }
-
-            // Add fade-in animation to sections
-            document.querySelectorAll('section').forEach((section, idx) => {
-                setTimeout(() => {
-                    section.classList.add('fade-in');
-                }, idx * 100);
-            });
-        }, 300);
-    }
-
-    setupLazyLoading() {
-        // Setup Intersection Observer for images
-        const imageObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const img = entry.target;
-                    this.loadImage(img);
-                    imageObserver.unobserve(img);
-                }
-            });
-        }, {
-            rootMargin: '50px'
-        });
-
-        // Observe all images with data-src
-        document.querySelectorAll('img[data-src]').forEach(img => {
-            imageObserver.observe(img);
+        // Add fade-in animation to sections
+        document.querySelectorAll('section').forEach((section, idx) => {
+            setTimeout(() => {
+                section.classList.add('fade-in');
+            }, idx * 100);
         });
     }
 
-    loadImage(img) {
-        const wrapper = img.closest('.lazy-image-wrapper');
-        if (wrapper) {
-            wrapper.setAttribute('data-loading', 'true');
-        }
-
-        const src = img.getAttribute('data-src');
-        if (!src) return;
-
-        const tempImg = new Image();
-        tempImg.onload = () => {
-            img.src = src;
-            img.removeAttribute('data-src');
-            if (wrapper) {
-                wrapper.classList.add('loaded');
-                wrapper.removeAttribute('data-loading');
-            }
-            this.loadedAssets++;
-            this.updateProgress();
-        };
-        tempImg.onerror = () => {
-            if (wrapper) {
-                wrapper.removeAttribute('data-loading');
-            }
-        };
-        tempImg.src = src;
+    setupImageLoadingTransitions() {
+        // Monitor all showcase galleries for image changes
+        this.setupShowcaseImageTransitions();
     }
 
-    setupVideoLoading() {
-        const videos = document.querySelectorAll('video');
+    setupShowcaseImageTransitions() {
+        // Find all main images in comparison sections
+        const mainImages = [
+            { id: 'depth-main-img', type: 'image' },
+            { id: 'pcd-main-img', type: 'image' },
+            { id: 'nvs-main-img', type: 'image' }
+        ];
 
-        videos.forEach(video => {
-            const container = video.parentElement;
+        mainImages.forEach(({ id, type }) => {
+            const img = document.getElementById(id);
+            if (!img) return;
+
+            // Create loading overlay for this image
+            const container = img.parentElement;
             if (!container) return;
 
-            // Create loading overlay
-            const overlay = document.createElement('div');
-            overlay.className = 'video-loading-overlay';
-            overlay.innerHTML = `
-                <div class="video-spinner"></div>
-                <div class="video-loading-text">Loading video<span class="loading-dots"></span></div>
-            `;
-
+            // Ensure container has relative positioning
             container.style.position = 'relative';
-            container.appendChild(overlay);
 
-            // Hide overlay when video is ready
-            const hideOverlay = () => {
-                overlay.classList.add('hidden');
-                setTimeout(() => overlay.remove(), 300);
-                this.loadedAssets++;
-                this.updateProgress();
-            };
+            // Override image src setter to add loading effect
+            const originalSrc = img.src;
+            let currentOverlay = null;
 
-            video.addEventListener('loadeddata', hideOverlay);
-            video.addEventListener('canplaythrough', hideOverlay);
-
-            // Remove overlay if video fails to load
-            video.addEventListener('error', () => {
-                overlay.classList.add('hidden');
-                setTimeout(() => overlay.remove(), 300);
+            // Use MutationObserver to detect src changes
+            const observer = new MutationObserver((mutations) => {
+                mutations.forEach((mutation) => {
+                    if (mutation.type === 'attributes' && mutation.attributeName === 'src') {
+                        const newSrc = img.src;
+                        if (newSrc && newSrc !== originalSrc && !newSrc.includes('blob:')) {
+                            this.showImageLoadingOverlay(img, container);
+                        }
+                    }
+                });
             });
+
+            observer.observe(img, { attributes: true });
         });
+    }
+
+    showImageLoadingOverlay(img, container) {
+        // Remove existing overlay if any
+        const existingOverlay = container.querySelector('.image-loading-overlay');
+        if (existingOverlay) {
+            existingOverlay.remove();
+        }
+
+        // Create overlay
+        const overlay = document.createElement('div');
+        overlay.className = 'image-loading-overlay';
+        overlay.innerHTML = `
+            <div class="image-spinner"></div>
+        `;
+
+        container.appendChild(overlay);
+
+        // Wait for image to load
+        const onLoad = () => {
+            setTimeout(() => {
+                overlay.classList.add('hidden');
+                setTimeout(() => overlay.remove(), 300);
+            }, 200);
+        };
+
+        if (img.complete) {
+            onLoad();
+        } else {
+            img.addEventListener('load', onLoad, { once: true });
+            img.addEventListener('error', () => {
+                overlay.classList.add('hidden');
+                setTimeout(() => overlay.remove(), 300);
+            }, { once: true });
+        }
     }
 
     enhancePointCloudLoading() {
         const loadingDiv = document.getElementById('pointcloud-loading');
         if (!loadingDiv) return;
 
-        // Enhance with spinner
-        const spinner = document.createElement('div');
-        spinner.className = 'pointcloud-spinner';
-
-        // Insert spinner before text
-        loadingDiv.insertBefore(spinner, loadingDiv.firstChild);
-
-        // Add loading dots animation to text
-        const text = loadingDiv.lastChild;
-        if (text && text.nodeType === Node.TEXT_NODE) {
-            const span = document.createElement('span');
-            span.innerHTML = 'Loading point cloud<span class="loading-dots"></span>';
-            loadingDiv.replaceChild(span, text);
-        }
+        // Replace with enhanced loading effect
+        loadingDiv.innerHTML = `
+            <div class="pointcloud-loader">
+                <div class="pointcloud-particles">
+                    <div class="particle"></div>
+                    <div class="particle"></div>
+                    <div class="particle"></div>
+                    <div class="particle"></div>
+                    <div class="particle"></div>
+                    <div class="particle"></div>
+                    <div class="particle"></div>
+                    <div class="particle"></div>
+                </div>
+                <div class="pointcloud-loading-text">Generating Point Cloud<span class="loading-dots"></span></div>
+            </div>
+        `;
     }
 
     // Public method to show loading for dynamic content
     static showLoading(element, message = 'Loading') {
         const overlay = document.createElement('div');
-        overlay.className = 'video-loading-overlay';
+        overlay.className = 'image-loading-overlay';
         overlay.innerHTML = `
-            <div class="video-spinner"></div>
-            <div class="video-loading-text">${message}<span class="loading-dots"></span></div>
+            <div class="image-spinner"></div>
         `;
         element.style.position = 'relative';
         element.appendChild(overlay);

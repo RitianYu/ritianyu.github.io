@@ -324,6 +324,23 @@ class VizShowcaseManager {
         // Update video source
         const video = document.getElementById('nvs-video');
         if (video) {
+            const container = video.parentElement;
+
+            // Show loading overlay
+            let overlay = container.querySelector('.video-loading-overlay');
+            if (!overlay) {
+                overlay = document.createElement('div');
+                overlay.className = 'video-loading-overlay';
+                overlay.innerHTML = `
+                    <div class="image-spinner"></div>
+                `;
+                container.style.position = 'relative';
+                container.appendChild(overlay);
+            } else {
+                // Make sure overlay is visible
+                overlay.classList.remove('hidden');
+            }
+
             const source = video.querySelector('source');
             if (source) {
                 source.src = scene.video;
@@ -334,14 +351,29 @@ class VizShowcaseManager {
 
                 video.load(); // Reload video with new source
 
+                // Hide loading overlay when video is ready
+                const hideLoading = () => {
+                    setTimeout(() => {
+                        if (overlay) {
+                            overlay.classList.add('hidden');
+                        }
+                    }, 200);
+                };
+
                 // Auto-play video after it's loaded
                 video.addEventListener('loadeddata', function autoPlay() {
+                    hideLoading();
                     video.play().catch(err => {
                         console.log('Auto-play prevented:', err);
                     });
                     // Remove the event listener after first play
                     video.removeEventListener('loadeddata', autoPlay);
-                });
+                }, { once: true });
+
+                // Also handle error case
+                video.addEventListener('error', () => {
+                    hideLoading();
+                }, { once: true });
             }
         }
     }

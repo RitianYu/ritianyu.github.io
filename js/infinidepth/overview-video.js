@@ -47,7 +47,9 @@
             // Seek and play
             const t = Math.min(target, (video.duration || target));
             video.currentTime = t;
-            video.play();
+            video.play().catch(err => {
+                console.log('Autoplay prevented:', err);
+            });
         };
 
         // Wait for metadata if not loaded
@@ -107,6 +109,19 @@
     video.addEventListener('timeupdate', updateStageBtn);
     video.addEventListener('seeking', updateStageBtn);
     video.addEventListener('seeked', updateStageBtn);
+
+    // Delayed auto-play (1.5 seconds after page loads)
+    video.addEventListener('loadeddata', function delayedAutoPlay() {
+        // Wait for page loader to finish (1s) + additional 0.5s delay
+        setTimeout(() => {
+            video.play().catch(err => {
+                console.log('Autoplay prevented by browser:', err);
+                // If autoplay is blocked, user can still click play button
+            });
+        }, 1500);
+
+        video.removeEventListener('loadeddata', delayedAutoPlay);
+    }, { once: true });
 
     // Initialize
     updateStageBtn();
