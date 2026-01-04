@@ -69,10 +69,12 @@
 
     // Expose to window for HTML onclick
     window.seekOverviewVideo = function(timeOrIdx) {
-        let idx = 0;
+        let idx;
         if (typeof timeOrIdx === 'number') {
             const i = seekTimes.indexOf(timeOrIdx);
             idx = (i >= 0) ? i : 0;
+        } else {
+            idx = 0;
         }
         doSeekTo(idx);
     };

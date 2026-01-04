@@ -4,26 +4,52 @@
 .viz-switch {
     display: flex;
     justify-content: center;
-    gap: 12px;
-    margin: 12px 0 16px 0;
+    gap: 14px;
+    margin: 16px 0 20px 0;
+    padding: 8px;
+    background: rgba(247, 249, 252, 0.6);
+    border-radius: 50px;
+    display: inline-flex;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    box-shadow: 0 2px 8px rgba(52, 85, 120, 0.04);
 }
 
 .viz-btn {
-    border: 1px solid #cfd6df;
-    background: #f7f9fc;
+    border: 1.5px solid rgba(52, 85, 120, 0.12);
+    background: white;
     color: #345;
-    padding: 6px 18px;
-    border-radius: 999px;
-    font-size: 0.95rem;
+    padding: 8px 24px;
+    border-radius: 50px;
+    font-size: 0.97rem;
     font-weight: 500;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    z-index: 1;
+    box-shadow: 0 1px 3px rgba(52, 85, 120, 0.04);
+}
+
+.viz-btn:hover:not(.active) {
+    background: #f0f4f8;
+    border-color: rgba(52, 85, 120, 0.2);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 6px rgba(52, 85, 120, 0.08);
 }
 
 .viz-btn.active {
-    background: #345;
+    background: linear-gradient(135deg, #345 0%, #5a8ab8 100%);
     color: #fff;
     border-color: #345;
+    box-shadow:
+        0 2px 8px rgba(52, 85, 120, 0.2),
+        0 4px 12px rgba(52, 85, 120, 0.1);
+    transform: translateY(-1px);
+}
+
+.viz-btn:active {
+    transform: translateY(0) scale(0.98);
 }
 
 .viz-content {
@@ -81,10 +107,10 @@
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    width: 40px;
-    height: 40px;
-    background: rgba(255, 255, 255, 0.95);
-    border: 2px solid rgba(52, 85, 120, 0.25);
+    width: 44px;
+    height: 44px;
+    background: white;
+    border: 2px solid rgba(52, 85, 120, 0.15);
     border-radius: 50%;
     cursor: pointer;
     display: flex;
@@ -93,24 +119,30 @@
     font-size: 20px;
     font-weight: bold;
     color: #345;
-    transition: all 0.2s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     z-index: 10;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
+    box-shadow:
+        0 2px 8px rgba(52, 85, 120, 0.08),
+        0 4px 16px rgba(52, 85, 120, 0.04);
+    backdrop-filter: blur(8px);
 }
 
 .showcase-arrow:hover {
-    background: #345;
+    background: linear-gradient(135deg, #345 0%, #5a8ab8 100%);
     color: #fff;
     border-color: #345;
-    box-shadow: 0 4px 16px rgba(52, 85, 120, 0.35);
+    box-shadow:
+        0 4px 12px rgba(52, 85, 120, 0.2),
+        0 8px 24px rgba(52, 85, 120, 0.15);
+    transform: translateY(-50%) scale(1.08);
 }
 
 .showcase-arrow:active {
-    transform: translateY(-50%) scale(0.92);
+    transform: translateY(-50%) scale(0.95);
 }
 
 .showcase-arrow.disabled {
-    opacity: 0.25;
+    opacity: 0.2;
     cursor: not-allowed;
     pointer-events: none;
 }
@@ -155,32 +187,39 @@
     height: auto;
     aspect-ratio: 4 / 3;
     object-fit: cover;
-    border-radius: 10px;
-    border: 2.5px solid #e3e8ef;
+    border-radius: 12px;
+    border: 2.5px solid rgba(52, 85, 120, 0.12);
     cursor: pointer;
-    transition: border 0.18s, transform 0.18s, box-shadow 0.18s, filter 0.18s, opacity 0.3s;
-    box-shadow: 0 2px 10px rgba(80,120,180,0.09);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow:
+        0 2px 8px rgba(52, 85, 120, 0.06),
+        0 4px 12px rgba(52, 85, 120, 0.03);
     background: #f7f9fb;
-    filter: grayscale(0.12) brightness(0.98);
+    filter: grayscale(0.1) brightness(0.98);
 }
 
 .showcase-thumb.active {
     border: 3px solid #345;
-    box-shadow: 0 4px 18px rgba(80,120,180,0.18);
-    transform: translateY(-6px);
+    box-shadow:
+        0 4px 12px rgba(52, 85, 120, 0.15),
+        0 8px 24px rgba(52, 85, 120, 0.1);
+    transform: translateY(-8px) scale(1.02);
     z-index: 2;
     filter: none;
 }
 
 .showcase-thumb:hover {
     filter: none;
-    border-color: #a9b8c9;
-    transform: translateY(-2px);
+    border-color: rgba(97, 182, 242, 0.4);
+    transform: translateY(-3px);
+    box-shadow:
+        0 3px 10px rgba(52, 85, 120, 0.08),
+        0 6px 18px rgba(52, 85, 120, 0.05);
 }
 
 .showcase-thumb:active {
-    border-color: #a9b8c9;
-    transform: scale(0.97);
+    border-color: #5a8ab8;
+    transform: translateY(-1px) scale(0.98);
 }
 
 /* Point Cloud PLY Buttons */
@@ -209,39 +248,54 @@
 
 /* Overview Stage Bar */
 .overview-stage-bar {
-    background: #f5f7fa;
-    border-radius: 12px;
-    padding: 10px 10px 6px 10px;
-    margin: 16px auto 0 auto;
+    background: linear-gradient(135deg, #f8f9fa 0%, #f5f7fa 100%);
+    border-radius: 16px;
+    padding: 12px 12px 8px 12px;
+    margin: 20px auto 0 auto;
     display: flex;
     justify-content: center;
-    gap: 10px;
-    box-shadow: 0 2px 12px rgba(80,120,180,0.03);
-    max-width: 800px;
+    gap: 12px;
+    box-shadow:
+        0 2px 8px rgba(52, 85, 120, 0.04),
+        0 4px 16px rgba(52, 85, 120, 0.02);
+    max-width: 850px;
+    border: 1px solid rgba(52, 85, 120, 0.06);
 }
 
 .overview-stage-btn {
-    background: none;
-    border: none;
-    border-radius: 8px;
-    padding: 0.28em 0.7em;
-    font-size: 0.93rem;
+    background: white;
+    border: 1.5px solid rgba(52, 85, 120, 0.1);
+    border-radius: 10px;
+    padding: 0.35em 0.85em;
+    font-size: 0.94rem;
     font-family: 'Jost', 'Segoe UI', Arial, sans-serif;
     font-weight: 500;
     color: #345;
-    transition: background 0.18s, color 0.18s;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     cursor: pointer;
     outline: none;
+    box-shadow: 0 1px 3px rgba(52, 85, 120, 0.04);
 }
 
-.overview-stage-btn:hover,
-.overview-stage-btn:focus {
-    background: #e3eaf2;
+.overview-stage-btn:hover:not(.active) {
+    background: #f0f4f8;
+    border-color: rgba(52, 85, 120, 0.2);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 6px rgba(52, 85, 120, 0.08);
 }
 
 .overview-stage-btn.active {
-    background: #a9b8c9 !important;
+    background: linear-gradient(135deg, #5a8ab8 0%, #345 100%) !important;
     color: #fff !important;
+    border-color: #345 !important;
+    box-shadow:
+        0 2px 8px rgba(52, 85, 120, 0.2),
+        0 4px 12px rgba(52, 85, 120, 0.1) !important;
+    transform: translateY(-1px);
+}
+
+.overview-stage-btn:active {
+    transform: translateY(0) scale(0.98);
 }
 
 @media (max-width: 700px) {

@@ -6,13 +6,13 @@
     <meta name="description" content="InfiniDepth Project Page">
     <meta name="author" content="Hao Yu">
     <title>InfiniDepth</title>
-    
+
     <!-- Bootstrap & Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    
+
     <!-- InfiniDepth Styles -->
     <link href="css/infinidepth/main.css" rel="stylesheet">
     <link href="css/infinidepth/title-animations.css" rel="stylesheet">
@@ -20,6 +20,16 @@
     <link href="css/infinidepth/layout.css" rel="stylesheet">
     <link href="css/infinidepth/visualization.css" rel="stylesheet">
     <link href="css/infinidepth/loading.css" rel="stylesheet">
+
+    <!-- Inline style to hide body content initially -->
+    <style>
+        body.loading {
+            overflow: hidden;
+        }
+        body.loading > *:not(#page-loader) {
+            visibility: hidden;
+        }
+    </style>
 
     <!-- Three.js for Point Cloud Viewer -->
     <script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
@@ -33,7 +43,14 @@
     </script>
 </head>
 
-<body>
+<body class="loading">
+    <!-- Page Loader (Static HTML for immediate display) -->
+    <div class="page-loader" id="page-loader">
+        <div class="loader-content">
+            <div class="loader-spinner"></div>
+            <div class="loader-text">Loading InfiniDepth</div>
+        </div>
+    </div>
     <!-- Cover Section -->
     <section>
         <div class="jumbotron text-center mt-0">
@@ -124,14 +141,25 @@
                     <div class="section-card">
                         <h3 style="font-size:1.5rem; margin-bottom:17px; color:#345; font-weight:600;">Overview</h3>
                         <!-- <h3>Overview</h3> -->
-                        <div style="display: flex; justify-content: center; align-items: center;">
-                            <video id="overviewVideo" controls autoplay loop muted playsinline style="width: 100%; height: auto; border-radius: 12px; box-shadow: 0 4px 24px rgba(0,0,0,0.12);">
+                        <div style="display: flex; justify-content: center; align-items: center; position: relative;">
+                            <!-- Video Loading Bar -->
+                            <div id="video-loading-overlay" class="video-loading-overlay">
+                                <div class="video-loading-content">
+                                    <div class="video-loading-bar-container">
+                                        <div class="video-loading-bar">
+                                            <div class="video-loading-bar-fill"></div>
+                                        </div>
+                                    </div>
+                                    <div class="video-loading-text">Loading video...</div>
+                                </div>
+                            </div>
+                            <video id="overviewVideo" controls loop muted playsinline style="width: 100%; height: auto; border-radius: 12px; box-shadow: 0 4px 24px rgba(0,0,0,0.12);">
                                 <source src="images/pub/infinidepth/demo_speed_compress_2.mov" type="video/mp4">
                                 Your browser does not support the video tag.
                             </video>
                         </div>
                         <div class="overview-stage-bar">
-                            <button class="overview-stage-btn" id="stage-btn-1" onclick="seekOverviewVideo(0)">Depth Map at 16K-Resolution</button>
+                            <button class="overview-stage-btn" id="stage-btn-1" onclick="seekOverviewVideo(2)">Depth Map at 16K-Resolution</button>
                             <button class="overview-stage-btn" id="stage-btn-2" onclick="seekOverviewVideo(18)">Fine-Grained Point Clouds</button>
                             <button class="overview-stage-btn" id="stage-btn-3" onclick="seekOverviewVideo(24)">Single-View NVS under Large ViewPoint Shifts</button>
                         </div>
@@ -227,8 +255,7 @@
                 Point clouds from predicted depth maps. Use mouse to rotate, zoom, and pan.
                 </p>
                 <div id="pointcloud-container" style="width:100%; height:600px; border-radius:12px; background:#ffffff; position:relative;">
-                    <div id="pointcloud-loading" style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); color:#333; font-size:1.1rem;">
-                        Loading point cloud...
+                    <div id="pointcloud-loading" style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);">
                     </div>
                 </div>
                 <!-- Showcase bar for point cloud scenes -->
@@ -300,7 +327,7 @@
                 <div style="display:flex; justify-content:center;">
                 <img id="depth-main-img"
                     alt="Depth Comparison"
-                    style="max-width:100%; border-radius:12px; transition:box-shadow 0.2s;"
+                    style="max-width:100%; transition:box-shadow 0.2s;"
                 >
                 </div>
                 <div class="showcase-bar" id="depth-showcase"></div>
@@ -311,7 +338,7 @@
                 <div style="display:flex; justify-content:center;">
                 <img id="pcd-main-img"
                     alt="Point Cloud Comparison"
-                    style="max-width:100%; border-radius:12px; transition:box-shadow 0.2s;"
+                    style="max-width:100%; transition:box-shadow 0.2s;"
                 >
                 </div>
                 <div class="showcase-bar" id="pcd-showcase"></div>
@@ -322,7 +349,7 @@
                 <div style="display:flex; justify-content:center;">
                 <img id="nvs-main-img"
                     alt="Novel View Synthesis Comparison"
-                    style="max-width:100%; border-radius:12px; transition:box-shadow 0.2s;"
+                    style="max-width:100%; transition:box-shadow 0.2s;"
                 >
                 </div>
                 <div class="showcase-bar" id="nvs-showcase"></div>
@@ -357,12 +384,17 @@
                 <div class="col-md-12">
                     <div class="section-card">
                         <h3 style="font-size:1.5rem; margin-bottom:17px; color:#345; font-weight:600;">Citation</h3>
-                        <pre><code>@inproceedings{yu2025infinidepth,
-                                title={InfiniDepth: Your Paper Title},
-                                author={Yu, Hao and Author, Name and Another, Author},
-                                booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
-                                year={2025}
+                        <div style="position: relative;">
+                            <pre id="citation-code"><code>@inproceedings{yu2025infinidepth,
+                                title={InfiniDepth: Arbitrary-Resolution and Fine-Grained Depth Estimation with Neural Implicit Fields},
+                                author={Hao Yu, Haotong Lin, Jiawei Wang, Jiaxin Li, Yida Wang, Xueyang Zhang, Yue Wang, Xiaowei Zhou, Ruizhen Hu and Sida Peng},
+                                booktitle={arXiv preprint},
+                                year={2026}
                                 }</code></pre>
+                            <button id="copy-citation-btn" class="copy-citation-btn" onclick="copyCitation()">
+                                <i class="fa fa-copy"></i> Copy
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -393,5 +425,27 @@
     <script src="js/infinidepth/viz-showcase.js"></script>
     <script src="js/infinidepth/overview-video.js"></script>
     <script type="module" src="js/infinidepth/pointcloud-viewer.js"></script>
+
+    <!-- Citation Copy Script -->
+    <script>
+    function copyCitation() {
+        const citationText = document.querySelector('#citation-code code').textContent;
+        const button = document.getElementById('copy-citation-btn');
+
+        navigator.clipboard.writeText(citationText).then(() => {
+            // Change button text to "Copied!"
+            button.innerHTML = '<i class="fa fa-check"></i> Copied!';
+            button.style.background = '#4CAF50';
+
+            // Reset button after 2 seconds
+            setTimeout(() => {
+                button.innerHTML = '<i class="fa fa-copy"></i> Copy';
+                button.style.background = '';
+            }, 2000);
+        }).catch(err => {
+            console.error('Failed to copy: ', err);
+        });
+    }
+    </script>
 </body>
 </html>

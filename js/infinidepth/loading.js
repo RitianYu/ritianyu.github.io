@@ -9,8 +9,8 @@ class LoadingManager {
     }
 
     init() {
-        // Create page loader
-        this.createPageLoader();
+        // Page loader is now in HTML, no need to create it
+        // this.createPageLoader();
 
         // Setup image loading transitions
         this.setupImageLoadingTransitions();
@@ -18,21 +18,16 @@ class LoadingManager {
         // Enhance point cloud loading
         this.enhancePointCloudLoading();
 
+        // Video loading will be setup after page loader finishes
+        // this.setupVideoLoading();
+
         // Start page load
         this.startPageLoad();
     }
 
     createPageLoader() {
-        const loader = document.createElement('div');
-        loader.className = 'page-loader';
-        loader.id = 'page-loader';
-        loader.innerHTML = `
-            <div class="loader-content">
-                <div class="loader-spinner"></div>
-                <div class="loader-text">Loading InfiniDepth</div>
-            </div>
-        `;
-        document.body.insertBefore(loader, document.body.firstChild);
+        // Deprecated: Page loader is now created in HTML
+        // This method is kept for backward compatibility but does nothing
     }
 
     startPageLoad() {
@@ -45,10 +40,10 @@ class LoadingManager {
     }
 
     onDOMReady() {
-        // Simple 1 second delay for initial load animation
+        // Simple 0.5 second delay for initial load animation
         setTimeout(() => {
             this.hidePageLoader();
-        }, 1000);
+        }, 500);
     }
 
     hidePageLoader() {
@@ -59,12 +54,187 @@ class LoadingManager {
             setTimeout(() => loader.remove(), 500);
         }
 
+        // Remove loading class from body to show content
+        document.body.classList.remove('loading');
+
         // Add fade-in animation to sections
         document.querySelectorAll('section').forEach((section, idx) => {
             setTimeout(() => {
                 section.classList.add('fade-in');
             }, idx * 100);
         });
+
+        // Start video loading after page loader finishes (after fade-out completes)
+        setTimeout(() => {
+            this.setupVideoLoading();
+        }, 500);
+    }
+
+    setupVideoLoading() {
+        const video = document.getElementById('overviewVideo');
+        const overlay = document.getElementById('video-loading-overlay');
+
+        if (!video || !overlay) return;
+
+        const barFill = overlay.querySelector('.video-loading-bar-fill');
+
+        // Show loading overlay
+        overlay.classList.remove('hidden');
+
+        // Initialize bar at 0%
+        barFill.style.width = '0%';
+
+        // Flag to ensure we only start video once
+        let videoStarted = false;
+        let currentDisplayPercentage = 0;
+        let targetPercentage = 0;
+        let animationFrameId = null;
+        let progressCheckInterval = null;
+        let startTime = Date.now();
+        let minLoadingTime = 2000; // Minimum 2 seconds for loading animation visibility
+
+        // Smoothly animate progress bar
+        const animateProgress = () => {
+            if (currentDisplayPercentage < targetPercentage) {
+                // Smoothly increment display percentage with slower rate for better visibility
+                const increment = (targetPercentage - currentDisplayPercentage) * 0.08;
+                currentDisplayPercentage += Math.max(increment, 0.3);
+
+                if (currentDisplayPercentage > targetPercentage) {
+                    currentDisplayPercentage = targetPercentage;
+                }
+
+                barFill.style.width = currentDisplayPercentage + '%';
+            }
+
+            if (!videoStarted) {
+                animationFrameId = requestAnimationFrame(animateProgress);
+            }
+        };
+
+        // Function to start video playback
+        const startVideoPlayback = () => {
+            if (videoStarted) return;
+
+            // Ensure minimum loading time has passed
+            const elapsedTime = Date.now() - startTime;
+            if (elapsedTime < minLoadingTime) {
+                setTimeout(() => startVideoPlayback(), minLoadingTime - elapsedTime);
+                return;
+            }
+
+            videoStarted = true;
+
+            // Stop checking progress
+            if (progressCheckInterval) {
+                clearInterval(progressCheckInterval);
+            }
+
+            // Cancel any pending animation
+            if (animationFrameId) {
+                cancelAnimationFrame(animationFrameId);
+            }
+
+            // Ensure we show 100% before hiding
+            currentDisplayPercentage = 100;
+            targetPercentage = 100;
+            barFill.style.width = '100%';
+
+            setTimeout(() => {
+                overlay.classList.add('hidden');
+                setTimeout(() => {
+                    overlay.style.display = 'none';
+                    // Reset video to beginning and play
+                    video.currentTime = 0;
+                    video.play().catch(err => console.log('Video autoplay failed:', err));
+                }, 600);
+            }, 300);
+        };
+
+        // More accurate and reliable progress tracking
+        const updateProgress = () => {
+            if (!video.duration || video.duration === 0) {
+                return;
+            }
+
+            const buffered = video.buffered;
+            if (buffered.length > 0) {
+                // Get the end of the last buffered range (most accurate for sequential loading)
+                let maxBufferedEnd = 0;
+                for (let i = 0; i < buffered.length; i++) {
+                    const end = buffered.end(i);
+                    if (end > maxBufferedEnd) {
+                        maxBufferedEnd = end;
+                    }
+                }
+
+                const percentage = Math.min((maxBufferedEnd / video.duration) * 100, 100);
+
+                // Update target percentage for smooth animation
+                if (percentage > targetPercentage) {
+                    targetPercentage = percentage;
+                    console.log('Video buffered:', Math.round(percentage) + '%', 'Duration:', video.duration, 'Buffered end:', maxBufferedEnd, 'ReadyState:', video.readyState);
+                }
+
+                // Only start playback when truly ready (sufficient buffering and can play through)
+                if (percentage >= 95 && video.readyState >= 3 && !videoStarted) {
+                    console.log('Video ready to play - buffered and readyState:', video.readyState);
+                    // Ensure target is 100% for final animation
+                    targetPercentage = 100;
+                    setTimeout(() => {
+                        if (!videoStarted) {
+                            startVideoPlayback();
+                        }
+                    }, 500);
+                }
+            }
+        };
+
+        // Start smooth animation
+        animateProgress();
+
+        // Poll progress more frequently for better responsiveness
+        progressCheckInterval = setInterval(updateProgress, 100);
+
+        // Listen to video events
+        video.addEventListener('loadedmetadata', () => {
+            console.log('Video metadata loaded, duration:', video.duration);
+            updateProgress();
+        });
+
+        video.addEventListener('progress', () => {
+            updateProgress();
+        });
+
+        video.addEventListener('canplay', () => {
+            console.log('Video can play, readyState:', video.readyState);
+            updateProgress();
+        });
+
+        video.addEventListener('canplaythrough', () => {
+            console.log('Video can play through, readyState:', video.readyState);
+            if (!videoStarted) {
+                targetPercentage = 100;
+                // Wait for animation to catch up
+                setTimeout(() => {
+                    if (!videoStarted) {
+                        startVideoPlayback();
+                    }
+                }, 800);
+            }
+        });
+
+        // Fallback: force playback after reasonable time
+        setTimeout(() => {
+            if (!videoStarted) {
+                console.log('Video loading timeout, forcing playback. Current progress:', targetPercentage + '%');
+                targetPercentage = 100;
+                setTimeout(startVideoPlayback, 800);
+            }
+        }, 10000);
+
+        // Initial check after a short delay
+        setTimeout(updateProgress, 100);
     }
 
     setupImageLoadingTransitions() {
@@ -150,7 +320,7 @@ class LoadingManager {
         const loadingDiv = document.getElementById('pointcloud-loading');
         if (!loadingDiv) return;
 
-        // Replace with enhanced loading effect
+        // Replace with enhanced loading effect (particles only, no text)
         loadingDiv.innerHTML = `
             <div class="pointcloud-loader">
                 <div class="pointcloud-particles">
@@ -163,7 +333,6 @@ class LoadingManager {
                     <div class="particle"></div>
                     <div class="particle"></div>
                 </div>
-                <div class="pointcloud-loading-text">Generating Point Cloud<span class="loading-dots"></span></div>
             </div>
         `;
     }

@@ -82,8 +82,7 @@ import { PLYLoader } from 'three/addons/loaders/PLYLoader.js';
         console.log('Loading PLY file:', filename);
         if (loading) {
             loading.style.display = 'block';
-            loading.textContent = 'Loading point cloud...';
-            loading.style.color = '#333';
+            // Don't set textContent - loading animation is handled by CSS
         }
 
         // Remove existing point cloud
@@ -143,13 +142,12 @@ import { PLYLoader } from 'three/addons/loaders/PLYLoader.js';
             function(xhr) {
                 const percent = (xhr.loaded / xhr.total * 100).toFixed(0);
                 console.log('Loading progress:', percent + '%');
-                if (loading) loading.textContent = `Loading point cloud... ${percent}%`;
+                // Don't update text - loading animation is handled by CSS
             },
             function(error) {
                 console.error('Error loading PLY:', error);
                 if (loading) {
-                    loading.textContent = 'Error loading point cloud. Please check the browser console.';
-                    loading.style.color = '#ff6b6b';
+                    loading.innerHTML = '<div style="color: #ff6b6b; font-size: 1rem;">Error loading point cloud</div>';
                 }
             }
         );
