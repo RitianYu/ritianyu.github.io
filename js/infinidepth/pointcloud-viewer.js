@@ -102,7 +102,7 @@ import { PLYLoader } from 'three/addons/loaders/PLYLoader.js';
                 // Flip X, Y and Z axes
                 const positions = geometry.attributes.position.array;
                 for (let i = 0; i < positions.length; i += 3) {
-                    positions[i] = -positions[i];         // Flip X
+                    // positions[i] = -positions[i];         // Flip X
                     positions[i + 1] = -positions[i + 1]; // Flip Y
                     positions[i + 2] = -positions[i + 2]; // Flip Z
                 }

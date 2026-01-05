@@ -99,7 +99,7 @@ const VizShowcaseConfig = {
             },
             {
                 name: 'DIODE',
-                plyFile: 'PromptNeuralDepth_00019_00183_indoors_320_010_2d_uniform_up_1_disparity_filter.ply',
+                plyFile: 'PromptNeuralDepth_00019_00183_indoors_320_010_2d_uniform_up_1_disparity.ply',
                 thumbnail: 'images/pub/infinidepth/pointclouds/00019_00183_indoors_320_010_low.png'
             },
         ]
