@@ -17,22 +17,40 @@ const VizShowcaseConfig = {
             },
             {
                 name: 'Scene 2',
-                rgb: 'images/pub/infinidepth/interactitve_depth/rgb3.png',
-                depth: 'images/pub/infinidepth/interactitve_depth/depth3.png',
-                thumbnail: 'images/pub/infinidepth/interactitve_depth/rgb3_low.png'
+                rgb: 'images/pub/infinidepth/interactitve_depth/rgb_diode_1.png',
+                depth: 'images/pub/infinidepth/interactitve_depth/depth_diode_1.png',
+                thumbnail: 'images/pub/infinidepth/interactitve_depth/rgb_low_diode_1.png'
             },
             {
                 name: 'Scene 3',
-                rgb: 'images/pub/infinidepth/interactitve_depth/rgb4.png',
-                depth: 'images/pub/infinidepth/interactitve_depth/depth4.png',
-                thumbnail: 'images/pub/infinidepth/interactitve_depth/rgb4_low.png'
+                rgb: 'images/pub/infinidepth/interactitve_depth/rgb3.png',
+                depth: 'images/pub/infinidepth/interactitve_depth/depth3.png',
+                thumbnail: 'images/pub/infinidepth/interactitve_depth/rgb3_low.png'
             },
             {
                 name: 'Scene 4',
                 rgb: 'images/pub/infinidepth/interactitve_depth/rgb4.png',
                 depth: 'images/pub/infinidepth/interactitve_depth/depth4.png',
                 thumbnail: 'images/pub/infinidepth/interactitve_depth/rgb4_low.png',
-            }
+            },
+            {
+                name: 'Scene 5',
+                rgb: 'images/pub/infinidepth/interactitve_depth/rgb_diode_2.png',
+                depth: 'images/pub/infinidepth/interactitve_depth/depth_diode_2.png',
+                thumbnail: 'images/pub/infinidepth/interactitve_depth/rgb_low_diode_2.png'
+            },
+            {
+                name: 'Scene 6',
+                rgb: 'images/pub/infinidepth/interactitve_depth/DSC_9260.png',
+                depth: 'images/pub/infinidepth/interactitve_depth/PromptNeuralDepth_DSC_9260_up_5_disparity.png',
+                thumbnail: 'images/pub/infinidepth/interactitve_depth/DSC_9260_low.png'
+            },
+            {
+                name: 'Scene 7',
+                rgb: 'images/pub/infinidepth/interactitve_depth/DSC_6493.png',
+                depth: 'images/pub/infinidepth/interactitve_depth/PromptNeuralDepth_DSC_6493_up_5_disparity.png',
+                thumbnail: 'images/pub/infinidepth/interactitve_depth/DSC_6493_low.png'
+            },
         ]
     },
 
@@ -40,25 +58,50 @@ const VizShowcaseConfig = {
     pointcloud: {
         scenes: [
             {
-                name: 'ETH Scene',
+                name: 'DIODE',
+                plyFile: 'diode_filter.ply',
+                thumbnail: 'images/pub/infinidepth/pointclouds/00019_00183_indoors_190_040_low.png'
+            },
+            {
+                name: 'ETH',
                 plyFile: 'eth_1.ply',
-                thumbnail: 'images/pub/infinidepth/vis_pcd/rgb1.jpg'
+                thumbnail: 'images/pub/infinidepth/pointclouds/DSC_0219_low.png'
             },
             {
-                name: 'Waymo Scene',
-                plyFile: 'waymo_1.ply',
-                thumbnail: 'images/pub/infinidepth/vis_pcd/rgb2.jpg'
+                name: 'ETH',
+                plyFile: 'eth3dpipes__images__dslr_images__DSC_0644_filtered.ply',
+                thumbnail: 'images/pub/infinidepth/pointclouds/DSC_0644_low.png'
             },
             {
-                name: 'ETH Scene',
-                plyFile: 'eth_1.ply',
-                thumbnail: 'images/pub/infinidepth/vis_pcd/rgb1.jpg'
+                name: 'NYU',
+                plyFile: 'nyudatasets__nyu__home_office__rgb_00555_filtered.ply',
+                thumbnail: 'images/pub/infinidepth/pointclouds/rgb_555_low.png'
             },
             {
-                name: 'Waymo Scene',
-                plyFile: 'waymo_1.ply',
-                thumbnail: 'images/pub/infinidepth/vis_pcd/rgb2.jpg'
-            }
+                name: 'NYU',
+                plyFile: 'nyudatasets__nyu__home_office__rgb_00556_filtered.ply',
+                thumbnail: 'images/pub/infinidepth/pointclouds/rgb_556_low.png'
+            },
+            {
+                name: 'NYU',
+                plyFile: 'nyudatasets__nyu__bedroom__rgb_01156_filtered.ply',
+                thumbnail: 'images/pub/infinidepth/pointclouds/rgb_1156_low.png'
+            },
+            {
+                name: 'ETH',
+                plyFile: 'eth3delectro__images__dslr_images__DSC_9297_filtered.ply',
+                thumbnail: 'images/pub/infinidepth/pointclouds/DSC_9297_low.png'
+            },
+            {
+                name: 'DIODE',
+                plyFile: 'PromptNeuralDepth_00019_00183_indoors_150_000_2d_uniform_up_1_disparity.ply',
+                thumbnail: 'images/pub/infinidepth/pointclouds/00019_00183_indoors_150_000_low.png'
+            },
+            {
+                name: 'DIODE',
+                plyFile: 'PromptNeuralDepth_00019_00183_indoors_320_010_2d_uniform_up_1_disparity_filter.ply',
+                thumbnail: 'images/pub/infinidepth/pointclouds/00019_00183_indoors_320_010_low.png'
+            },
         ]
     },
 

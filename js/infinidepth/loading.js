@@ -343,20 +343,9 @@ class LoadingManager {
         const loadingDiv = document.getElementById('pointcloud-loading');
         if (!loadingDiv) return;
 
-        // Replace with enhanced loading effect (particles only, no text)
+        // Replace with spinner (consistent with qualitative comparison)
         loadingDiv.innerHTML = `
-            <div class="pointcloud-loader">
-                <div class="pointcloud-particles">
-                    <div class="particle"></div>
-                    <div class="particle"></div>
-                    <div class="particle"></div>
-                    <div class="particle"></div>
-                    <div class="particle"></div>
-                    <div class="particle"></div>
-                    <div class="particle"></div>
-                    <div class="particle"></div>
-                </div>
-            </div>
+            <div class="image-spinner"></div>
         `;
     }
 

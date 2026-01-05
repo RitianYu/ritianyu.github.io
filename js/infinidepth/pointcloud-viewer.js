@@ -82,7 +82,6 @@ import { PLYLoader } from 'three/addons/loaders/PLYLoader.js';
         console.log('Loading PLY file:', filename);
         if (loading) {
             loading.style.display = 'block';
-            // Don't set textContent - loading animation is handled by CSS
         }
 
         // Remove existing point cloud
@@ -100,11 +99,12 @@ import { PLYLoader } from 'three/addons/loaders/PLYLoader.js';
             function(geometry) {
                 console.log('PLY loaded successfully, vertices:', geometry.attributes.position.count);
 
-                // Flip X and Y axes
+                // Flip X, Y and Z axes
                 const positions = geometry.attributes.position.array;
                 for (let i = 0; i < positions.length; i += 3) {
                     positions[i] = -positions[i];         // Flip X
                     positions[i + 1] = -positions[i + 1]; // Flip Y
+                    positions[i + 2] = -positions[i + 2]; // Flip Z
                 }
                 geometry.attributes.position.needsUpdate = true;
 
@@ -142,7 +142,7 @@ import { PLYLoader } from 'three/addons/loaders/PLYLoader.js';
             function(xhr) {
                 const percent = (xhr.loaded / xhr.total * 100).toFixed(0);
                 console.log('Loading progress:', percent + '%');
-                // Don't update text - loading animation is handled by CSS
+                // Loading animation is handled by CSS spinner
             },
             function(error) {
                 console.error('Error loading PLY:', error);
