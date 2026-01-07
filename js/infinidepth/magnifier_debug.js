@@ -553,9 +553,9 @@ class DepthMagnifier {
         // Calculate magnification factor (lens size / patch size)
         const lensSize = 200; // Fixed lens size
         const magnification = lensSize / this.patchSize;
-        
-        // Show patch size and magnification
-        this.zoomInfo.textContent = `Patch: ${Math.round(this.patchSize)}px | Zoom: ${magnification.toFixed(2)}x`;
+
+        // Show only magnification
+        this.zoomInfo.textContent = `Zoom: ${magnification.toFixed(1)}x`;
     }
     
     /**

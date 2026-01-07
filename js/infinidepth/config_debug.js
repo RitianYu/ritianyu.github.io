@@ -10,8 +10,8 @@ const InfiniDepthConfig = {
     scenes: [
         {
             name: 'DSC_0250',
-            rgbImage: 'images/pub/infinidepth/DSC_0219_cropped.png',
-            depthImage: 'images/pub/infinidepth/PromptNeuralDepth_DSC_0219_up_8_implicit_cropped.png', // Single depth image
+            rgbImage: 'images/pub/infinidepth/0000011.png',
+            depthImage: 'images/pub/infinidepth/PromptNeuralDepth_000011_up_16_disparity.png', // Single depth image
             methodLabel: 'InfiniDepth (Ours)',
             // Predefined anchor points for auto recording (x, y in 0-1 range)
             anchors: [
@@ -24,8 +24,8 @@ const InfiniDepthConfig = {
         },
         {
             name: 'Demo Scene 2',
-            rgbImage: 'images/pub/infinidepth/DSC_0219_cropped.png',
-            depthImage: 'images/pub/infinidepth/PromptNeuralDepth_DSC_0219_up_8_implicit_cropped.png', // Single depth image
+            rgbImage: 'images/pub/infinidepth/interactitve_depth/rgb4.png',
+            depthImage: 'images/pub/infinidepth/interactitve_depth/depth4.png', // Single depth image
             methodLabel: 'InfiniDepth (Ours)',
             anchors: [
                 { x: 0.30, y: 0.40, name: 'Left Detail' },
@@ -50,7 +50,7 @@ const InfiniDepthConfig = {
     
     // Patch size settings (in pixels)
     initialPatchSize: 512,  // Initial patch size when hovering starts
-    minPatchSize: 32,       // Minimum patch size (max zoom in)
+    minPatchSize: 12.5,     // Minimum patch size (max zoom in = 16x, since lens is 200px)
     maxPatchSize: 512,      // Maximum patch size (max zoom out)
     
     // Zoom behavior - keyboard controlled
