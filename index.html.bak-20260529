@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <!-- Prevent caching -->
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+
+  <title>Hao Yu</title>
+  <meta name="author" content="Hao Yu">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Fonts: Inter (body) + Zhi Mang Xing (Chinese name) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Zhi+Mang+Xing&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" type="text/css" href="stylesheet.css?v=20260529">
+</head>
+<body>
+
+  <!-- Gradient accent bar fixed at top of viewport -->
+  <div class="top-bar" aria-hidden="true"></div>
+
+  <div class="page-wrap">
+
+    <!-- ── Profile ──────────────────────────────────────────── -->
+    <header class="profile-card">
+      <div class="profile-inner">
+
+        <div class="profile-text">
+          <h1 class="profile-name">
+            Hao Yu
+            <span class="profile-name-zh">余昊</span>
+          </h1>
+
+          <p>
+            Hi! I am a first-year Master's student at Zhejiang University, advised by
+            <a href="https://pengsida.net/">Prof. Sida Peng</a> and
+            <a href="https://xzhou.me/">Prof. Xiaowei Zhou</a>.
+            I received my Bachelor's degree from Shandong University in 2025.
+            I'm now a research intern at <a href="https://3d.hunyuan.tencent.com/">Tencent Hunyuan</a>.
+          </p>
+          <p>
+            My research interests lie in <strong>3D reconstruction</strong> and <strong>generation</strong>,
+            with the goal of benefiting robotics 🤖 and the gaming industry 🎮.
+          </p>
+
+          <nav class="social-nav" aria-label="Contact and profiles">
+            <a href="mailto:yu2365667746@gmail.com" class="social-btn">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+                <path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555ZM0 4.697v7.104l5.803-3.558L0 4.697ZM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757Zm3.436-.586L16 11.801V4.697l-5.803 3.546Z"/>
+              </svg>
+              Email
+            </a>
+            <a href="https://scholar.google.com/citations?user=YOUR_ID" class="social-btn" target="_blank" rel="noopener">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M12 24a7 7 0 1 1 0-14 7 7 0 0 1 0 14zm0-24L0 9.5l4.5 3.5L12 8.5l7.5 4.5L24 9.5z"/>
+              </svg>
+              Scholar
+            </a>
+            <a href="https://twitter.com/YuRitianYu" class="social-btn" target="_blank" rel="noopener">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+              </svg>
+              Twitter
+            </a>
+            <a href="https://github.com/RitianYu" class="social-btn" target="_blank" rel="noopener">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+                <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+              </svg>
+              GitHub
+            </a>
+          </nav>
+        </div><!-- /profile-text -->
+
+        <div class="profile-photo-wrap">
+          <a href="images/me/github.jpg">
+            <img src="images/me/github.jpg" alt="Hao Yu profile photo" class="profile-photo">
+          </a>
+        </div>
+
+      </div><!-- /profile-inner -->
+    </header>
+
+    <!-- ── Publications ──────────────────────────────────────── -->
+    <section class="site-section" id="publications">
+      <div class="section-heading">
+        <h2>Selected Publications</h2>
+        <span class="section-note">* denotes equal contributions</span>
+      </div>
+
+      <div class="pub-list">
+
+        <!-- InfiniDepth -->
+        <article class="pub-card">
+          <div class="pub-media">
+            <video playsinline autoplay loop muted>
+              <source src="images/pub/infinidepth/demo_in_projectpage.mov" type="video/mp4">
+            </video>
+          </div>
+          <div class="pub-body">
+            <h3 class="pub-title">InfiniDepth: Arbitrary-Resolution and Fine-Grained Depth Estimation with Neural Implicit Fields</h3>
+            <p class="pub-authors">
+              <strong>Hao Yu*</strong>, Haotong Lin*, Jiawei Wang*, Jiaxin Li, Yida Wang,
+              Xueyang Zhang, Yue Wang, Xiaowei Zhou, Ruizhen Hu, Sida Peng
+            </p>
+            <div class="pub-meta-row">
+              <span class="venue-badge venue-conf">CVPR 2026</span> 
+              <div class="pub-highlight">
+                <!-- star icon -->
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                </svg>
+                1k+ Stars &nbsp;·&nbsp; China3DV TOP 5 Paper
+              </div>
+            </div>
+            <div class="pub-links">
+              <a href="https://zju3dv.github.io/InfiniDepth" target="_blank" rel="noopener">Project</a>
+              <a href="https://github.com/zju3dv/InfiniDepth" target="_blank" rel="noopener">Code</a>
+              <a href="https://arxiv.org/abs/2601.03252" target="_blank" rel="noopener">Paper</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- MatchAnything -->
+        <article class="pub-card">
+          <div class="pub-media">
+            <video playsinline autoplay loop muted>
+              <source src="https://zju3dv.github.io/MatchAnything/img/teaser_v0.mov" type="video/mp4">
+            </video>
+          </div>
+          <div class="pub-body">
+            <h3 class="pub-title">MatchAnything: Universal Cross-Modality Image Matching with Large-Scale Pre-Training</h3>
+            <p class="pub-authors">
+              Xingyi He, <strong>Hao Yu</strong>, Sida Peng, Dongli Tan, Zehong Shen, Xiaowei Zhou, Hujun Bao
+            </p>
+            <div class="pub-meta-row">
+              <span class="venue-badge venue-conf">arXiv 2025</span>
+              <div class="pub-highlight">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                </svg>
+                1.3k+ Stars &nbsp;·&nbsp; HuggingFace tried 54k+ times &nbsp;·&nbsp;
+                Included in <a href="https://huggingface.co/zju-community/matchanything_eloftr" target="_blank" rel="noopener">Transformers</a>
+              </div>
+            </div>
+            <div class="pub-links">
+              <a href="https://zju3dv.github.io/MatchAnything/" target="_blank" rel="noopener">Project</a>
+              <a href="https://github.com/zju3dv/MatchAnything" target="_blank" rel="noopener">Code</a>
+              <a href="https://arxiv.org/abs/2501.07556" target="_blank" rel="noopener">Paper</a>
+            </div>
+          </div>
+        </article>
+
+      </div><!-- /pub-list -->
+    </section>
+
+    <!-- ── Experience ───────────────────────────────────────── -->
+    <section class="site-section" id="experience">
+      <div class="section-heading">
+        <h2>Experience</h2>
+      </div>
+
+      <div class="exp-list">
+
+        <div class="exp-item">
+          <img src="images/icons/hunyuan.png" alt="Tencent Hunyuan" class="exp-logo">
+          <div class="exp-body">
+            <div class="exp-header-row">
+              <span class="exp-company">Tencent, <a href="https://github.com/Tencent-Hunyuan" target="_blank" rel="noopener">Hunyuan</a></span>
+              <span class="exp-period">Mar. 2026 – Present</span>
+            </div>
+            <div class="exp-role"><strong>Tencent Project Up</strong> Research Intern</div>
+            <div class="exp-advisor">
+              Advised by <a href="https://zhenwwang.github.io/" target="_blank" rel="noopener">Zhenwei Wang</a>
+              and <a href="https://tengfei-wang.github.io/" target="_blank" rel="noopener">Tengfei Wang</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="exp-item">
+          <img src="images/icons/liauto.png" alt="Li Auto" class="exp-logo">
+          <div class="exp-body">
+            <div class="exp-header-row">
+              <span class="exp-company">Li Auto, <a href="https://github.com/LiAutoAD" target="_blank" rel="noopener">Autonomous Driving Team</a></span>
+              <span class="exp-period">Mar. 2025 – Mar. 2026</span>
+            </div>
+            <div class="exp-role">Research Intern</div>
+            <div class="exp-advisor">
+              Advised by <a href="https://wangyida.github.io/" target="_blank" rel="noopener">Yida Wang</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="exp-item">
+          <img src="images/icons/roboticsx.avif" alt="Tencent RoboticsX" class="exp-logo">
+          <div class="exp-body">
+            <div class="exp-header-row">
+              <span class="exp-company">Tencent, <a href="https://roboticsx.tencent.com/#/" target="_blank" rel="noopener">RoboticsX</a></span>
+              <span class="exp-period">Oct. 2024 – Feb. 2025</span>
+            </div>
+            <div class="exp-role">Research Intern</div>
+            <div class="exp-advisor">
+              Advised by <a href="https://cghezhang.github.io/" target="_blank" rel="noopener">He Zhang</a>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /exp-list -->
+    </section>
+
+    <!-- ── Honors & Awards ──────────────────────────────────── -->
+    <section class="site-section" id="awards">
+      <div class="section-heading">
+        <h2>Honors &amp; Awards</h2>
+      </div>
+
+      <div class="award-list">
+
+        <div class="award-row">
+          <span class="award-icon" aria-hidden="true">🏆</span>
+          <span class="award-name">China3DV TOP 5 Paper</span>
+          <span class="award-year">2026</span>
+        </div>
+
+        <div class="award-row">
+          <span class="award-icon" aria-hidden="true">🎓</span>
+          <span class="award-name">National Scholarship</span>
+          <span class="award-year">2025</span>
+        </div>
+
+        <div class="award-row">
+          <span class="award-icon" aria-hidden="true">🏅</span>
+          <span class="award-name">
+            Gold Medal in <a href="https://www.kaggle.com/competitions/image-matching-challenge-2024" target="_blank" rel="noopener">Image Matching Challenge 2024</a>,
+            <a href="https://www.youtube.com/watch?v=KG-_i12fU_A&t=14889s" target="_blank" rel="noopener">CVPR 2024 Workshop</a>
+          </span>
+          <span class="award-year">2024</span>
+        </div>
+
+        <div class="award-row">
+          <span class="award-icon" aria-hidden="true">🥇</span>
+          <span class="award-name">First Prize in the Chinese Mathematics Competitions</span>
+          <span class="award-year">2023</span>
+        </div>
+
+      </div><!-- /award-list -->
+    </section>
+
+    <!-- ── Footer ───────────────────────────────────────────── -->
+    <footer class="site-footer">
+      Website template adapted from <a href="https://jonbarron.info/">Jon Barron</a>.
+    </footer>
+
+  </div><!-- /page-wrap -->
+
+  <!-- Statcounter -->
+  <script type="text/javascript">
+    var sc_project = 13072472;
+    var sc_invisible = 1;
+    var sc_security = "98024855";
+  </script>
+  <script type="text/javascript" src="https://www.statcounter.com/counter/counter.js" async></script>
+  <noscript>
+    <div class="statcounter">
+      <a title="Web Analytics Made Easy - Statcounter" href="https://statcounter.com/" target="_blank">
+        <img class="statcounter" src="https://c.statcounter.com/13072472/0/98024855/1/"
+          alt="Web Analytics Made Easy - Statcounter" referrerpolicy="no-referrer-when-downgrade">
+      </a>
+    </div>
+  </noscript>
+
+</body>
+</html>
