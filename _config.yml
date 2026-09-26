@@ -1,0 +1,7 @@
+# Keep restoration files and development documentation out of GitHub Pages.
+exclude:
+  - backups
+  - scripts
+  - README.md
+  - index.html.bak-20260312
+  - index.html.bak-20260529

@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 426" fill="none">
+  <rect width="640" height="426" fill="#eeefeb"/>
+  <g stroke="#dfe2dc" stroke-width="1">
+    <path d="M0 71h640M0 142h640M0 213h640M0 284h640M0 355h640M80 0v426M160 0v426M240 0v426M320 0v426M400 0v426M480 0v426M560 0v426"/>
+  </g>
+  <g transform="translate(52 91)">
+    <rect width="215" height="222" rx="5" fill="#f8f8f5" stroke="#bdc7c8"/>
+    <path d="M0 145h215M54 50v172m53-172v172m54-172v172" stroke="#e1e4df"/>
+    <path d="m37 144 59-66 34 29 45-52v131H37z" fill="#d5deda"/>
+    <path d="m37 144 59-66 34 29 45-52" stroke="#96a9a4" stroke-width="2"/>
+    <circle cx="57" cy="49" r="11" fill="#c4cfc9"/>
+    <g fill="#526d82"><circle cx="37" cy="144" r="4"/><circle cx="96" cy="78" r="4"/><circle cx="130" cy="107" r="4"/><circle cx="175" cy="55" r="4"/></g>
+  </g>
+  <g transform="translate(373 115)">
+    <rect width="215" height="222" rx="5" fill="#313c43" stroke="#52626d"/>
+    <path d="M0 145h215M54 50v172m53-172v172m54-172v172" stroke="#445159"/>
+    <path d="m37 144 59-66 34 29 45-52v131H37z" fill="#596b72"/>
+    <path d="m37 144 59-66 34 29 45-52" stroke="#b1c2c7" stroke-width="2"/>
+    <circle cx="57" cy="49" r="11" fill="#7b9399"/>
+    <g fill="#e3ecea"><circle cx="37" cy="144" r="4"/><circle cx="96" cy="78" r="4"/><circle cx="130" cy="107" r="4"/><circle cx="175" cy="55" r="4"/></g>
+  </g>
+  <g stroke="#819aaa" stroke-width="1" opacity=".75">
+    <path d="M89 235 410 259M148 169l321 24M182 198l321 24M227 146l321 24"/>
+  </g>
+  <g font-family="Inter,Arial,sans-serif" font-size="10" letter-spacing="2" fill="#657175">
+    <text x="53" y="66">MODALITY A</text><text x="374" y="90">MODALITY B</text>
+    <text x="52" y="382" font-size="9" letter-spacing="1.5">DIFFERENT APPEARANCES. SHARED STRUCTURE.</text>
+  </g>
+</svg>

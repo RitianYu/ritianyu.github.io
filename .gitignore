@@ -1,0 +1,7 @@
+# Local full-site backup; lightweight source snapshots remain versioned.
+backups/**/*.tar.gz
+backups/**/*.zip
+node_modules/
+.DS_Store
+playwright-report/
+test-results/
