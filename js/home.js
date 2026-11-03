@@ -2,6 +2,7 @@
 (() => {
   'use strict';
 
+  document.documentElement.classList.add('js');
   const year = document.querySelector('#copyright-year');
   if (year) year.textContent = new Date().getFullYear();
   const navLinks = Array.from(document.querySelectorAll('.main-nav a'));
@@ -9,7 +10,9 @@
   let scrollScheduled = false;
 
   function updateNavigation() {
-    const headerHeight = document.querySelector('.site-header').getBoundingClientRect().height;
+    const header = document.querySelector('.site-header');
+    header.classList.toggle('is-scrolled', window.scrollY > 4);
+    const headerHeight = header.getBoundingClientRect().height;
     let current = sections[0];
     for (const section of sections) {
       if (section.getBoundingClientRect().top <= headerHeight + 80) current = section;
@@ -31,6 +34,19 @@
   window.addEventListener('pageshow', scheduleNavigation);
   updateNavigation();
 
+  // Sections fade in once as they enter the viewport.
+  const revealTargets = document.querySelectorAll('.publication, .timeline-item, .section-heading, .honor-row');
+  if ('IntersectionObserver' in window) {
+    const revealer = new IntersectionObserver(entries => {
+      for (const entry of entries) {
+        if (!entry.isIntersecting) continue;
+        entry.target.classList.add('is-visible');
+        revealer.unobserve(entry.target);
+      }
+    }, { rootMargin: '0px 0px -8% 0px' });
+    revealTargets.forEach(target => { target.classList.add('reveal'); revealer.observe(target); });
+  }
+
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const saveData = Boolean(navigator.connection?.saveData);
   const previews = [];
@@ -41,6 +57,14 @@
     const name = video.getAttribute('aria-label').replace(' research preview', '');
     const state = { frame, video, visible: false, pausedByUser: false, pending: false };
     previews.push(state);
+    // Size the frame to the real video shape once it is known.
+    const article = frame.closest('.publication');
+    const applyRatio = () => {
+      if (!video.videoWidth || !video.videoHeight) return;
+      article.style.setProperty('--ratio', (video.videoWidth / video.videoHeight).toFixed(3));
+    };
+    video.addEventListener('loadedmetadata', applyRatio);
+    applyRatio();
     video.controls = false;
     button.hidden = false;
     const updateButton = playing => {
